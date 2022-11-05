@@ -4,10 +4,10 @@ This boilerplate app creates a functional starting point for building an applica
 
 React Frontend (FrameWork)
 Node JS Express Backend (Server)
-Axios (HTTP requests): 
-    *  Zoom SDK JWT Generation
-    *  Server - to - Server 
-    *  Create Zoom Meeting
+Axios (HTTP requests):
+* Zoom SDK JWT Generation
+* Server - to - Server OAuth
+* Create Zoom Meeting
 
 TO-DO:
 * Add Mongo DB Backend
