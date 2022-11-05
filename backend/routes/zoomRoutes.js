@@ -1,0 +1,19 @@
+const express = require('express');
+
+const {
+    CreateAppointment,
+    getMsdkSignature, 
+  } = require("../controllers/zoomControllers.js");
+
+const router = express.Router();
+
+router.route('/').post();
+
+// Get MSDK Signature Route
+
+router.route("/msig").post(getMsdkSignature);
+
+// Create routes. Test with Postman
+router.route("/create").post(CreateAppointment);
+
+module.exports = router; // Export the router so it can be used in server.js
