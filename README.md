@@ -11,3 +11,18 @@ This boilerplate app creates a functional starting point for building an applica
 
 TO-DO:
 * Add Mongo DB Backend
+
+# Getting started
+
+In root, run the following command:
+```
+npm run dev
+```
+In frontend
+npm install @mui/x-date-pickers
+npm install moment  
+npm install @emotion/react
+npm i @emotion/styled
+
+
+npm install material-table --save

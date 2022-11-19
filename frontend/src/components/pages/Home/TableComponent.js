@@ -1,49 +1,154 @@
 import  React, { useState , useEffect } from 'react'
+import "./Button.css";
+
+import { styled } from "@mui/material/styles";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+
 
 
 function TableComponent() {
-    var [date,setDate] = useState(new Date());
+
+    var [date,setDate] = useState(new Date(Date.UTC(2012, 11, 20, 3, 0, 0)));
     
-  useEffect(() => {
-      var timer = setInterval(()=>setDate(new Date()), 1000 )
-      
-      return function cleanup() {
-          clearInterval(timer)
+    const timeOptions = { hour: '2-digit', minute: "2-digit" };
+    const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
+
+
+    const StyledTableCell = styled(TableCell)(({ theme }) => ({
+      [`&.${tableCellClasses.head}`]: {
+    
+        color: theme.palette.common.white,
+       
+      },
+      [`&.${tableCellClasses.body}`]: {
+        fontSize: 12
       }
+    }));
+    
+    const StyledTableRow = styled(TableRow)(({ theme }) => ({
+      "&:nth-of-type(odd)": {
+        boxShadow: "none"
+      },
+      // hide last border
+      "&:last-child td, &:last-child th": {
+        border: 0,
+      }
+    }));
+
+    function createData(topic, meetingnumber ) {
+      return { topic, meetingnumber };
+    }
+
+  //   const getlistOfMeetings = (e) => {
+  //     if (e) e.preventDefault();
+     
+  //     const SIGNATURE_OPTIONS = {
+  //       method: "GET",
+  //       headers: { "Content-Type": "application/json"},
+  //      };
+    
+  //     fetch("/api/zoom/listmeetings", SIGNATURE_OPTIONS)
+  //       .then((data) => data.json())
+  //       .then(resp => resp )
+  //   };
+  // console.log("List Meeting: ",getlistOfMeetings())
+
+    // const rows = getlistOfMeetings();
+
+    // rows.forEach(meeting => {
+    //     for (let key in meeting) {
+    //       console.log(`${key}: ${meeting[key]}`)
+    //     }
+    //   })
+    
+    
   
-  });
+
+    const rows = [
+      createData("Frozen yoghurt", 15997894570653),
+      createData("Ice cream sandwich", 23797894570653),
+      createData("Eclair", 26297894570653),
+      createData("Cupcake", 30597894570653),
+      createData("Gingerbread", 35697894570653)
+    ];
+
+    
+  // fetch data from backend
+  const [meetingDetails, setMeetingDetails] = useState([]);
+
+ 
+
+  useEffect(() => {
+    
+
+
+    const getTableData = async () => {
+      const response = await fetch("/api/zoom/listmeetings");
+      const newData = await response.json();
+      console.log("New Data: ",newData.meetings)
+      setMeetingDetails(newData.meetings);
+    };
+   
+    getTableData();
+
+    var timer = setInterval(()=>setDate(new Date()), 1000 )
+      
+    return function cleanup() {
+        clearInterval(timer)
+    }
+  
+  },[]);
+
+  
 
   return (
-    <>
-           <th align="center" className="table-header-group">
-            <h1>  {date.toLocaleTimeString()}</h1>
-            <h2>  {date.toLocaleDateString()}</h2>
-        </th>
+    <TableContainer style={{ backgroundColor: "blue" , borderRadius: 35}} component={Paper} >
+    
+      <Table sx={{ minWidth: 500 , border: 'none'}} aria-label="customized table">
+      
 
-        <table align="center">
-          <tr>
-            <td align="center" width="440px">
-              <h3 align="center"> Jack Austin </h3>
-            </td>
+        <TableHead  sx={{ flex: '1 1 100%' }} >
+          <TableRow  >
+            <StyledTableCell>
 
-            <td>
-              <button className="button-3 bn37">View</button>
-            </td>
-          </tr>
-          <br />
+            <h1 align="center">  {date.toLocaleTimeString([],timeOptions )}</h1>
+            <h2 align="center">  {date.toLocaleDateString('en-us', dateOptions)}</h2>
+            
+            </StyledTableCell>
+          </TableRow>
+          
+        </TableHead>
 
-          <tr>
-            <td>
-              <h3 align="center"> Mack Jones </h3>
-            </td>
+        <TableBody style={{ backgroundColor: "white" }} >
+        
+        {meetingDetails.map((row) => (
+            <StyledTableRow  key={row.id}>
+              <StyledTableCell component="th" scope="row">{row.topic} </StyledTableCell>
+            
+              <StyledTableCell align="left"> 
+              <button className="button-3 bn37"> Join </button>
+              {row.id}
+             
+              </StyledTableCell>
+            </StyledTableRow>
+          ))}
 
-            <td>
-              <button class="button-3 bn37">View</button>
-            </td>
-          </tr>
-        </table>
-    </>
-  )
+
+        </TableBody>
+
+        
+      </Table>
+    </TableContainer>
+  );
 }
 
 export default TableComponent
+
+

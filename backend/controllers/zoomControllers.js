@@ -6,13 +6,21 @@ const axios = require("axios");
 const btoa = require("btoa");
 const KJUR = require("jsrsasign");
 
-//Generate Zoom JWT SDK Token
+  /**
+  * Get Meeting SDK Auth Token
+  * @param {String} meetingNumber
+  * @param {String} role
+  * @returns {String} sdk auth token
+  * @see https://marketplace.zoom.us/docs/sdk/native-sdks/web/getting-started/auth-jwt
+  * @see https://marketplace.zoom.us/docs/sdk/native-sdks/web/getting-started/join-meeting
+  * 
+ */
 const getMsdkSignature = asyncHandler(async (req, res) => {
     const iat = Math.round(new Date().getTime() / 1000) - 30;
     const exp = iat + 60 * 60 * 2;
   
     const oHeader = { alg: "HS256", typ: "JWT" };
-    console.log(req.body);
+    
   
     const oPayload = {
       sdkKey: process.env.REACT_APP_ZOOM_MSDK_KEY,
@@ -39,7 +47,15 @@ const getMsdkSignature = asyncHandler(async (req, res) => {
   
 
 
-  // Get Zoom Access Token 
+  /**
+ * Call Zoom Oauth API for Server-to-Server access token.
+ *
+ * @param      {Object}  input_config
+ * @param      {String}  input_config.ZOOM_ACCOUNT_ID     The zoom account id
+ * @param      {String}  input_config.ZOOM_CLIENT_ID      The zoom client id
+ * @param      {String}  input_config.ZOOM_CLIENT_SECRET  The zoom client secret
+ * @returns    {String}  zoom access_token
+ */
 async function getAccessToken() {
     try {
       base_64 = btoa(process.env.CLIENT_ID + ":" + process.env.CLIENT_SECRET);
@@ -53,66 +69,85 @@ async function getAccessToken() {
           Authorization: "Basic " + `${base_64} `,
         },
       });
-  
+      
+     
       return resp.data.access_token;
     } catch (err) {
       // Handle Error Here
       console.error(err);
     }
   }
+  
+  /**
+ *  Create A Zoom Meeting Appointments
+ * @route POST /api/zoom/create
+ * @access Public
+ * @param {string} topic
+ * @param {string} start_time
+ * @param {string} first_name
+ * @param {string} email
+ * @returns {object} 200 - An array of user info
+ */
 
   const CreateAppointment = asyncHandler(async (req, res) => {
-    const { title, content, category, time, date, email, name } = req.body;
-    const start_time = format_StartTime(date, time);
-  
-    if (!title || !content || !category) {
+    const { topic, start_time,  first_name ,email } = req.body;
+
+    if (!email || !start_time || !first_name) {
       res.status(400);
       throw new Error("Please Fill all the fields");
     } else {
   
-      const { id: meetingid, password: passcode } = await createZoomMeeting(title, start_time, name, email);
+    const { id, password} = await createZoomMeeting(topic, start_time, first_name, email);
   
-      
-     
-  
-      const meeting = new Meeting({
-        user: req.user._id,
-        title,
-        meetingid,
-        passcode,
-        content,
-        category,
-        name,
-        email,
-        time,
-        date,
-      });
-      const createMeeting = await meeting.save();
-  
-      res.status(201).json(createMeeting);
+      res.status(201).json({id , password});
     }
   });
 
-  // Create Zoom Meeting Via REST API
+  const ListMeeting = asyncHandler(async (req, res) => {
+    const meetings = await listZoomMeeting();
+    if ( meetings === undefined) {
+      res.status(400);
+      throw new Error("No meeting found");
+    } else {  
+      res.status(201).json({meetings});
+      
+    }
+  });
+
+
+  /**
+ *  Create Zoom Meeting Via REST API
+ * @param      {Object}  input_config
+ * @param      {String}  topic     The topic of the meeting
+ * @param      {String}  start_time  The start time of the meeting
+ * @param      {String}  first_name  The first name of the user
+ * @returns    {String}  The meeting id and password
+ */
+    
+ 
   async function createZoomMeeting(topic, start_time, first_name, email) {
     try {
+
+
       const data = JSON.stringify({
         topic: topic,
         start_time: start_time,
         first_name: first_name,
         email: email,
         join_before_host: true,
+        password: generateOTP(),
       });
   
       const resp = await axios({
         method: "post",
-        url: "https://api.zoom.us/v2/users/me/meetings",
+        url: "https://api.zoom.us/v2/users/donte.zoomie@gmail.com/meetings",
         headers: {
           Authorization: "Bearer " + `${await getAccessToken()} `,
           "Content-Type": "application/json",
         },
         data: data,
       });
+
       const { id, password } = resp.data;
   
       return { id, password };
@@ -122,8 +157,77 @@ async function getAccessToken() {
       }
     }
   }
+
+  async function listZoomMeeting() {
+    try {
+
+      const resp = await axios({
+        method: "get",
+        url: "https://api.zoom.us/v2/users/donte.zoomie@gmail.com/meetings",
+        headers: {
+          Authorization: "Bearer " + `${await getAccessToken()} `,
+          "Content-Type": "application/json",
+        }
+      });
+      const  meetings = resp.data.meetings;
+
+      // meetings.forEach(meeting => {
+      //   for (let key in meeting) {
+      //     console.log(`${key}: ${meeting[key]}`)
+      //   }
+      // })
+
+
+      const newArray = meetings.map(obj => ['id', 'topic'].reduce((newObj, key) => { 
+        newObj[key] = obj[key]
+        return newObj
+      }, {}))
+      
+  
+      return newArray;
+    } catch (err) {
+      if (err.status == undefined) {
+        console.log("Error : ", err);
+      }
+    }
+  }
+
+// 
+
+/**
+ * Zoom API supports the ISO 8601 date and time format.
+ * @param      {Date}  date    The date
+ * @returns    {String}  The ISO 8601 date and time format
+ * @see https://marketplace.zoom.us/docs/api-reference/using-zoom-apis/#time-in-zoom-api
+ */
+
+  function converttoISOString(date) {
+    // const date = "05 October 2011 14:48 UTC";
+    
+    const event = new Date(date);
+    console.log(event.toISOString());
+// expected output: 2011-10-05T14:48:00.000Z
+    return event.toISOString();
+  }
+
+
+/**
+ * Declare a digits variable which stores all digits from 0 to 9
+ * @returns   {String}  One time password
+ */
+  
+  function generateOTP() {
+
+    var digits = "0123456789";
+    let OTP = "";
+    for (let i = 0; i < 6; i++) {
+      OTP += digits[Math.floor(Math.random() * 10)];
+    }
+    return OTP;
+  }
   
   module.exports = {
     getMsdkSignature, 
     CreateAppointment,
+    ListMeeting,
   };
