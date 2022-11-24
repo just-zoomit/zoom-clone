@@ -22,10 +22,7 @@ export default function JoinDialog() {
   const handleClose = () => {
     setOpen(false);
   };
-  const incrementcount = () => {
-    let tempCount = count++;
-    setCount(tempCount);
-  };
+
   return (
     <div>
       

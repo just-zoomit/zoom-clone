@@ -1,154 +1,153 @@
-import  React, { useState , useEffect } from 'react'
-import "./Button.css";
-
-import { styled } from "@mui/material/styles";
+import React, { useState, useEffect } from "react";
+import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 
+import ButtonsComponent from "./ButtonsComponent";
 
+const columns = [
+  {
+    id: "topic",
+    minWidth: 170,
+    align: "left",
+    format: (value) => value.toLocaleString("en-US"),
+  },
+
+  {
+    id: "id",
+    minWidth: 170,
+    align: "right",
+    format: (value) => value.toFixed(0),
+  },
+];
 
 function TableComponent() {
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-    var [date,setDate] = useState(new Date(Date.UTC(2012, 11, 20, 3, 0, 0)));
-    
-    const timeOptions = { hour: '2-digit', minute: "2-digit" };
-    const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  const [date, setDate] = React.useState(
+    new Date(Date.UTC(2012, 11, 20, 3, 0, 0))
+  );
 
+  const timeOptions = { hour: "2-digit", minute: "2-digit" };
+  const dateOptions = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
 
+  const getData = (data) => {
+    console.log("Coming From ButtonsCompoonet:", data);
+    setMeetingDetails(data);
+  };
 
-    const StyledTableCell = styled(TableCell)(({ theme }) => ({
-      [`&.${tableCellClasses.head}`]: {
-    
-        color: theme.palette.common.white,
-       
-      },
-      [`&.${tableCellClasses.body}`]: {
-        fontSize: 12
-      }
-    }));
-    
-    const StyledTableRow = styled(TableRow)(({ theme }) => ({
-      "&:nth-of-type(odd)": {
-        boxShadow: "none"
-      },
-      // hide last border
-      "&:last-child td, &:last-child th": {
-        border: 0,
-      }
-    }));
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
 
-    function createData(topic, meetingnumber ) {
-      return { topic, meetingnumber };
-    }
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
 
-  //   const getlistOfMeetings = (e) => {
-  //     if (e) e.preventDefault();
-     
-  //     const SIGNATURE_OPTIONS = {
-  //       method: "GET",
-  //       headers: { "Content-Type": "application/json"},
-  //      };
-    
-  //     fetch("/api/zoom/listmeetings", SIGNATURE_OPTIONS)
-  //       .then((data) => data.json())
-  //       .then(resp => resp )
-  //   };
-  // console.log("List Meeting: ",getlistOfMeetings())
-
-    // const rows = getlistOfMeetings();
-
-    // rows.forEach(meeting => {
-    //     for (let key in meeting) {
-    //       console.log(`${key}: ${meeting[key]}`)
-    //     }
-    //   })
-    
-    
-  
-
-    const rows = [
-      createData("Frozen yoghurt", 15997894570653),
-      createData("Ice cream sandwich", 23797894570653),
-      createData("Eclair", 26297894570653),
-      createData("Cupcake", 30597894570653),
-      createData("Gingerbread", 35697894570653)
-    ];
-
-    
   // fetch data from backend
   const [meetingDetails, setMeetingDetails] = useState([]);
 
- 
-
   useEffect(() => {
-    
-
-
-    const getTableData = async () => {
-      const response = await fetch("/api/zoom/listmeetings");
-      const newData = await response.json();
-      console.log("New Data: ",newData.meetings)
-      setMeetingDetails(newData.meetings);
-    };
-   
-    getTableData();
-
-    var timer = setInterval(()=>setDate(new Date()), 1000 )
-      
+    const timer = setInterval(() => setDate(new Date()), 1000);
     return function cleanup() {
-        clearInterval(timer)
-    }
-  
-  },[]);
-
-  
+      clearInterval(timer);
+    };
+  }, []);
 
   return (
-    <TableContainer style={{ backgroundColor: "blue" , borderRadius: 35}} component={Paper} >
-    
-      <Table sx={{ minWidth: 500 , border: 'none'}} aria-label="customized table">
-      
+    <>
+      <div className="button-container">
+        {" "}
+        <ButtonsComponent onSubmit={getData} />{" "}
+      </div>
+      <div>
+        <Paper
+          sx={{}}
+          style={{ overflowY: "hidden", borderRadius: 35, border: 0 }}
+        >
+          <TableContainer
+            sx={{ maxHeight: 450, borderBottom: "none" }}
+            style={{ borderRadius: 35 }}
+          >
+            <Table stickyHeader aria-label="table" sx={{ border: 0 }}>
+              <TableHead>
+                <TableRow>
+                  <TableCell
+                    style={{
+                      backgroundColor: "blue",
+                      color: "white",
+                      overflowX: "hidden",
+                    }}
+                    align="center"
+                    colSpan={3}
+                  >
+                    <h2 align="center">
+                      {" "}
+                      {date.toLocaleTimeString([], timeOptions)}
+                    </h2>
+                    <h2 align="center">
+                      {" "}
+                      {date.toLocaleDateString("en-us", dateOptions)}
+                    </h2>
+                  </TableCell>
+                </TableRow>
+              </TableHead>
 
-        <TableHead  sx={{ flex: '1 1 100%' }} >
-          <TableRow  >
-            <StyledTableCell>
+              <TableBody>
+                {meetingDetails
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row) => {
+                    return (
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={row.code}
+                      >
+                        {columns.map((column) => {
+                          const value = row[column.id];
+                          return (
+                            <>
+                              <TableCell key={column.id} align={column.align}>
+                                {column.format && typeof value === "number"
+                                  ? column.format(value)
+                                  : value}
+                              </TableCell>
+                            </>
+                          );
+                        })}
+                      </TableRow>
+                    );
+                  })}
+              </TableBody>
+            </Table>
+          </TableContainer>
 
-            <h1 align="center">  {date.toLocaleTimeString([],timeOptions )}</h1>
-            <h2 align="center">  {date.toLocaleDateString('en-us', dateOptions)}</h2>
-            
-            </StyledTableCell>
-          </TableRow>
-          
-        </TableHead>
-
-        <TableBody style={{ backgroundColor: "white" }} >
-        
-        {meetingDetails.map((row) => (
-            <StyledTableRow  key={row.id}>
-              <StyledTableCell component="th" scope="row">{row.topic} </StyledTableCell>
-            
-              <StyledTableCell align="left"> 
-              <button className="button-3 bn37"> Join </button>
-              {row.id}
-             
-              </StyledTableCell>
-            </StyledTableRow>
-          ))}
-
-
-        </TableBody>
-
-        
-      </Table>
-    </TableContainer>
+          <TablePagination
+            style={{ overflowX: "hidden" }}
+            rowsPerPageOptions={[10, 25, 100]}
+            component="div"
+            count={meetingDetails.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </Paper>
+      </div>
+    </>
   );
 }
-
-export default TableComponent
-
-
+export default TableComponent;

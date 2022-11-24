@@ -11,8 +11,8 @@ function Home() {
     <>
   
  
-      <div className="button-container"><ButtonsComponent /></div>
-      <div> <TableComponent /> </div>
+      {/* <div className="button-container"> <ButtonsComponent /> </div> */}
+      <TableComponent /> 
      
     </>
   )
