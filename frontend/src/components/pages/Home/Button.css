@@ -13,7 +13,6 @@
     font-size: 48px;
 }
 
-
 table {
   border: 1px solid black;
 
@@ -80,6 +79,7 @@ td {
     background: #061fdc;
   }
 
+ 
 .bn37 {
     transition: transform 0.2s cubic-bezier(0.235, 0, 0.05, 0.95);
     box-shadow: 0px 15px 20px rgba(81, 83, 82, 0.4);
@@ -88,6 +88,12 @@ td {
   .bn37:hover {
     transform: perspective(1px) scale3d(1.044, 1.044, 1) translateZ(0) !important;
   }
+
+  .bn37:disabled {
+    background: grey;
+    cursor: not-allowed;
+  }
+
   
   .button-container {
     display: grid;

@@ -98,7 +98,7 @@ const startMeeting = (signature) => {
     })
   }
 
-  /**
+/**
  * Get meeting number and password from query params, and
  * call the signature endpoint to initialize the meeting
  * @param {String} meetingNumber

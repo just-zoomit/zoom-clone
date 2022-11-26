@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import "./Button.css";
 
@@ -6,26 +6,14 @@ import ScheduleDialog from "../ScheduleDialog/ScheduleDialog";
 import JoinDialog from "../ScheduleDialog/JoinDialog";
 
 const ButtonsComponent = (props) => {
+  // fetch data from backend
+  const [meetingDetails, setMeetingDetails] = useState([]);
+  const [vaild, setValid] = useState(false);
+
   const handleNewMeeting = () => {
     console.log("New Meeting");
   };
-
-  // fetch data from backend
-  const [meetingDetails, setMeetingDetails] = useState([]);
-
-  //Example of how to set entered event value
-  const handleChange = async (e) => {
-    const getTableData = async (e) => {
-      const response = await fetch("/api/zoom/listmeetings");
-      const newData = await response.json();
-      console.log("New Data: ", newData.meetings);
-
-      setMeetingDetails(newData.meetings);
-
-      //
-    };
-    getTableData();
-  };
+ 
 
   const handleSubmit = (e) => {
     // prevent page refresh
@@ -45,15 +33,19 @@ const ButtonsComponent = (props) => {
     getTableData();
   };
 
+  // useEffect (() => {
+  //   // setValid(startTime && endTime < 24 && endTime > startTime);
+  // }, []);
+
   return (
     <>
       <div>
-        <form onSubmit={handleSubmit}>
-          <button className=" bn37" onClick={handleListMeeting}>
+        
+          <button className=" bn37" >
             <i class="material-icons large icon-blue">videocam</i>
           </button>
           <p> New Meeting</p>
-        </form>
+      
       </div>
 
       <div>
@@ -69,7 +61,7 @@ const ButtonsComponent = (props) => {
       </div>
       <div>
         <form onSubmit={handleSubmit}>
-          <button className=" bn37" onClick={handleListMeeting}>
+          <button className="bn37"  onClick={handleListMeeting} disabled="true">
             <i class="material-icons large icon-blue">videocam</i>
           </button>
           <p> List Meetings</p>

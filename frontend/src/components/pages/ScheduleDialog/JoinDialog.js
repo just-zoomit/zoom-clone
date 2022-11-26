@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -6,37 +6,34 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
+import { useNavigate } from "react-router-dom";
 
 export default function JoinDialog() {
   const [open, setOpen] = React.useState(false);
-  const [emailValue, setEmailValue] = React.useState("");
-  const [topicValue, setTopicValue] = React.useState("");
 
-  const [count, setCount] = React.useState(0);
+  const id = useRef();
+  const password = useRef();
+  const navigate = useNavigate();
 
   const handleClickOpen = () => {
-    console.log("Email : ",emailValue);
     setOpen(true);
   };
 
   const handleClose = () => {
-    setOpen(false);
+    if (id.current && password.current) {
+      console.log("id: ", id.current.value);
+      setOpen(false);
+      console.log("password: ", password.current.value);
+      navigate(`/msdk/?mn=${id.current.value}&pw=${password.current.value}`);
+    }
   };
 
   return (
     <div>
-      
+      <button className="button-2 bn37" onClick={handleClickOpen}>
+        <i class="material-icons large icon-blue"> add_box</i>
+      </button>
 
-    
-
-        <button className="button-2 bn37" onClick={handleClickOpen}>
-          <i class="material-icons large icon-blue" >
-            {" "}
-            add_box
-          </i>
-        </button>
-
-      
       <Dialog
         open={open}
         onClose={handleClose}
@@ -44,27 +41,29 @@ export default function JoinDialog() {
       >
         <DialogTitle id="form-dialog-title">Join Meeting</DialogTitle>
         <DialogContent>
-          
           <TextField
             autoFocus
             margin="dense"
             id="name"
             label="Meeting Number"
-            type="email"
-            onChange={(e) => setTopicValue(e.target.value)}
+            type="meetingNumber"
+            required={true}
+            inputRef={id}
+            // onChange={(e) => setMeetingNumber(e.target.value)}
             fullWidth
           />
 
-            <TextField
+          <TextField
             autoFocus
             margin="dense"
             id="name"
             label="Meeting Password"
-            type="email"
-            onChange={(e) => setEmailValue(e.target.value)}
+            type="password"
+            inputRef={password}
+            required={true}
+            // onChange={(e) => setMeetingPassword(e.target.value)}
             fullWidth
           />
-        
         </DialogContent>
 
         <DialogActions>

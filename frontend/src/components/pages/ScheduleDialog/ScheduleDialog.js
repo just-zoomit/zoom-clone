@@ -9,12 +9,15 @@ import Stack from '@mui/material/Stack';
 
 import { useNavigate } from 'react-router-dom';
 
+import { emailRegex } from "../../shared";
+
 
 
 
 export default function ScheduleDialog() {
   const [open, setOpen] = React.useState(false);
-  const [emailValue, setEmailValue] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [valid, setValid] = useState(false);
   const [topicValue, setTopicValue] = React.useState("");
   const [name, setName] = React.useState("");
   const [dateTimeValue, setDateTimeValue] = React.useState('');
@@ -25,12 +28,8 @@ export default function ScheduleDialog() {
 
   const defaultDate = new Date()
   defaultDate.setDate(defaultDate.getDate() + 3)
-
   const [date, setDate] = React.useState(defaultDate);
-
-  const [meetingDetails, setMeetingDetails] = React.useState([]);
-  const [id, setId] = useState('');
-  const [response, setResponse] = useState({});
+  
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -47,7 +46,7 @@ export default function ScheduleDialog() {
       body: JSON.stringify({
         topic: topicValue,
         first_name: name,
-        email: emailValue,
+        email: email,
         start_time: prevDateTimeValue.current,
       }),
     };
@@ -64,6 +63,8 @@ export default function ScheduleDialog() {
     console.log("After: ");
 
     setOpen(false);
+
+    
   };
 
   
@@ -73,8 +74,12 @@ export default function ScheduleDialog() {
 
 
   useEffect(() => {
+    console.log("Before Valid: ", valid);
+    setValid(email && emailRegex.test(email));
+    console.log("Valid: ", valid);
     prevDateTimeValue.current = dateTimeValue;
-  }, [dateTimeValue]);
+    
+  }, [dateTimeValue, email]);
 
   return (
     <>
@@ -121,7 +126,7 @@ export default function ScheduleDialog() {
             label="Email Address"
             type="email"
             required={true}
-            onChange={(e) => setEmailValue(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             fullWidth
           />
         <Stack component="form" noValidate spacing={4}>
@@ -150,8 +155,11 @@ export default function ScheduleDialog() {
 
        
 
-          <Button onClick={handleSubmit} color="primary"> Submit
+          <Button onClick={handleSubmit } color="primary"> Submit
           </Button>
+
+          {/* <Button onClick={valid ? handleSubmit : alert("Please enter a valid email.") } color="primary"> Submit
+          </Button> */}
       
           
         </DialogActions>
