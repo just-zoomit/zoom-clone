@@ -5,14 +5,11 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import Stack from '@mui/material/Stack';
+import Stack from "@mui/material/Stack";
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 import { emailRegex } from "../../shared";
-
-
-
 
 export default function ScheduleDialog() {
   const [open, setOpen] = React.useState(false);
@@ -20,26 +17,20 @@ export default function ScheduleDialog() {
   const [valid, setValid] = useState(false);
   const [topicValue, setTopicValue] = React.useState("");
   const [name, setName] = React.useState("");
-  const [dateTimeValue, setDateTimeValue] = React.useState('');
-  const prevDateTimeValue  = React.useRef('');
+  const [dateTimeValue, setDateTimeValue] = React.useState("");
+  const prevDateTimeValue = React.useRef("");
 
   const navigate = useNavigate();
 
-
-  const defaultDate = new Date()
-  defaultDate.setDate(defaultDate.getDate() + 3)
+  const defaultDate = new Date();
+  defaultDate.setDate(defaultDate.getDate() + 3);
   const [date, setDate] = React.useState(defaultDate);
-  
 
   const handleClickOpen = () => {
     setOpen(true);
-    
   };
 
-  const handleSubmit= () => {
-   
-    
-
+  const handleSubmit = () => {
     const POST_OPTIONS = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -51,45 +42,33 @@ export default function ScheduleDialog() {
       }),
     };
 
-  
-
-    fetch("/api/zoom/create", POST_OPTIONS ).then((data) => data.json())
-    .then(({ id, password }) => {
-
-      navigate(`/msdk/?mn=${id}&pw=${password}`);
-      // setResponse({ id, password });
-    });
+    fetch("/api/zoom/create", POST_OPTIONS)
+      .then((data) => data.json())
+      .then(({ id, password }) => {
+        navigate(`/msdk/?mn=${id}&pw=${password}`);
+      });
 
     console.log("After: ");
 
     setOpen(false);
-
-    
   };
 
-  
   const handleClose = () => {
     setOpen(false);
   };
 
-
   useEffect(() => {
-    console.log("Before Valid: ", valid);
     setValid(email && emailRegex.test(email));
-    console.log("Valid: ", valid);
+
     prevDateTimeValue.current = dateTimeValue;
-    
   }, [dateTimeValue, email]);
 
   return (
     <>
-      
+      <button className="button-2 bn37" onClick={handleClickOpen}>
+        <i class="material-icons large icon-blue">calendar_month</i>
+      </button>
 
-      <button className="button-2 bn37" onClick={handleClickOpen} >
-          <i class="material-icons large icon-blue"  >calendar_month</i>
-        </button>
-        
-      
       <Dialog
         open={open}
         onClose={handleClose}
@@ -97,7 +76,6 @@ export default function ScheduleDialog() {
       >
         <DialogTitle id="form-dialog-title">Schedule Meeting</DialogTitle>
         <DialogContent>
-          
           <TextField
             autoFocus
             margin="dense"
@@ -108,7 +86,7 @@ export default function ScheduleDialog() {
             onChange={(e) => setTopicValue(e.target.value)}
             fullWidth
           />
-            <TextField
+          <TextField
             autoFocus
             margin="dense"
             id="name"
@@ -119,7 +97,7 @@ export default function ScheduleDialog() {
             fullWidth
           />
 
-            <TextField
+          <TextField
             autoFocus
             margin="dense"
             id="name"
@@ -129,43 +107,36 @@ export default function ScheduleDialog() {
             onChange={(e) => setEmail(e.target.value)}
             fullWidth
           />
-        <Stack component="form" noValidate spacing={4}>
-      
-        <TextField
-            autoFocus
-            margin="dense"
-            required={true}
-            id="datetime-local"
-            label="Date and Time"
-            type="datetime-local"
-            defaultValue={date.toLocaleDateString('en-CA')}
-            sx={{ width: 250 }}
-            InputLabelProps={{shrink: true,}}
-            
-            onChange={(e) => setDateTimeValue(e.target.value)}
-        />
-        </Stack>
+          <Stack component="form" noValidate spacing={4}>
+            <TextField
+              autoFocus
+              margin="dense"
+              required={true}
+              id="datetime-local"
+              label="Date and Time"
+              type="datetime-local"
+              defaultValue={date.toLocaleDateString("en-CA")}
+              sx={{ width: 250 }}
+              InputLabelProps={{ shrink: true }}
+              onChange={(e) => setDateTimeValue(e.target.value)}
+            />
+          </Stack>
         </DialogContent>
-          
 
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
 
-       
-
-          <Button onClick={handleSubmit } color="primary"> Submit
+          <Button onClick={handleSubmit} color="primary">
+            {" "}
+            Submit
           </Button>
 
           {/* <Button onClick={valid ? handleSubmit : alert("Please enter a valid email.") } color="primary"> Submit
           </Button> */}
-      
-          
         </DialogActions>
-       
       </Dialog>
-      
-      </>
+    </>
   );
 }

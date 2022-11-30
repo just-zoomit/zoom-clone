@@ -170,6 +170,7 @@ async function getAccessToken() {
         }
       });
       const  meetings = resp.data.meetings;
+      
 
       // meetings.forEach(meeting => {
       //   for (let key in meeting) {
@@ -178,7 +179,7 @@ async function getAccessToken() {
       // })
 
 
-      const newArray = meetings.map(obj => ['id', 'topic'].reduce((newObj, key) => { 
+      const newArray = meetings.map(obj => ['id', 'topic', ].reduce((newObj, key) => { 
         newObj[key] = obj[key]
         return newObj
       }, {}))

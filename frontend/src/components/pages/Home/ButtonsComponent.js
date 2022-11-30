@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import "./Button.css";
 
@@ -8,12 +8,9 @@ import JoinDialog from "../ScheduleDialog/JoinDialog";
 const ButtonsComponent = (props) => {
   // fetch data from backend
   const [meetingDetails, setMeetingDetails] = useState([]);
-  const [vaild, setValid] = useState(false);
+  // const [vaild, setValid] = useState(false);
 
-  const handleNewMeeting = () => {
-    console.log("New Meeting");
-  };
- 
+
 
   const handleSubmit = (e) => {
     // prevent page refresh
@@ -61,7 +58,8 @@ const ButtonsComponent = (props) => {
       </div>
       <div>
         <form onSubmit={handleSubmit}>
-          <button className="bn37"  onClick={handleListMeeting} disabled="true">
+        {/* disabled="true" */}
+          <button className="bn37"  onClick={handleListMeeting} >
             <i class="material-icons large icon-blue">videocam</i>
           </button>
           <p> List Meetings</p>

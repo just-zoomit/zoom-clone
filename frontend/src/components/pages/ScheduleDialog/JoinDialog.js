@@ -19,11 +19,15 @@ export default function JoinDialog() {
     setOpen(true);
   };
 
+  const handleCancel = () => {
+    setOpen(false);
+  };
+
   const handleClose = () => {
-    if (id.current && password.current) {
-      console.log("id: ", id.current.value);
+    if (id.current.value === "" || password.current.value === "") {
+      alert("Please enter a valid meeting ID and password");
+    } else {
       setOpen(false);
-      console.log("password: ", password.current.value);
       navigate(`/msdk/?mn=${id.current.value}&pw=${password.current.value}`);
     }
   };
@@ -67,7 +71,7 @@ export default function JoinDialog() {
         </DialogContent>
 
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleCancel} color="primary">
             Cancel
           </Button>
           <Button onClick={handleClose} color="primary">

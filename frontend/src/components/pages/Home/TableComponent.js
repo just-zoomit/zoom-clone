@@ -9,6 +9,7 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 
 import ButtonsComponent from "./ButtonsComponent";
+import { useNavigate } from "react-router-dom";
 
 const columns = [
   {
@@ -29,6 +30,7 @@ const columns = [
 function TableComponent() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const navigate = useNavigate();
 
   const [date, setDate] = React.useState(
     new Date(Date.UTC(2012, 11, 20, 3, 0, 0))
@@ -53,7 +55,17 @@ function TableComponent() {
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
-    setPage(0);
+    setPage(0); 
+  };
+
+  const handleNavigate= (e) => {
+    console.log("Navigating to: ", e.target.value);
+
+    if (e.target.value ) {
+      
+      
+      navigate(`/msdk/?mn=${e.target.value}&pw=${e.target.value}`);
+    }
   };
 
   // fetch data from backend
@@ -122,7 +134,7 @@ function TableComponent() {
                             <>
                               <TableCell key={column.id} align={column.align}>
                                 {column.format && typeof value === "number"
-                                  ? column.format(value)
+                                  ?  <button className="button-3 bn37" value={column.format(value)} onClick={handleNavigate}> Join </button>
                                   : value}
                               </TableCell>
                             </>
