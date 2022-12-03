@@ -24,9 +24,8 @@ const {
 // Assign meeting role based on user type
 const role = "1"; // 1 for host, 0 for attendee
 
-
 /**
- * Get meeting signature from backend
+ * Get meeting JWT SDK signature from backend
  * @see https://marketplace.zoom.us/docs/sdk/native-sdks/web/getting-started/auth-jwt
  * @see https://marketplace.zoom.us/docs/sdk/native-sdks/web/getting-started/join-meeting
  * @see https://marketplace.zoom.us/docs/sdk/native-sdks/web/getting-started/zoom-meeting
