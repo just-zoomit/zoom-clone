@@ -35,6 +35,7 @@ const role = "1"; // 1 for host, 0 for attendee
   * 
  */
   const getSignature = (e) => {
+    
     if (e) e.preventDefault();
    
   
