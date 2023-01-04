@@ -1,0 +1,81 @@
+.PopModal {
+    font-family: sans-serif;
+    text-align: center;
+  }
+  .PopModal button {
+    padding: 13px 29px;
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 99px;
+    height: 99px;
+    border-radius: 25px;
+    background: #061fdc;
+    font-size: 48pt;
+    font-weight: bold;
+    border: none;
+    outline: none;
+    color: white;
+    cursor: pointer;
+  }
+  
+  #portal .container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(247, 247, 247, 0.7);
+  }
+  
+  .container .modal {
+    z-index: 1;
+    width: 550px;
+    height: 440px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    position: relative;
+    animation: animate 0.3s;
+  }
+
+  .btn-container {
+    position: absolute;
+    bottom: 1;
+    right: 0;
+    
+  }
+  
+  .btn-container button {
+    float: right;
+   
+  }
+  .modal button {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    padding: 8px 11px;
+    background: crimson;
+    color: white;
+    font-weight: bold;
+    border: none;
+    outline: none;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+
+ 
+  @keyframes animate {
+    from {
+      transform: scale(0.5);
+    }
+    to {
+      transform: scale(1);
+    }
+  }

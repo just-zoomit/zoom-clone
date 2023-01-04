@@ -2,13 +2,17 @@
     box-sizing: border-box;
   }
   
-  body {
+body {
     display: grid;
     place-items: center;
     margin: 0;
   }
 
-  i.icon-blue {
+.i.iconBlue {
+    color: white;
+    font-size: 48px;
+}
+.materialicons {
     color: white;
     font-size: 48px;
 }
@@ -30,7 +34,7 @@ td {
     border-radius: 8px;
   }
 
-  button {
+  .buttoner {
     position: relative;
     display: grid;
     place-items: center;
@@ -39,10 +43,11 @@ td {
     border-radius: 25px;
     border: 0;
     background: #faa92f;
+    color: white;
   
   }
 
-  .button-1 {
+  .buttonBlue {
     position: relative;
     display: grid;
     place-items: center;
@@ -50,23 +55,12 @@ td {
     height: 99px;
     border-radius: 25px;
     border: 0;
-    background: #faa92f;
-  
-  }
-  
-  .button-2 {
-    position: relative;
-    display: grid;
-    place-items: center;
-    width: 99px;
-    height: 99px;
-    border-radius: 25px;
-    border: 0;
+    color: white;
     background: #061fdc;
   
   }
 
-  .button-3 {
+  .buttonDanger {
     position: relative;
     display: grid;
     place-items: right;
@@ -95,7 +89,7 @@ td {
   }
 
   
-  .button-container {
+  .buttonContainer {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 80px;

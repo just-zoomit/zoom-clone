@@ -8,6 +8,8 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 
 import { useNavigate } from "react-router-dom";
 
+import styles from '../Home/Button.module.css';
+
 export default function JoinDialog() {
   const [open, setOpen] = React.useState(false);
 
@@ -34,7 +36,8 @@ export default function JoinDialog() {
 
   return (
     <div>
-      <button className="button-2 bn37" onClick={handleClickOpen}>
+   
+      <button  className={`${styles.buttonBlue} ${styles.bn37}`}  onClick={handleClickOpen}>
         <i class="material-icons large icon-blue"> add_box</i>
       </button>
 

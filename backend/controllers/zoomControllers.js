@@ -90,14 +90,19 @@ async function getAccessToken() {
  */
 
   const CreateAppointment = asyncHandler(async (req, res) => {
-    const { topic, start_time,  first_name ,email } = req.body;
+    const { topic, start_time, end_time, first_name ,email } = req.body;
+
+
+    console.log("Test Request Body: ",req.body);
+    console.log("Start Time Conversion : ", converttoISOString(start_time));
+    // console.log("End Time Conversion : ", converttoISOString(end_time));
 
     if (!email || !start_time || !first_name) {
       res.status(400);
       throw new Error("Please Fill all the fields");
     } else {
   
-    const { id, password} = await createZoomMeeting(topic, start_time, first_name, email);
+    const { id, password} = await createZoomMeeting(topic, converttoISOString(start_time), first_name, email);
   
       res.status(201).json({id , password});
     }
@@ -127,6 +132,8 @@ async function getAccessToken() {
  
   async function createZoomMeeting(topic, start_time, first_name, email) {
     try {
+
+      console.log("Start Time in Create Meeting: ", start_time);
 
 
       const data = JSON.stringify({
@@ -206,7 +213,6 @@ async function getAccessToken() {
     // const date = "05 October 2011 14:48 UTC";
     
     const event = new Date(date);
-    console.log(event.toISOString());
 // expected output: 2011-10-05T14:48:00.000Z
     return event.toISOString();
   }

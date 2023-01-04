@@ -8,7 +8,10 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 
+import styles from './Button.module.css';
 import ButtonsComponent from "./ButtonsComponent";
+
+
 import { useNavigate } from "react-router-dom";
 
 const columns = [
@@ -93,7 +96,7 @@ function TableComponent() {
             sx={{ maxHeight: 450, borderBottom: "none" }}
             style={{ borderRadius: 35 }}
           >
-            <Table stickyHeader aria-label="table" sx={{ border: 0 }}>
+            <Table aria-label="table" sx={{ border: 0 }}>
               <TableHead>
                 <TableRow>
                   <TableCell
@@ -134,7 +137,7 @@ function TableComponent() {
                             <>
                               <TableCell key={column.id} align={column.align}>
                                 {column.format && typeof value === "number"
-                                  ?  <button className="button-3 bn37" value={column.format(value)} onClick={handleNavigate}> Join </button>
+                                  ?  <button  className={`${styles.buttonDanger} ${styles.bn37}`}  value={column.format(value)} onClick={handleNavigate}> Join </button>
                                   : value}
                               </TableCell>
                             </>

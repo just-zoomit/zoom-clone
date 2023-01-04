@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 
-import "./Button.css";
+import styles from "./Button.module.css";
 
-import ScheduleDialog from "../ScheduleDialog/ScheduleDialog";
-import JoinDialog from "../ScheduleDialog/JoinDialog";
+import NewMeetingButton from "../ScheduleDialog/NewMeetingButton";
+
+import SchedulePopModal from "../ScheduleDialog/SchedulePopModal";
+import JoinPopModal from "../ScheduleDialog/JoinPopModal";
+
+// import "../ScheduleDialog/styles.css"
+// import JoinDialog from "../ScheduleDialog/JoinDialog";
 
 const ButtonsComponent = (props) => {
   // fetch data from backend
   const [meetingDetails, setMeetingDetails] = useState([]);
   // const [vaild, setValid] = useState(false);
-
-
 
   const handleSubmit = (e) => {
     // prevent page refresh
@@ -36,34 +39,38 @@ const ButtonsComponent = (props) => {
 
   return (
     <>
-      <div>
-        
-          <button className=" bn37" >
-            <i class="material-icons large icon-blue">videocam</i>
-          </button>
+      <div className={styles.buttonContainer}>
+        <div>
+          <NewMeetingButton />
           <p> New Meeting</p>
-      
-      </div>
+        </div>
 
-      <div>
-        <JoinDialog />
-        <p> Join</p>
-      </div>
+        <div>
+          <JoinPopModal />
+          {/* <JoinDialog  />  */}
+          <p> Join</p>
+        </div>
 
-      <br />
+        <br />
 
-      <div>
-        <ScheduleDialog />
-        <p> Schedule</p>
-      </div>
-      <div>
-        <form onSubmit={handleSubmit}>
-        {/* disabled="true" */}
-          <button className="bn37"  onClick={handleListMeeting} >
-            <i class="material-icons large icon-blue">videocam</i>
-          </button>
-          <p> List Meetings</p>
-        </form>
+        <div>
+          <SchedulePopModal />
+          {/* <ScheduleDialog /> */}
+          <p> Schedule</p>
+        </div>
+
+        <div>
+          <form onSubmit={handleSubmit}>
+            {/* disabled="true" */}
+            <button
+              className={`${styles.buttonBlue} ${styles.bn37}`}
+              onClick={handleListMeeting}
+            >
+              <i class="material-icons large icon-blue md-48"> videocam</i>
+            </button>
+            <p> List Meetings</p>
+          </form>
+        </div>
       </div>
     </>
   );
