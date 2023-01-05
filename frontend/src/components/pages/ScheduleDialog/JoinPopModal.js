@@ -1,23 +1,25 @@
 import React, { useState } from "react";
-import "./styles.css";
 import { JoinModal } from "./JoinModal";
+
+import "./styles.css";
+import styles from '../Home/Button.module.css';
 // import classes from './Styles.module.css';
 
 export default function PopModal() {
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => {
-    // document.getElementById("css-dwuj3p-MuiTableCell-root").style.position = "none";
+  
   
     setShowModal(true);
     
   };
   
   return (
-    <div className="PopModal" >
-      {/* <h1>  Schedule Popup Modal</h1> */}
+    <div  >
+      {/* <h1>  Join Popup Modal</h1> */}
       
-      <button onClick={openModal}>
+      <button className={`${styles.buttonBlue} ${styles.bn37}`}  onClick={openModal} >
       <i class="material-icons large icon-blue"> add_box</i>
       </button>
       {showModal ? <JoinModal setShowModal={setShowModal} /> : null}

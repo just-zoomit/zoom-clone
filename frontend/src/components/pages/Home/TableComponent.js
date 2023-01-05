@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
-import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
+// import Paper from "@mui/material/Paper";
+// import Table from "@mui/material/Table";
+// import TableBody from "@mui/material/TableBody";
+// import TableCell from "@mui/material/TableCell";
+// import TableContainer from "@mui/material/TableContainer";
+// import TableHead from "@mui/material/TableHead";
+// import TablePagination from "@mui/material/TablePagination";
+// import TableRow from "@mui/material/TableRow";
 
 import styles from './Button.module.css';
 import ButtonsComponent from "./ButtonsComponent";
+import CusTable from "./CusTable";
 
 
 import { useNavigate } from "react-router-dom";
@@ -83,11 +84,15 @@ function TableComponent() {
 
   return (
     <>
-      <div className="button-container">
+      {/* <div className="button-container">
         {" "}
         <ButtonsComponent onSubmit={getData} />{" "}
-      </div>
-      <div>
+      </div> */}
+      <CusTable />
+
+
+
+      {/* <div>
         <Paper
           sx={{}}
           style={{ overflowY: "hidden", borderRadius: 35, border: 0 }}
@@ -101,7 +106,7 @@ function TableComponent() {
                 <TableRow>
                   <TableCell
                     style={{
-                      backgroundColor: "blue",
+                      backgroundColor: "#316efd",
                       color: "white",
                       overflowX: "hidden",
                     }}
@@ -161,7 +166,7 @@ function TableComponent() {
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
         </Paper>
-      </div>
+      </div> */}
     </>
   );
 }

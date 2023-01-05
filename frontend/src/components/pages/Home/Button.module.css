@@ -56,27 +56,28 @@ td {
     border-radius: 25px;
     border: 0;
     color: white;
-    background: #061fdc;
+    background: #316efd;
   
   }
 
   .buttonDanger {
     position: relative;
-    display: grid;
-    place-items: right;
+    color: grey;
+    place-items: center;
+    font-weight: bold;
     width: 62px;
-    height: 36px;
+    height: 26px;
     border-radius: 25px;
     border: 5;
     margin: 0 auto;
     grid-gap: 80px;
-    background: #061fdc;
+    padding:0;
+    flex-direction: row;
   }
 
  
 .bn37 {
     transition: transform 0.2s cubic-bezier(0.235, 0, 0.05, 0.95);
-    box-shadow: 0px 15px 20px rgba(81, 83, 82, 0.4);
   }
 
   .bn37:hover {
@@ -99,4 +100,18 @@ td {
     height:250px; 
   }
 
+  .box{
+    border: solid .2em #f5f5f5;  
+    border-radius: 2.5em;
+    width: auto;
+    height: auto;
+    background-color:#ffffff;
+    
+  
+}
 
+.tableHeader {
+  
+  width: auto;
+  height: auto;
+}

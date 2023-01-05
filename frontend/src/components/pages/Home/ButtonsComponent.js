@@ -45,9 +45,8 @@ const ButtonsComponent = (props) => {
           <p> New Meeting</p>
         </div>
 
-        <div>
+        <div  >
           <JoinPopModal />
-          {/* <JoinDialog  />  */}
           <p> Join</p>
         </div>
 
@@ -55,7 +54,7 @@ const ButtonsComponent = (props) => {
 
         <div>
           <SchedulePopModal />
-          {/* <ScheduleDialog /> */}
+      
           <p> Schedule</p>
         </div>
 

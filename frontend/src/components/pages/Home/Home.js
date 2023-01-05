@@ -1,6 +1,7 @@
 import React from 'react'
 
 import TableComponent from './TableComponent'
+import Table from './Table'
 
 
 
@@ -13,6 +14,7 @@ function Home() {
  
       {/* <div className="button-container"> <ButtonsComponent /> </div> */}
       <TableComponent /> 
+      {/* <Table/>  */}
      
     </>
   )

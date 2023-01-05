@@ -12,12 +12,15 @@
   "author": "Donte S.",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.2.2",
     "btoa": "^1.2.1",
     "concurrently": "^7.5.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-async-handler": "^1.2.0",
     "jsrsasign": "^10.5.27",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "react-data-table-component": "^7.5.3",
+    "styled-components": "^5.3.6"
   }
 }
