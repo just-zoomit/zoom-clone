@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 
-import styles from "./Button.module.css";
-
 import NewMeetingButton from "../ScheduleDialog/NewMeetingButton";
 
 import SchedulePopModal from "../ScheduleDialog/SchedulePopModal";
 import JoinPopModal from "../ScheduleDialog/JoinPopModal";
 
-// import "../ScheduleDialog/styles.css"
-// import JoinDialog from "../ScheduleDialog/JoinDialog";
+import styles from "./Button.module.css";
+import "../ScheduleDialog/styles.css";
 
 const ButtonsComponent = (props) => {
   // fetch data from backend
@@ -32,10 +30,6 @@ const ButtonsComponent = (props) => {
     };
     getTableData();
   };
-
-  // useEffect (() => {
-  //   // setValid(startTime && endTime < 24 && endTime > startTime);
-  // }, []);
 
   return (
     <>
@@ -65,7 +59,7 @@ const ButtonsComponent = (props) => {
               className={`${styles.buttonBlue} ${styles.bn37}`}
               onClick={handleListMeeting}
             >
-              <i class="material-icons large icon-blue md-48"> videocam</i>
+              <i class="material-icons md40px"> videocam</i>
             </button>
             <p> List Meetings</p>
           </form>

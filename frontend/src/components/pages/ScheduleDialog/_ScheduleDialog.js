@@ -135,8 +135,6 @@ export default function ScheduleDialog() {
             Submit
           </Button>
 
-          {/* <Button onClick={valid ? handleSubmit : alert("Please enter a valid email.") } color="primary"> Submit
-          </Button> */}
         </DialogActions>
       </Dialog>
     </>

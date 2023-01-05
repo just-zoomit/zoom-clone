@@ -26,3 +26,5 @@ npm i @emotion/styled
 
 
 npm install material-table --save
+
+https://react-data-table-component.netlify.app/?path=/docs/getting-started-installation--page

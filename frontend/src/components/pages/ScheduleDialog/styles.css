@@ -84,6 +84,11 @@
     cursor: not-allowed;
   }
 
+  i.md40px {
+    font-size: 45px;
+  }
+  
+
   @keyframes animate {
     from {
       transform: scale(0.5);

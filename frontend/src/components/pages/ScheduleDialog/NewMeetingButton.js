@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-
 import { useNavigate } from "react-router-dom";
 
 import { emailRegex } from "../../shared";
@@ -48,7 +47,7 @@ export default function NewMeetingButton() {
   return (
     <>
       <button  className={`${styles.buttoner} ${styles.bn37}`}  onClick={handleSubmit}>
-      <i class="material-icons large icon-blue md-48">videocam</i>
+      <i class="material-icons large icon-blue md40px">videocam</i>
       </button>
     </>
   );

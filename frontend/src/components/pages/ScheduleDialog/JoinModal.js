@@ -24,20 +24,17 @@ export const JoinModal = ({ setShowModal }) => {
   const password = useRef();
   const navigate = useNavigate();
 
-
-
   const handleSubmit = (event) => {
     event.preventDefault();
     // Do something with the topic, start and end date values here
-  
-      if (id.current.value === "" || password.current.value === "") {
-        alert("Please enter a valid meeting ID and password");
-      } else {
-        setShowModal(false);
-        navigate(`/msdk/?mn=${id.current.value}&pw=${password.current.value}`);
-      }
-  };
 
+    if (id.current.value === "" || password.current.value === "") {
+      alert("Please enter a valid meeting ID and password");
+    } else {
+      setShowModal(false);
+      navigate(`/msdk/?mn=${id.current.value}&pw=${password.current.value}`);
+    }
+  };
 
   // render the modal JSX in the portal div.
   return ReactDom.createPortal(
@@ -51,22 +48,11 @@ export const JoinModal = ({ setShowModal }) => {
             <form onSubmit={handleSubmit}>
               <label htmlFor="topic">Meeting Number</label>
               <br />
-              <input
-                type="text"
-                id="topic"
-                ref={id}
-                required={true}
-                
-              />
+              <input type="text" id="topic" ref={id} required={true} />
               <br />
               <label htmlFor="topic">Meeting Password</label>
               <br />
-              <input
-                type="text"
-                id="topic"
-                ref= {password}
-                required={true}
-              />
+              <input type="text" id="topic" ref={password} required={true} />
               <hr class="solid"></hr>
               <p>Role Type</p>
               <label>
@@ -76,8 +62,8 @@ export const JoinModal = ({ setShowModal }) => {
                   style={{ display: "inline-block" }}
                   checked={role === 1}
                   onChange={() => setState({ role: 1 })}
-                />
-                 {" "}Host
+                />{" "}
+                Host
               </label>
               &nbsp; &nbsp;
               <label>
@@ -87,14 +73,12 @@ export const JoinModal = ({ setShowModal }) => {
                   style={{ display: "inline-block" }}
                   checked={role === 0}
                   onChange={() => setState({ role: 0 })}
-                />
-                {" "}Participant
+                />{" "}
+                Participant
               </label>
-
-
               <div className="btn-container">
                 <button type="submit" style={{ background: "blue" }}>
-                {role === 0 ? 'Join Meeting' : 'Start Meeting'}
+                  {role === 0 ? "Join Meeting" : "Start Meeting"}
                 </button>
               </div>
             </form>

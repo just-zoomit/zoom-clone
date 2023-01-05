@@ -12,7 +12,6 @@ import styles from './Button.module.css';
 import ButtonsComponent from "./ButtonsComponent";
 import CusTable from "./CusTable";
 
-
 import { useNavigate } from "react-router-dom";
 
 const columns = [
@@ -66,7 +65,6 @@ function TableComponent() {
     console.log("Navigating to: ", e.target.value);
 
     if (e.target.value ) {
-      
       
       navigate(`/msdk/?mn=${e.target.value}&pw=${e.target.value}`);
     }
