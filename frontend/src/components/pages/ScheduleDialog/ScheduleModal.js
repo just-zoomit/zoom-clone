@@ -9,8 +9,6 @@ export const ScheduleModal = ({ setShowModal }) => {
   // close the modal when clicking outside the modal.
   const modalRef = useRef();
 
-  
-
   const closeModal = (e) => {
     if (e.target === modalRef.current) {
       setShowModal(false);
@@ -70,7 +68,6 @@ export const ScheduleModal = ({ setShowModal }) => {
 
   useEffect(() => {
     
-        
         prevStartDate.current = date + ' ' ;
         prevEndDate.current = toDate + ' ' ;
   }, [date, toDate]);

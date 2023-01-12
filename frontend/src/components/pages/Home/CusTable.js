@@ -1,6 +1,7 @@
 import DataTable from "react-data-table-component";
 import { useState, useEffect } from "react";
 
+import { EditPopModal } from "../ScheduleDialog/EditPopModal";
 import ButtonsComponent from "./ButtonsComponent";
 import styles from "./Button.module.css";
 
@@ -28,9 +29,14 @@ const customStyles = {
 export default function CusTable() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [perPage, setPerPage] = useState(6);
   // fetch data from backend
   const [meetingDetails, setMeetingDetails] = useState([]);
+  
+  const openModal = () => {
+    setShowModal(true);
+  };
 
   const columns = [
     {
@@ -40,9 +46,10 @@ export default function CusTable() {
       selector: (row) =>
         row.id ? (
           <div>
-            <button className={`${styles.buttonDanger} `} value={[row.id]}>
+            <button className={`${styles.buttonDanger} `} value={[row.id]} onClick={openModal} >
               <i class="material-icons large icon-blue md-48"> edit</i>
             </button>
+            {showModal ? <EditPopModal setShowModal={setShowModal} /> : null}
             <button className={`${styles.buttonDanger} `}>
               <i class="material-icons large icon-blue md-48">
                 {" "}

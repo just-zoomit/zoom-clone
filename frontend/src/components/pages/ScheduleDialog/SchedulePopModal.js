@@ -3,7 +3,6 @@ import { ScheduleModal } from "./ScheduleModal";
 
 import styles from '../Home/Button.module.css';
 
-
 export default function SchedulePopModal() {
   const [showModal, setShowModal] = useState(false);
 
