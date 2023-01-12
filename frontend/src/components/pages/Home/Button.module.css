@@ -65,7 +65,7 @@ body {
 
   .buttonContainer {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 2fr);
     grid-gap: 80px;
     align-items: center;
     width:50%; 
@@ -73,7 +73,7 @@ body {
     height:250px; 
   }
 
-  .box{
+  .box {
     border: solid .2em #f5f5f5;  
     border-radius: 2.5em;
     width: auto;
