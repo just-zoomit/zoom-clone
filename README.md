@@ -2,12 +2,15 @@
 
 This boilerplate app creates a functional starting point for building an application with connected React frontend and a Node/Express backend.
 
-* React Frontend (FrameWork)
+* React Frontend (FrameWork) -- Leveraging React Design Patterns 
+    * React Hook Pattern (useResource)
+    * Controlled and Uncontrolled Components Pattern
+    * Component Composition Pattern
 * Node JS Express Backend (Server)
 * Axios (HTTP requests):
     * Zoom SDK JWT Generation
     * Server - to - Server OAuth
-    * Create Zoom Meeting
+    * A CRUD implementation with Zoom Rest APIs Meeting
 
 TO-DO:
 * Add Mongo DB Backend
@@ -19,10 +22,6 @@ In root, run the following command:
 npm run dev
 ```
 In frontend
-npm install @mui/x-date-pickers
-npm install moment  
-npm install @emotion/react
-npm i @emotion/styled
 
 
 npm install material-table --save
