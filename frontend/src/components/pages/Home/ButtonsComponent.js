@@ -8,6 +8,10 @@ import JoinPopModal from "../ScheduleDialog/JoinPopModal";
 import styles from "./Button.module.css";
 import "../ScheduleDialog/styles.css";
 
+
+//  To Be REMOVED
+
+
 const ButtonsComponent = (props) => {
   // fetch data from backend
   const [meetingDetails, setMeetingDetails] = useState([]);

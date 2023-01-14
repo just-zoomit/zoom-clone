@@ -3,10 +3,6 @@ import ReactDom from "react-dom";
 
 import { useNavigate } from "react-router-dom";
 
-const display = {
-  display: "inline-block",
-};
-
 export const JoinModal = ({ setShowModal }) => {
   // close the modal when clicking outside the modal.
   const modalRef = useRef();
@@ -17,7 +13,6 @@ export const JoinModal = ({ setShowModal }) => {
     }
   };
 
-  const [topic, setTopic] = useState("");
   const [state, setState] = useState({ role: 1 });
   const { role } = state;
   const id = useRef();

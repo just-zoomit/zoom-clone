@@ -1,7 +1,11 @@
 * {
     box-sizing: border-box;
   }
-  
+
+  /* 
+   To Be REMOVED
+ */
+
 body {
     display: grid;
     place-items: center;

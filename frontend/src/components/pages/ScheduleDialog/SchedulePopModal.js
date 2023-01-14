@@ -3,6 +3,9 @@ import { ScheduleModal } from "./ScheduleModal";
 
 import styles from '../Home/Button.module.css';
 
+
+// To Be REMOVED
+
 export default function SchedulePopModal() {
   const [showModal, setShowModal] = useState(false);
 

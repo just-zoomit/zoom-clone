@@ -3,6 +3,8 @@ import { JoinModal } from "./JoinModal";
 
 import styles from "../Home/Button.module.css";
 
+// To Be REMOVED
+
 export default function PopModal() {
   const [showModal, setShowModal] = useState(false);
 

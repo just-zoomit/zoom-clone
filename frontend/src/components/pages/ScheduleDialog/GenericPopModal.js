@@ -3,63 +3,106 @@ import styled from "styled-components";
 import { ScheduleModal } from "./ScheduleModal";
 import { JoinModal } from "./JoinModal";
 
-import { DangerBlueButton, BigSuccessButton } from "../Home/buttonComposition";
-import styles from "../Home/Button.module.css";
+import { BigSuccessButton } from "../Home/buttonComposition";
+
+import { useResource } from "../Home/useResource";
+
+import { useNavigate } from "react-router-dom";
+import { InstantMeeting } from "./InstantMeeting";
 
 const DivContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 2fr);
   grid-gap: 80px;
   padding: 1;
-  width:50%; 
-  height:200px;
+  width: 50%;
+  height: 200px;
   flex-direction: row | row-reverse | column | column-reverse;
 `;
 
-const joinIcon = (
-  <i class="material-icons large icon-blue md40px"> add_box</i>
-);
+const joinIcon = <i class="material-icons large icon-blue md40px"> add_box</i>;
 const scheduleIcon = (
   <i class="material-icons large icon-blue md40px">calendar_month</i>
 );
 const listMeetingIcon = (
   <i class="material-icons large icon-blue md40px">list</i>
 );
-const newMeetingIcon = (
-  <i class="material-icons large icon-blue md40px">videocam</i>
-);
 
-export default function GenericPopModal() {
+export default function GenericPopModal(props) {
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
 
-  
-  const openModal = () => {
+  const navigate = useNavigate();
+
+  const openJoinModal = () => {
     setShowModal(true);
   };
-  const openModal2 = () => {
+  const openScheduleModal = () => {
     setShowModal2(true);
   };
-  
+
+  const [data, setData] = useState(null);
+
+  const startInstantMeeting = (data) => {
+    const { id, password } = data;
+    navigate(`/msdk/?mn=${id}&pw=${password}`);
+  };
+
+  const handleDataReceived = (data) => {
+    setData(data);
+    startInstantMeeting(data);
+  };
+
+  const listmeetings = useResource("/api/zoom/listmeetings");
+  const [tableData, setTableData] = useState(null);
+
+  const handleClick = async (event) => {
+    event.preventDefault();
+
+    try {
+      //Test remove later
+      setTableData(listmeetings.meetings);
+
+      props.onDataReceived(listmeetings.meetings);
+      // setDisplay(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleClearData = () => {
+    props.onClearData();
+  }
+
   return (
     <>
-    <div >
-      <DivContainer>
-        <DangerBlueButton  text={newMeetingIcon} props={styles.bn37} />
-        <BigSuccessButton text={joinIcon} onClick={openModal2} />
-        {showModal2 ? <JoinModal setShowModal={setShowModal2} /> : null}
-       
-        
-      </DivContainer>
+      <div>
+        <DivContainer>
+          <InstantMeeting onDataReceived={handleDataReceived} />
 
-      <DivContainer>
-       
-       <BigSuccessButton text={scheduleIcon} onClick={openModal} />
-       
-        <BigSuccessButton text={listMeetingIcon}  />
-        {showModal ? <ScheduleModal setShowModal={setShowModal} /> : null}
-      </DivContainer>
+          <BigSuccessButton
+            text={joinIcon}
+            label="Join"
+            onClick={openScheduleModal}
+          />
+          {showModal2 ? <JoinModal setShowModal={setShowModal2} /> : null}
+        </DivContainer>
 
+        <DivContainer>
+          <BigSuccessButton
+            text={scheduleIcon}
+            label="Schedule"
+            onClick={openJoinModal}
+          />
+          {showModal ? <ScheduleModal setShowModal={setShowModal} /> : null}
+
+          <BigSuccessButton
+            text={listMeetingIcon}
+            onClick={handleClick}
+            label="List"
+          />
+          <button onClick={handleClearData}>Clear Data</button>
+        </DivContainer>
       </div>
     </>
   );

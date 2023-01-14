@@ -29,8 +29,9 @@ const Buttoner = styled.button`
   color: white;
 `;
 
-export const Button = ({ size, color, text, ...props }) => {
+export const Button = ({ size, color, text,label, ...props }) => {
   return (
+    <div>
     <button
       style={{
         padding: "0",
@@ -51,6 +52,8 @@ export const Button = ({ size, color, text, ...props }) => {
       {" "}
       {text}{" "}
     </button>
+    <p> {label}</p>
+    </div>
   );
 };
 

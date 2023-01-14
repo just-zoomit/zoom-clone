@@ -2,8 +2,13 @@ import DataTable from "react-data-table-component";
 import { useState, useEffect } from "react";
 
 import { EditPopModal } from "../ScheduleDialog/EditPopModal";
-import ButtonsComponent from "./ButtonsComponent";
+
 import styles from "./Button.module.css";
+import { element } from "./dateTime";
+
+//controling the icon font size, need to fix
+import ButtonsComponent from "./ButtonsComponent";
+
 
 //  Internally, customStyles will deep merges your customStyles with the default styling.
 const customStyles = {
@@ -26,17 +31,9 @@ const customStyles = {
   },
 };
 
-export default function CusTable() {
-  const [data, setData] = useState([]);
+export default function CusTable({data}) {
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [perPage, setPerPage] = useState(6);
-  // fetch data from backend
-  const [meetingDetails, setMeetingDetails] = useState([]);
-  
-  const openModal = () => {
-    setShowModal(true);
-  };
 
   const columns = [
     {
@@ -46,7 +43,10 @@ export default function CusTable() {
       selector: (row) =>
         row.id ? (
           <div>
-            <button className={`${styles.buttonDanger} `} value={[row.id]} onClick={openModal} >
+            <button 
+            className={`${styles.buttonDanger} `} 
+            value={[row.id]} 
+            onClick={openModal} >
               <i class="material-icons large icon-blue md-48"> edit</i>
             </button>
             {showModal ? <EditPopModal setShowModal={setShowModal} /> : null}
@@ -64,59 +64,30 @@ export default function CusTable() {
     },
   ];
 
-  const timeOptions = { hour: "2-digit", minute: "2-digit" };
-  const dateOptions = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
+  const openModal = () => {
+    setShowModal(true);
   };
 
-  const element = (
-    <div className={`${styles.tableHeader} `}>
-      <div>
-        <h1>{new Date().toLocaleTimeString([], timeOptions)}</h1>
-        <h2>{new Date().toLocaleDateString("en-us", dateOptions)}</h2>
-      </div>
-    </div>
-  );
+  // fetch data from backend custom hook
+  const tableDataa = data || [];
 
-  const getData = (data) => {
-    console.log("Coming From ButtonsCompoonet:", data);
-    setMeetingDetails(data);
-  };
-
-  useEffect(() => {
-    fetchTableData();
-  }, []);
-
-  async function fetchTableData() {
-    setLoading(true);
-    const URL = "https://jsonplaceholder.typicode.com/todos";
-    const response = await fetch(URL);
-
-    const users = await response.json();
-    setData(users);
-    setLoading(false);
-  }
+  console.log("tableDataa log", tableDataa);
 
   return (
     <>
-      <div className="button-container">
-        {" "}
-        <ButtonsComponent onSubmit={getData} />{" "}
-      </div>
 
       <div className={`${styles.box} `}>
         <div style={{ margin: "10px" }}>
+
           <DataTable
             title={element}
             columns={columns}
-            data={meetingDetails}
+            data={data}
             progressPending={loading}
             customStyles={customStyles}
             pagination
           />
+
         </div>
       </div>
     </>
