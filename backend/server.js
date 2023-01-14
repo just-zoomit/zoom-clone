@@ -25,12 +25,6 @@ app.get('/api', (req, res) => {
 app.use('/api/zoom', zoomRoutes); // Use the zoomRoutes.js file
 
 
-
-// // Test CORS, and remove if not needed
-// app.use((req, res, next) => {
-//   res.send('Welcome to Express');
-// });
-
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
