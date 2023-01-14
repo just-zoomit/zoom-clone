@@ -12,6 +12,9 @@ const newMeetingIcon = (
   <i class="material-icons large icon-blue md40px">videocam</i>
 );
 
+
+// Adpoted Component Composition pattern and pass data from child to parent pattern
+
 export function InstantMeeting(props) {
 
   const [open, setOpen] = React.useState(false);

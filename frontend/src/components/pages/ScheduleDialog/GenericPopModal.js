@@ -10,6 +10,11 @@ import { useResource } from "../Home/useResource";
 import { useNavigate } from "react-router-dom";
 import { InstantMeeting } from "./InstantMeeting";
 
+import { ControlledModal } from "./ControlledModal";
+import { ControlledForm } from "./ControlledForm";
+
+// Adpoted Component Composition pattern
+
 const DivContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 2fr);
@@ -27,6 +32,8 @@ const scheduleIcon = (
 const listMeetingIcon = (
   <i class="material-icons large icon-blue md40px">list</i>
 );
+
+
 
 export default function GenericPopModal(props) {
   const [showModal, setShowModal] = useState(false);
@@ -73,6 +80,8 @@ export default function GenericPopModal(props) {
   const handleClearData = () => {
     props.onClearData();
   }
+  // Switch to show modal
+  const [shouldShowModal, setShouldShowModal] = useState(false);
 
   return (
     <>
@@ -80,14 +89,32 @@ export default function GenericPopModal(props) {
         <DivContainer>
           <InstantMeeting onDataReceived={handleDataReceived} />
 
+          
+
           <BigSuccessButton
             text={joinIcon}
             label="Join"
             onClick={openScheduleModal}
           />
           {showModal2 ? <JoinModal setShowModal={setShowModal2} /> : null}
+         
+          {/* Ex. Controlled Modal and Form */}
+          <ControlledModal
+          shouldShow={shouldShowModal}
+          onRequestClose={() => { 
+          alert("Modal closed")
+          setShouldShowModal(false)}}
+        >
+        <ControlledForm />
+
+        </ControlledModal>
+        <button onClick={() => setShouldShowModal(!shouldShowModal)}>
+        {shouldShowModal ? "Hide Modal": "Show Modal"} 
+        </button>
+
         </DivContainer>
 
+        
         <DivContainer>
           <BigSuccessButton
             text={scheduleIcon}
@@ -101,6 +128,7 @@ export default function GenericPopModal(props) {
             onClick={handleClick}
             label="List"
           />
+          {/* Ex. clear Table data switch */}
           <button onClick={handleClearData}>Clear Data</button>
         </DivContainer>
       </div>

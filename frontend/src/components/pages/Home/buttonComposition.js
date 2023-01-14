@@ -28,6 +28,7 @@ const Buttoner = styled.button`
   border: 0;
   color: white;
 `;
+// Adpoted Component Composition pattern, parent component of GenericPopModal
 
 export const Button = ({ size, color, text,label, ...props }) => {
   return (

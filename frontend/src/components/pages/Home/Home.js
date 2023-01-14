@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import CusTable from "./CusTable";
+import Table from "./Table";
 import GenericPopModal from "../ScheduleDialog/GenericPopModal";
 
 function Home() {
@@ -32,7 +32,7 @@ function Home() {
     <>
       <GenericPopModal onDataReceived={handleDataReceived} onClearData={handleClearData} />
       {/* <CusTable data={data} /> */}
-      {data.length > 0 ? <CusTable data={data} /> : null}
+      {data.length > 0 ? <Table data={data} /> : null}
     </>
   );
 }

@@ -5,6 +5,7 @@ const display = {
   display: "inline-block",
 };
 
+// Adopted Controlled form pattern. It does care about the state of the form
 export const ScheduleModal = ({ setShowModal }) => {
   // close the modal when clicking outside the modal.
   const modalRef = useRef();
@@ -44,7 +45,7 @@ export const ScheduleModal = ({ setShowModal }) => {
   }
 
   const handleSubmit = (event) => {
-    event.preventDefault();
+    
     // Do something with the topic, start and end date values here
     const startTime = formatDate(prevStartDate.current) + ' ' + time + ' ' + 'UTC'
     const endTime = formatDate(prevEndDate.current) + ' ' + toTime + ' ' + 'UTC'
@@ -64,6 +65,7 @@ export const ScheduleModal = ({ setShowModal }) => {
         .then((data) => data.json())
 
       setShowModal(false);
+      event.preventDefault();
   };
 
   useEffect(() => {

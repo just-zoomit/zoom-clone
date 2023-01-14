@@ -3,7 +3,6 @@ import { ScheduleModal } from "./ScheduleModal";
 
 import styles from '../Home/Button.module.css';
 
-
 // To Be REMOVED
 
 export default function SchedulePopModal() {
@@ -15,7 +14,7 @@ export default function SchedulePopModal() {
   };
   
   return (
-    <div className="PopModal" >
+    <div className="PopModal">
 
       <button className={`${styles.buttoner} ${styles.bn37}`} onClick={openModal}>
       <i class="material-icons large icon-blue md40px">calendar_month</i>

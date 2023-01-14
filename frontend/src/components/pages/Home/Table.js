@@ -1,5 +1,5 @@
 import DataTable from "react-data-table-component";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import { EditPopModal } from "../ScheduleDialog/EditPopModal";
 
@@ -31,7 +31,7 @@ const customStyles = {
   },
 };
 
-export default function CusTable({data}) {
+export default function Table({data}) {
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
 

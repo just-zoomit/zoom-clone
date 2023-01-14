@@ -3,6 +3,8 @@ import ReactDom from "react-dom";
 
 import { useNavigate } from "react-router-dom";
 
+// Adopted unControlled form pattern. It does not care about the state of the form
+
 export const JoinModal = ({ setShowModal }) => {
   // close the modal when clicking outside the modal.
   const modalRef = useRef();
@@ -20,7 +22,7 @@ export const JoinModal = ({ setShowModal }) => {
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
-    event.preventDefault();
+   
     // Do something with the topic, start and end date values here
 
     if (id.current.value === "" || password.current.value === "") {
@@ -29,6 +31,7 @@ export const JoinModal = ({ setShowModal }) => {
       setShowModal(false);
       navigate(`/msdk/?mn=${id.current.value}&pw=${password.current.value}`);
     }
+    event.preventDefault();
   };
 
   // render the modal JSX in the portal div.
