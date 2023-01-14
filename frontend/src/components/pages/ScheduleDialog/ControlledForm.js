@@ -60,6 +60,7 @@ export const ControlledForm = () => {
         value={formData.name}
         onChange={handleChange}
         />
+        <br />
         <input 
         type="text" 
         name="age" 
@@ -67,6 +68,9 @@ export const ControlledForm = () => {
         value={formData.age} 
         onChange={handleChange}
         />
+        &nbsp;
+        <br />
+        
         <input 
         type="text" 
         name="Hair Color" 
@@ -74,7 +78,11 @@ export const ControlledForm = () => {
         value={formData.hairColorInput}
         onChange={handleChange}
         />
+       
+        <br />
+     
         <button onClick={handleSubmit} type="submit">Submit</button>
+        &nbsp; &nbsp;
         </form>
 
     )

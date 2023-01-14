@@ -50,6 +50,7 @@ export default function Table({data}) {
               <i class="material-icons large icon-blue md-48"> edit</i>
             </button>
             {showModal ? <EditPopModal setShowModal={setShowModal} /> : null}
+            
             <button className={`${styles.buttonDanger} `}>
               <i class="material-icons large icon-blue md-48">
                 {" "}
@@ -75,6 +76,8 @@ export default function Table({data}) {
 
   return (
     <>
+
+    {/* Moved BottomComponent.js and replaced with buttomComposition pattern */}
 
       <div className={`${styles.box} `}>
         <div style={{ margin: "10px" }}>
