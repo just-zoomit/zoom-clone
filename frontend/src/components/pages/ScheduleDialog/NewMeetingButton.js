@@ -9,14 +9,14 @@ import styles from '../Home/Button.module.css';
 // To Be REMOVED
 
 export default function NewMeetingButton() {
-  const [open, setOpen] = React.useState(false);
-  const [state, setState] = useState({ topic: 'Personal Meeting Room', 
+  const [, setOpen] = React.useState(false);
+  const [state, ] = useState({ topic: 'Personal Meeting Room', 
                                       name :'Donte',
                                       email: 'donte.Zoomie@gmail.com', 
                                       role: 1 });
   const { topic, name, email, role } = state;
 
-  const [valid, setValid] = useState(false);
+  const [, setValid] = useState(false);
   const prevDateTimeValue = React.useRef("");
 
   const navigate = useNavigate();
@@ -48,7 +48,7 @@ export default function NewMeetingButton() {
     setValid(email && emailRegex.test(email));
   
     prevDateTimeValue.current = new Date().toLocaleDateString()
-  }, [prevDateTimeValue]);
+  }, [prevDateTimeValue,email]);
 
   return (
     <>

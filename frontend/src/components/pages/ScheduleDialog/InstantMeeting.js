@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-import { useNavigate } from "react-router-dom";
-
 import { emailRegex } from "../../shared";
 
 import styles from '../Home/Button.module.css';
@@ -17,17 +15,17 @@ const newMeetingIcon = (
 
 export function InstantMeeting(props) {
 
-  const [open, setOpen] = React.useState(false);
-  const [state, setState] = useState({ topic: 'Personal Meeting Room', 
+  const [, setOpen] = React.useState(false);
+  const [state, ] = useState({ topic: 'Personal Meeting Room', 
                                       name :'Donte',
                                       email: 'donte.Zoomie@gmail.com', 
                                       role: 1 });
   const { topic, name, email, role } = state;
 
-  const [valid, setValid] = useState(false);
+  const [, setValid] = useState(false);
   const prevDateTimeValue = React.useRef("");
 
-  const [data, setData] = useState(null);
+  const [, setData] = useState(null); 
 
 
   const handleSubmit = async (event) => {
@@ -63,7 +61,7 @@ export function InstantMeeting(props) {
     setValid(email && emailRegex.test(email));
   
     prevDateTimeValue.current = new Date().toLocaleDateString()
-  }, [prevDateTimeValue]);
+  }, [prevDateTimeValue,email]);
 
   return (
     <div>

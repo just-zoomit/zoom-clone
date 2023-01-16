@@ -17,7 +17,7 @@ function Home() {
  */
 
   const [data, setData] = useState([]);
-  const [dataFetched, setDataFetched] = useState(false);
+  const [, setDataFetched] = useState(false);
 
   const handleDataReceived = (newData) => {
     setData(newData);

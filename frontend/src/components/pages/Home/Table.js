@@ -32,7 +32,7 @@ const customStyles = {
 };
 
 export default function Table({data}) {
-  const [loading, setLoading] = useState(false);
+  const [loading, ] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
   const columns = [

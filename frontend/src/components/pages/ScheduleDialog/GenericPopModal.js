@@ -48,7 +48,7 @@ export default function GenericPopModal(props) {
     setShowModal2(true);
   };
 
-  const [data, setData] = useState(null);
+  const [, setData] = useState(null);
 
   const startInstantMeeting = (data) => {
     const { id, password } = data;
@@ -60,8 +60,8 @@ export default function GenericPopModal(props) {
     startInstantMeeting(data);
   };
 
-  const listmeetings = useResource("/api/zoom/listmeetings");
-  const [tableData, setTableData] = useState(null);
+  const listmeetings = useResource("api/zoom/listmeetings");
+  const [, setTableData] = useState(null);  
 
   const handleClick = async (event) => {
     event.preventDefault();
