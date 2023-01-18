@@ -7,13 +7,13 @@ const btoa = require("btoa");
 const KJUR = require("jsrsasign");
 
   /**
-  * Get Meeting SDK Auth Token
+  * @description Get Meeting SDK Auth Token
   * @param {String} meetingNumber
   * @param {String} role
   * @returns {String} sdk auth token
   * @see https://marketplace.zoom.us/docs/sdk/native-sdks/web/getting-started/auth-jwt
   * @see https://marketplace.zoom.us/docs/sdk/native-sdks/web/getting-started/join-meeting
-  * 
+  * @access            Public
  */
 const getMsdkSignature = asyncHandler(async (req, res) => {
     const iat = Math.round(new Date().getTime() / 1000) - 30;
@@ -45,16 +45,14 @@ const getMsdkSignature = asyncHandler(async (req, res) => {
     });
   });
   
-
-
-  /**
- * Call Zoom Oauth API for Server-to-Server access token.
- *
+/**
+ * @description Call Zoom Oauth API for Server-to-Server access token.
  * @param      {Object}  input_config
  * @param      {String}  input_config.ZOOM_ACCOUNT_ID     The zoom account id
  * @param      {String}  input_config.ZOOM_CLIENT_ID      The zoom client id
  * @param      {String}  input_config.ZOOM_CLIENT_SECRET  The zoom client secret
  * @returns    {String}  zoom access_token
+ * @access               Public
  */
 async function getAccessToken() {
     try {
@@ -79,7 +77,7 @@ async function getAccessToken() {
   }
   
   /**
- *  Create A Zoom Meeting Appointments
+ * @description Create A Zoom Meeting Appointments
  * @route POST /api/zoom/create
  * @access Public
  * @param {string} topic
@@ -87,6 +85,7 @@ async function getAccessToken() {
  * @param {string} first_name
  * @param {string} email
  * @returns {object} 200 - An array of user info
+ * @access           Public
  */
 
   const CreateAppointment = asyncHandler(async (req, res) => {
@@ -108,8 +107,14 @@ async function getAccessToken() {
     }
   });
 
+  /**
+ * @description List Zoom Meeting Appointments
+ * @route GET /api/zoom/ListMeetings
+ * @access Public
+ */
+
   const ListMeeting = asyncHandler(async (req, res) => {
-    const meetings = await listZoomMeeting();
+    const meetings = await listZoomMeetings();
     if ( meetings === undefined) {
       res.status(400);
       throw new Error("No meeting found");
@@ -120,21 +125,70 @@ async function getAccessToken() {
   });
 
 
-  /**
+/**
+ * @description Fetch Single Meeting Record
+ * @route GET /api/zoom/ListMeetings
+ * @access Public
+ */
+
+  const getMeetingById = asyncHandler(async (req, res) => {
+   
+    const meeting = await getZoomMeetingById(req.params.id);
+    if ( meeting === undefined) {
+      res.status(400);
+      throw new Error("No meeting found");
+    } else {
+      res.status(201).json({meeting});
+    }
+  });
+
+/**
+ * @description Update Single Meeting Record
+ * @route PUT /api/zoom/ListMeetings
+ * @access Public
+ */
+  const UpdateMeeting = asyncHandler(async (req, res) => {
+    //Should meetingID be req.params.id or req.body.meetingId?
+    const meetingID = req.params.id;
+    const {meetingId,topic, start_time, end_time, first_name , email } = req.body;
+    const meetings = await updateZoomMeeting(meetingID, topic, convertISOString(start_time), first_name, email);
+    if ( meetings === undefined) {
+      res.status(400);
+      throw new Error("No meeting found");
+    } else {
+      res.status(201).json({meetings});
+    }
+  })
+
+//@description     Delete Single Meeting Record
+//@route           DELETE /api/meetings/:id
+//@access          Public
+
+  const DeleteMeeting = asyncHandler(async (req, res) => {
+    const { meetingId } = req.body;
+    const meetings = await deleteZoomMeeting(meetingId);
+    if ( meetings === undefined) {
+      res.status(400);
+      throw new Error("No meeting found");
+    } else {
+      res.status(201).json({meetings});
+    }
+  });
+
+/**
  *  Create Zoom Meeting Via REST API
  * @param      {Object}  input_config
  * @param      {String}  topic     The topic of the meeting
  * @param      {String}  start_time  The start time of the meeting
  * @param      {String}  first_name  The first name of the user
  * @returns    {String}  The meeting id and password
+ * @access     Public
  */
     
- 
   async function createZoomMeeting(topic, start_time, first_name, email) {
     try {
 
       console.log("Start Time in Create Meeting: ", start_time);
-
 
       const data = JSON.stringify({
         topic: topic,
@@ -165,7 +219,13 @@ async function getAccessToken() {
     }
   }
 
-  async function listZoomMeeting() {
+/**
+ * @description List Single Meeting Record
+ * @route GET /api/zoom/ListMeetings
+ * @access Private
+ */
+
+  async function listZoomMeetings() {
     try {
 
       const resp = await axios({
@@ -178,14 +238,6 @@ async function getAccessToken() {
       });
       const  meetings = resp.data.meetings;
       
-
-      // meetings.forEach(meeting => {
-      //   for (let key in meeting) {
-      //     console.log(`${key}: ${meeting[key]}`)
-      //   }
-      // })
-
-
       const newArray = meetings.map(obj => ['id', 'topic', ].reduce((newObj, key) => { 
         newObj[key] = obj[key]
         return newObj
@@ -199,13 +251,92 @@ async function getAccessToken() {
       }
     }
   }
-
-// 
+//Start here tomorrow
 
 /**
- * Zoom API supports the ISO 8601 date and time format.
+ * @description Fetch Single Meeting from Zoom Server
+ * @route GET /api/meetings/:id
+ * @access Private
+ */
+
+  const getZoomMeetingById = asyncHandler(async (meetingId) => {
+    try {
+      const access_token = await getAccessToken();
+      const resp = await axios({
+        method: "GET",
+        url: "https://api.zoom.us/v2/meetings/" + meetingId,
+        headers: {
+          Authorization: "Bearer " + access_token,
+        },
+      });
+      return resp.data;
+    } catch (err) {
+      // Handle Error Here
+      console.error(err);
+    }
+  });
+
+  /**
+ * @description Update Single Meeting from Zoom Server
+ * @route PUT /api/meetings/:id
+ * @access Private
+ */
+
+  const updateZoomMeeting = asyncHandler(async (meetingId, topic, start_time, first_name, email) => {
+    try {
+      const access_token = await getAccessToken();
+      const data = JSON.stringify({
+        topic: topic,
+        start_time: start_time,
+        first_name: first_name,
+        email: email,
+        join_before_host: true,
+        password: generateOTP(),
+      });
+      const resp = await axios({
+        method: "PATCH",
+        url: "https://api.zoom.us/v2/meetings/" + meetingId,
+        headers: {
+          Authorization: "Bearer " + access_token,
+          "Content-Type": "application/json",
+        },
+        data: data,
+      });
+      return resp.data;
+    } catch (err) {
+      // Handle Error Here
+      console.error(err);
+    }
+  });
+
+/**
+ * @description Delete Single Meeting from Zoom Server
+ * @route DELETE /api/meetings/:id
+ * @access Private
+ */
+
+  const deleteZoomMeeting = asyncHandler(async (meetingId) => {
+    try {
+      const access_token = await getAccessToken();
+      const resp = await axios({
+        method: "DELETE",
+        url: "https://api.zoom.us/v2/meetings/" + meetingId,
+        headers: {
+          Authorization: "Bearer " + access_token,
+        },
+      });
+      return resp.data;
+    } catch (err) {
+      // Handle Error Here
+      console.error(err);
+    }
+  });
+
+/**
+ * @description Zoom API supports the ISO 8601 date and time format.
  * @param      {Date}  date    The date
  * @returns    {String}  The ISO 8601 date and time format
+ * @access               Private
  * @see https://marketplace.zoom.us/docs/api-reference/using-zoom-apis/#time-in-zoom-api
  */
 
@@ -217,10 +348,10 @@ async function getAccessToken() {
     return event.toISOString();
   }
 
-
 /**
- * Declare a digits variable which stores all digits from 0 to 9
+ * @description Declare a digits variable which stores all digits from 0 to 9
  * @returns   {String}  One time password
+ * @access Private
  */
   
   function generateOTP() {
@@ -237,4 +368,7 @@ async function getAccessToken() {
     getMsdkSignature, 
     CreateAppointment,
     ListMeeting,
+    getMeetingById,
+    UpdateMeeting,
+    DeleteMeeting,
   };

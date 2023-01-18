@@ -16,14 +16,12 @@ app.use((req, res, next) => {
   next();
 });
 
-
 // Must be before any other routes. Remove this line if you don't want to use the default route.
 app.get('/api', (req, res) => {
   res.send(' Backend API is working');
 });
 
 app.use('/api/zoom', zoomRoutes); // Use the zoomRoutes.js file
-
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

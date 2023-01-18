@@ -35,6 +35,18 @@ export default function Table({data}) {
   const [loading, ] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
+  const deletHandler = (id) => {
+    console.log("deleteHandler", id);
+    if (window.confirm("Are you sure you want to delete this item?")) {
+      // deleteHandler(id);
+    }
+  };
+
+  const editHandler = (id) => {
+    console.log("editHandler", id);
+    // editHandler(id);
+  };
+
   const columns = [
     {
       selector: (row) => row.topic,
@@ -51,7 +63,7 @@ export default function Table({data}) {
             </button>
             {showModal ? <EditPopModal setShowModal={setShowModal} /> : null}
             
-            <button className={`${styles.buttonDanger} `}>
+            <button className={`${styles.buttonDanger} `} onClick ={ () => deletHandler(row.id)}>
               <i class="material-icons large icon-blue md-48">
                 {" "}
                 delete_forever
