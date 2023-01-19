@@ -7,7 +7,7 @@ import styles from "./Button.module.css";
 import { element } from "./dateTime";
 
 //controling the icon font size, need to fix
-import ButtonsComponent from "./ButtonsComponent";
+import "../ScheduleDialog/styles.css";
 
 import { ControlledModal } from "../ScheduleDialog/ControlledModal";
 import { MeetingInfoForm } from "../ScheduleDialog/MeetingInfoForm";
@@ -53,26 +53,26 @@ export default function Table({data}) {
    // Set state for modal
   const [state, setState] = useState(null);
 
-  // use rowvalue to get the id of the row
-  const id = "94431876430"
-  console.log("id: ", id);
-  const getMeeting = useResource(`/api/zoom/${id}`);
+  // // use rowvalue to get the id of the row
+  // const id = "94431876430"
+  // console.log("id: ", id);
+  // const getMeeting = useResource(`/api/zoom/${id}`);
 
-  const openModal = async (event) => {
-    event.preventDefault();
+  // const openModal_viod = async (event) => {
+  //   event.preventDefault();
 
-    try {
+  //   try {
      
-      console.log("getMeeting: ", getMeeting);
-      console.log("M Set: ", event.currentTarget.value);
-      setRowvalue(event.currentTarget.value);
-      setState(getMeeting);
-      setDataFetched(true);
-      setShowModal(true);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  //     console.log("getMeeting: ", getMeeting);
+  //     console.log("M Set: ", event.currentTarget.value);
+  //     setRowvalue(event.currentTarget.value);
+  //     setState(getMeeting);
+  //     setDataFetched(true);
+  //     setShowModal(true);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
 
   const columns = [
@@ -91,17 +91,8 @@ export default function Table({data}) {
               <i class="material-icons large icon-blue md-48"> edit</i>
             </button>
             
-            {showModal ? <EditPopModal setShowModal={setShowModal} data={state} /> : null}
+            {showModal ? <EditPopModal setShowModal={setShowModal} /> : null}
 
-            {/* {showModal ? <ControlledModal
-		            shouldShow={showModal}
-		          onRequestClose={() => 
-			      setShowModal(false) }
-		              >
-			<MeetingInfoForm />
-		</ControlledModal>
-		
-		 : null} */}
             
             <button className={`${styles.buttonDanger} `} onClick ={ () => deletHandler(row.id)}>
               <i class="material-icons large icon-blue md-48">
@@ -119,7 +110,7 @@ export default function Table({data}) {
 
 
 
-  const openModal_viod = () => {
+  const openModal = () => {
     setShowModal(true);
   };
 

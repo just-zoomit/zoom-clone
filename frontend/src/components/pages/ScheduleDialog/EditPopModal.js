@@ -8,8 +8,13 @@ import { withEditableMeeting } from "./withEditableMeeting";
 const display = {
   display: "inline-block",
 };
+// export const EditPopModal = ({ setShowModal, data }) => {
 
-export const EditPopModal = ({ setShowModal, data }) => {
+export const EditPopModal =
+  withEditableMeeting(({setShowModal, meeting, onChangeMeeting, onSaveMeeting, onResetMeeting} ) => {
+
+    const getTopic = meeting || {};
+
   // close the modal when clicking outside the modal.
   const modalRef = useRef();
   const closeModal = (e) => {
@@ -27,21 +32,13 @@ export const EditPopModal = ({ setShowModal, data }) => {
   defaultDate.setDate(defaultDate.getDate() + 3);
 
   const [date, setDate] = useState(defaultDate);
-  const [toDate, setToDate] = useState(defaultDate);
 
 
-  // Pass data from custom hook call Table.js
-  // console.log("data Print", data)
-  const editDataa = data
-  console.log("EditData", editDataa);
   
   const handleSubmit = (event) => {
     event.preventDefault();
 
     // Do something with the topic, start and end date values here
-
-    const meetingData = data
-    console.log("meetingData Print", meetingData)
     
     // Handle updated data
       setTopic("Test React");
@@ -67,26 +64,16 @@ export const EditPopModal = ({ setShowModal, data }) => {
     const newTime = hours + ":" + minutes.toString().padStart(2, '0');;
 
     return newDate + ' ' + newTime;
+    
 }
 
-  useEffect(() => {
-    
-   
-    //Set initial data
-    setTopic(editDataa.meeting.topic);
-    const newDate = convertDate(editDataa.meeting.start_time).split(" ")
-    console.log("EditData start date and time :", newDate);
-    setDate(newDate[0]);
-    setStartTime(newDate[1]);
-    // setStartTime(date[1]);
-    // setDate(editDataa.meeting.start_time);
-    // console.log("Formated to Localstring", new Date(editDataa.meeting.start_time).toLocaleString())
-    
+    const newDate = convertDate(getTopic.start_time).split(" ");
+    console.log("EditData start date and time :", newDate[0]);
+    console.log("EditData start date and time :", newDate[1]);
 
-  }, []);
 
   // render the modal JSX in the portal div.
-  return ReactDom.createPortal(
+  return meeting ? (ReactDom.createPortal(
     <div className="container" ref={modalRef} onClick={closeModal}>
       <div className="modal">
      
@@ -101,8 +88,8 @@ export const EditPopModal = ({ setShowModal, data }) => {
               <input
                 type="text"
                 id="topic"
-                value={topic}
-                onChange={(e) => setTopic(e.target.value)}
+                value={getTopic.topic}
+                onChange={(e) => onChangeMeeting({ topic: e.target.value })}
               />
               <br />
               <label htmlFor="date">Date & Time </label>
@@ -110,27 +97,27 @@ export const EditPopModal = ({ setShowModal, data }) => {
               <input
                 type="date"
                 id="datetime-local"
-                value={date}
+                value={newDate[0]}
                 required={true}
-                onChange={(e) => setDate(e.target.value)}
+                onChange={(e) => onChangeMeeting({ start_time: e.target.value })}
                 style={display}
               />
               &nbsp; &nbsp;
               <input
                 type="time"
                 id="time"
-                value={time}
+                value={newDate[1]}
                 required={true}
-                onChange={(e) => setStartTime(e.target.value)}
+                onChange={(e) => onChangeMeeting({ start_time: e.target.value })}
                 style={display}
               />
            
               <hr class="solid"></hr>
             
               <div className="btn-container">
-                <button type="submit" style={{ background: "blue" }} >
-                  Update
-                </button>
+              <button onClick={onResetMeeting}>Reset</button>
+              &nbsp; &nbsp;
+             <button onClick={onSaveMeeting}>Update</button>
               </div>
             </form>
           </div>
@@ -138,5 +125,7 @@ export const EditPopModal = ({ setShowModal, data }) => {
       </div>
     </div>,
     document.getElementById("portal")
-  );
-};
+  )) : (<p>Loading...</p>);
+},
+"94527937966"
+);

@@ -7,7 +7,6 @@ import ZoomMSDK from './components/pages/ZoomMSDK/ZoomMSDK';
 // import ExampleModal from './components/pages/ScheduleDialog/ExampleModal';
 import GenericPopModal from './components/pages/ScheduleDialog/GenericPopModal';
 import { MeetingInfoForm } from './components/pages/ScheduleDialog/MeetingInfoForm';
-import PopModal from './components/pages/ScheduleDialog/SchedulePopModal';
 import "./App.css";
 
 

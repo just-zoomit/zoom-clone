@@ -1,5 +1,7 @@
 import { withEditableMeeting } from "./withEditableMeeting";
 
+
+// REFERENCE:
 export const MeetingInfoForm = withEditableMeeting(({ meeting, onChangeMeeting, onSaveMeeting, onResetMeeting }) => {
     const getTopic = meeting || {};
 
@@ -22,8 +24,7 @@ export const MeetingInfoForm = withEditableMeeting(({ meeting, onChangeMeeting, 
     };
 
     const newDate = convertDate(getTopic.start_time).split(" ");
-    console.log("EditData start date and time :", newDate[0]);
-    console.log("EditData start date and time :", newDate[1]);
+
 
     return meeting ? (
       <div>

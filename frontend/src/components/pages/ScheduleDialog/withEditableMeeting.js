@@ -10,7 +10,7 @@ export const withEditableMeeting = (Component , meetingID)=> {
         useEffect(() => {
             (async () => {
                 const response = await axios.get(`api/zoom/${meetingID}`);
-                console.log("REsonse Data:",response.data.meeting);
+                // console.log("REsonse Data:",response.data.meeting);
                 setMeeting(response.data.meeting);
             })();
     },[]);
