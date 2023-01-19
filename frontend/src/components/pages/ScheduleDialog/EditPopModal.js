@@ -1,5 +1,5 @@
-import axios from "axios";
-import React, { useEffect, useState, useRef } from "react";
+
+import React, { useState, useRef } from "react";
 import ReactDom from "react-dom";
 
 import { withEditableMeeting } from "./withEditableMeeting";
@@ -23,15 +23,14 @@ export const EditPopModal =
     }
   };
 
-  const [topic, setTopic] = useState("");
+  const [, setTopic] = useState("");
  
-  const [time, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
+  const [, setStartTime] = useState("");
 
   const defaultDate = new Date();
   defaultDate.setDate(defaultDate.getDate() + 3);
 
-  const [date, setDate] = useState(defaultDate);
+  const [, setDate] = useState(defaultDate);
 
 
   
@@ -71,9 +70,8 @@ export const EditPopModal =
     console.log("EditData start date and time :", newDate[0]);
     console.log("EditData start date and time :", newDate[1]);
 
-
   // render the modal JSX in the portal div.
-  return meeting ? (ReactDom.createPortal(
+  return meeting ? ReactDom.createPortal(
     <div className="container" ref={modalRef} onClick={closeModal}>
       <div className="modal">
      
@@ -125,7 +123,7 @@ export const EditPopModal =
       </div>
     </div>,
     document.getElementById("portal")
-  )) : (<p>Loading...</p>);
+  ) : (<p>Loading...</p>);
 },
 "94527937966"
 );

@@ -9,12 +9,6 @@ import { element } from "./dateTime";
 //controling the icon font size, need to fix
 import "../ScheduleDialog/styles.css";
 
-import { ControlledModal } from "../ScheduleDialog/ControlledModal";
-import { MeetingInfoForm } from "../ScheduleDialog/MeetingInfoForm";
-
-import { useResource } from "../Home/useResource";
-
-
 //  Internally, customStyles will deep merges your customStyles with the default styling.
 const customStyles = {
   rows: {
@@ -39,7 +33,6 @@ const customStyles = {
 export default function Table({data}) {
   const [loading, ] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [rowvalue, setRowvalue] = useState("");
 
   const deletHandler = (id) => {
     console.log("deleteHandler", id);
@@ -47,33 +40,6 @@ export default function Table({data}) {
       // deleteHandler(id);
     }
   };
-
-  const [, setDataFetched] = useState(false);
- 
-   // Set state for modal
-  const [state, setState] = useState(null);
-
-  // // use rowvalue to get the id of the row
-  // const id = "94431876430"
-  // console.log("id: ", id);
-  // const getMeeting = useResource(`/api/zoom/${id}`);
-
-  // const openModal_viod = async (event) => {
-  //   event.preventDefault();
-
-  //   try {
-     
-  //     console.log("getMeeting: ", getMeeting);
-  //     console.log("M Set: ", event.currentTarget.value);
-  //     setRowvalue(event.currentTarget.value);
-  //     setState(getMeeting);
-  //     setDataFetched(true);
-  //     setShowModal(true);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
 
   const columns = [
     {
@@ -108,16 +74,12 @@ export default function Table({data}) {
     },
   ];
 
-
-
   const openModal = () => {
     setShowModal(true);
   };
 
-
   return (
     <>
-
     {/* Moved BottomComponent.js and replaced with buttomComposition pattern */}
 
       <div className={`${styles.box} `}>
