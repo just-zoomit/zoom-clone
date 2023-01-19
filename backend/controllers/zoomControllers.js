@@ -124,7 +124,6 @@ async function getAccessToken() {
     }
   });
 
-
 /**
  * @description Fetch Single Meeting Record
  * @route GET /api/zoom/ListMeetings
@@ -356,7 +355,7 @@ async function getAccessToken() {
   
   function generateOTP() {
 
-    
+
     var digits = "0123456789";
     let OTP = "";
     for (let i = 0; i < 6; i++) {

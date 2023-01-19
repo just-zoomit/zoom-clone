@@ -5,7 +5,7 @@ import ReactDom from "react-dom";
 
 // To Be Refactored
 
-export const EditPopModal = ({ setShowModal }) => {
+export const Controlled_PopModal = ({ setShowModal }) => {
   // close the modal when clicking outside the modal.
   const modalRef = useRef();
   const closeModal = (e) => {

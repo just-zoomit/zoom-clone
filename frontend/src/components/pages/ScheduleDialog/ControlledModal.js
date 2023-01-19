@@ -29,7 +29,7 @@ export const ControlledModal = ({ shouldShow, onRequestClose, children }) => {
 		{shouldShow ? (
 			<ModalBackground onClick={onRequestClose}>
 				<ModalBody onClick={e => e.stopPropagation()}>
-					<button onClick={onRequestClose}>Hide Modal</button>
+					<button onClick={onRequestClose}> </button>
 					{children}
 				</ModalBody>
 			</ModalBackground>

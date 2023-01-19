@@ -9,6 +9,11 @@ import { element } from "./dateTime";
 //controling the icon font size, need to fix
 import ButtonsComponent from "./ButtonsComponent";
 
+import { ControlledModal } from "../ScheduleDialog/ControlledModal";
+import { MeetingInfoForm } from "../ScheduleDialog/MeetingInfoForm";
+
+import { useResource } from "../Home/useResource";
+
 
 //  Internally, customStyles will deep merges your customStyles with the default styling.
 const customStyles = {
@@ -34,6 +39,7 @@ const customStyles = {
 export default function Table({data}) {
   const [loading, ] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [rowvalue, setRowvalue] = useState("");
 
   const deletHandler = (id) => {
     console.log("deleteHandler", id);
@@ -42,10 +48,32 @@ export default function Table({data}) {
     }
   };
 
-  const editHandler = (id) => {
-    console.log("editHandler", id);
-    // editHandler(id);
+  const [, setDataFetched] = useState(false);
+ 
+   // Set state for modal
+  const [state, setState] = useState(null);
+
+  // use rowvalue to get the id of the row
+  const id = "94431876430"
+  console.log("id: ", id);
+  const getMeeting = useResource(`/api/zoom/${id}`);
+
+  const openModal = async (event) => {
+    event.preventDefault();
+
+    try {
+     
+      console.log("getMeeting: ", getMeeting);
+      console.log("M Set: ", event.currentTarget.value);
+      setRowvalue(event.currentTarget.value);
+      setState(getMeeting);
+      setDataFetched(true);
+      setShowModal(true);
+    } catch (error) {
+      console.error(error);
+    }
   };
+
 
   const columns = [
     {
@@ -58,10 +86,22 @@ export default function Table({data}) {
             <button 
             className={`${styles.buttonDanger} `} 
             value={[row.id]} 
-            onClick={openModal} >
+            onClick={openModal }
+            >
               <i class="material-icons large icon-blue md-48"> edit</i>
             </button>
-            {showModal ? <EditPopModal setShowModal={setShowModal} /> : null}
+            
+            {showModal ? <EditPopModal setShowModal={setShowModal} data={state} /> : null}
+
+            {/* {showModal ? <ControlledModal
+		            shouldShow={showModal}
+		          onRequestClose={() => 
+			      setShowModal(false) }
+		              >
+			<MeetingInfoForm />
+		</ControlledModal>
+		
+		 : null} */}
             
             <button className={`${styles.buttonDanger} `} onClick ={ () => deletHandler(row.id)}>
               <i class="material-icons large icon-blue md-48">
@@ -77,14 +117,12 @@ export default function Table({data}) {
     },
   ];
 
-  const openModal = () => {
+
+
+  const openModal_viod = () => {
     setShowModal(true);
   };
 
-  // fetch data from backend custom hook
-  const tableDataa = data || [];
-
-  console.log("tableDataa log", tableDataa);
 
   return (
     <>
