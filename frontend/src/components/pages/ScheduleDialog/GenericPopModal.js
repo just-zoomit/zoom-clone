@@ -89,8 +89,6 @@ export default function GenericPopModal(props) {
         <DivContainer>
           <InstantMeeting onDataReceived={handleDataReceived} />
 
-          
-
           <BigSuccessButton
             text={joinIcon}
             label="Join"
@@ -114,7 +112,6 @@ export default function GenericPopModal(props) {
 
         </DivContainer>
 
-        
         <DivContainer>
           <BigSuccessButton
             text={scheduleIcon}

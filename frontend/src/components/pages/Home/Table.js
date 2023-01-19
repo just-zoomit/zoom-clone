@@ -1,5 +1,5 @@
 import DataTable from "react-data-table-component";
-import { useState } from "react";
+import { useState , useCallback, useEffect} from "react";
 
 import { EditPopModal } from "../ScheduleDialog/EditPopModal";
 
@@ -32,6 +32,7 @@ const customStyles = {
 
 export default function Table({data}) {
   const [loading, ] = useState(false);
+  
   const [showModal, setShowModal] = useState(false);
 
   const deletHandler = (id) => {
@@ -40,6 +41,22 @@ export default function Table({data}) {
       // deleteHandler(id);
     }
   };
+
+
+  const [rowData, setRowData] = useState({});
+
+  const openModal = useCallback(
+      function (e,row) {
+        if (!showModal) {
+          console.log("openModal");
+          e.stopPropagation();
+        }
+        setShowModal(true);;
+        setRowData(row);
+      },
+      [showModal, setShowModal ]
+    );
+
 
   const columns = [
     {
@@ -52,14 +69,10 @@ export default function Table({data}) {
             <button 
             className={`${styles.buttonDanger} `} 
             value={[row.id]} 
-            onClick={openModal }
+            onClick={openModal}
             >
               <i class="material-icons large icon-blue md-48"> edit</i>
             </button>
-            
-            {showModal ? <EditPopModal setShowModal={setShowModal} /> : null}
-
-            
             <button className={`${styles.buttonDanger} `} onClick ={ () => deletHandler(row.id)}>
               <i class="material-icons large icon-blue md-48">
                 {" "}
@@ -73,14 +86,19 @@ export default function Table({data}) {
       right: true,
     },
   ];
+  
+  // outside of the columns array
+ 
 
-  const openModal = () => {
-    setShowModal(true);
-  };
+  useEffect(() => {
+
+    //return document.removeEventListener("click", eventHandler);
+  }, [showModal]);
 
   return (
     <>
     {/* Moved BottomComponent.js and replaced with buttomComposition pattern */}
+    {showModal ? <EditPopModal setShowModal={setShowModal} row={rowData} /> : null}
 
       <div className={`${styles.box} `}>
         <div style={{ margin: "10px" }}>

@@ -8,12 +8,15 @@ import { withEditableMeeting } from "./withEditableMeeting";
 const display = {
   display: "inline-block",
 };
+
 // export const EditPopModal = ({ setShowModal, data }) => {
 
-export const EditPopModal =
-  withEditableMeeting(({setShowModal, meeting, onChangeMeeting, onSaveMeeting, onResetMeeting} ) => {
+export const EditPopModal = withEditableMeeting(({setShowModal, meeting, onChangeMeeting, onSaveMeeting, onResetMeeting} ) => {
 
     const getTopic = meeting || {};
+    const {topic, start_time, id } = meeting || {};
+
+    console.log("Topic meeting:", id);
 
   // close the modal when clicking outside the modal.
   const modalRef = useRef();
@@ -32,21 +35,6 @@ export const EditPopModal =
 
   const [, setDate] = useState(defaultDate);
 
-
-  
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    // Do something with the topic, start and end date values here
-    
-    // Handle updated data
-      setTopic("Test React");
-      setDate("2021-08-01");
-      setStartTime("12:00");
-      setShowModal(false);
-      
-  };
-
   const convertDate = (dateString) => {
     const date = new Date(dateString);
     date.setFullYear(2021);
@@ -63,15 +51,14 @@ export const EditPopModal =
     const newTime = hours + ":" + minutes.toString().padStart(2, '0');;
 
     return newDate + ' ' + newTime;
-    
 }
 
     const newDate = convertDate(getTopic.start_time).split(" ");
     console.log("EditData start date and time :", newDate[0]);
-    console.log("EditData start date and time :", newDate[1]);
 
-  // render the modal JSX in the portal div.
-  return meeting ? ReactDom.createPortal(
+
+  // render the modal JSX in the portal div one topic and start_time loads
+  return meeting ? ( ReactDom.createPortal(
     <div className="container" ref={modalRef} onClick={closeModal}>
       <div className="modal">
      
@@ -80,7 +67,7 @@ export const EditPopModal =
         {setShowModal && (
           <div>
             <p>Schedule</p>
-            <form onSubmit={handleSubmit}>
+            <form >
               <label htmlFor="topic">Topic:</label>
               <br />
               <input
@@ -111,11 +98,12 @@ export const EditPopModal =
               />
            
               <hr class="solid"></hr>
-            
               <div className="btn-container">
+              <div>
               <button onClick={onResetMeeting}>Reset</button>
               &nbsp; &nbsp;
              <button onClick={onSaveMeeting}>Update</button>
+             </div>
               </div>
             </form>
           </div>
@@ -123,7 +111,7 @@ export const EditPopModal =
       </div>
     </div>,
     document.getElementById("portal")
-  ) : (<p>Loading...</p>);
+  ) ) : null;
 },
-"94527937966"
+"96038701421"
 );
