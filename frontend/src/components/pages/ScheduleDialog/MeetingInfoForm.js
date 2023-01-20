@@ -25,7 +25,6 @@ export const MeetingInfoForm = withEditableMeeting(({ meeting, onChangeMeeting, 
 
     const newDate = convertDate(getTopic.start_time).split(" ");
 
-
     return meeting ? (
       <div>
        <p>Schedule</p>

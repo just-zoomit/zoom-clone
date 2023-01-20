@@ -2,31 +2,28 @@ import React, { useEffect, useState } from "react";
 
 import { emailRegex } from "../../shared";
 
-import styles from '../Home/Button.module.css';
-
 import { DangerBlueButton } from "../Home/buttonComposition";
 
 const newMeetingIcon = (
   <i class="material-icons large icon-blue md40px">videocam</i>
 );
 
-
 // Adpoted Component Composition pattern and pass data from child to parent pattern
 
 export function InstantMeeting(props) {
-
   const [, setOpen] = React.useState(false);
-  const [state, ] = useState({ topic: 'Personal Meeting Room', 
-                                      name :'Donte',
-                                      email: 'donte.Zoomie@gmail.com', 
-                                      role: 1 });
+  const [state] = useState({
+    topic: "Personal Meeting Room",
+    name: "Donte",
+    email: "donte.Zoomie@gmail.com",
+    role: 1,
+  });
   const { topic, name, email, role } = state;
 
   const [, setValid] = useState(false);
   const prevDateTimeValue = React.useRef("");
 
-  const [, setData] = useState(null); 
-
+  const [, setData] = useState(null);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -46,9 +43,8 @@ export function InstantMeeting(props) {
       const response = await fetch("/api/zoom/create", POST_OPTIONS);
 
       const json = await response.json();
-      console.log("ID & PW",json);
+      console.log("ID & PW", json);
       setData(json);
-      // navigate(`/msdk/?mn=${id}&pw=${password}`);
       props.onDataReceived(json);
       setOpen(false);
     } catch (error) {
@@ -56,20 +52,21 @@ export function InstantMeeting(props) {
     }
   };
 
-
   useEffect(() => {
     setValid(email && emailRegex.test(email));
-  
-    prevDateTimeValue.current = new Date().toLocaleDateString()
-  }, [prevDateTimeValue,email]);
+
+    prevDateTimeValue.current = new Date().toLocaleDateString();
+  }, [prevDateTimeValue, email]);
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
-      <DangerBlueButton  type="submit" text={newMeetingIcon} label="New Meeting" props={styles.bn37}  />
-        
+        <DangerBlueButton
+          type="submit"
+          text={newMeetingIcon}
+          label="New Meeting"
+        />
       </form>
-
     </div>
   );
 }

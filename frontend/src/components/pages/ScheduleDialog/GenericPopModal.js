@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { ScheduleModal } from "./ScheduleModal";
 import { JoinModal } from "./JoinModal";
@@ -7,7 +8,7 @@ import { BigSuccessButton } from "../Home/buttonComposition";
 
 import { useResource } from "../Home/useResource";
 
-import { useNavigate } from "react-router-dom";
+
 import { InstantMeeting } from "./InstantMeeting";
 
 import { ControlledModal } from "./ControlledModal";
@@ -67,11 +68,11 @@ export default function GenericPopModal(props) {
     event.preventDefault();
 
     try {
-      //Test remove later
+      
       setTableData(listmeetings.meetings);
 
       props.onDataReceived(listmeetings.meetings);
-      // setDisplay(false);
+      
     } catch (error) {
       console.error(error);
     }
@@ -106,7 +107,7 @@ export default function GenericPopModal(props) {
         <ControlledForm />
 
         </ControlledModal>
-        
+
         <button onClick={() => setShouldShowModal(!shouldShowModal)}>
         {shouldShowModal ? "Hide Modal": "Show Modal"} 
         </button>

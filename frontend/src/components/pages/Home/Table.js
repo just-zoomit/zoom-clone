@@ -1,9 +1,10 @@
-import DataTable from "react-data-table-component";
 import { useState, useCallback, useEffect } from "react";
+import styled from "styled-components";
+
+import DataTable from "react-data-table-component";
 
 import { EditPopModal } from "../ScheduleDialog/EditPopModal";
 
-import styles from "./Button.module.css";
 import { element } from "./dateTime";
 
 //controling the icon font size, need to fix
@@ -30,6 +31,28 @@ const customStyles = {
   },
 };
 
+const TableContainer = styled.div`
+    border: solid .2em #f5f5f5;  
+    border-radius: 2.5em;
+    width: auto;
+    height: auto;
+    background-color:#ffffff;
+`;
+const ButtonDanger = styled.button`
+     position: relative;
+    color: grey;
+    place-items: center;
+    font-weight: bold;
+    width: 62px;
+    height: 26px;
+    border-radius: 25px;
+    border: 5;
+    margin: 0 auto;
+    grid-gap: 80px;
+    padding:0;
+    flex-direction: row;
+`;
+ 
 export default function Table({ data }) {
   const [loading] = useState(false);
 
@@ -60,13 +83,12 @@ export default function Table({ data }) {
       selector: (row) =>
         row.id ? (
           <div>
-            <button
-              className={`${styles.buttonDanger} `}
+            <ButtonDanger
               value={[row.id]}
               onClick={openModal}
             >
               <i class="material-icons large icon-blue md-48"> edit</i>
-            </button>
+            </ButtonDanger>
           </div>
         ) : (
           "No"
@@ -80,11 +102,11 @@ export default function Table({ data }) {
   return (
     <>
       {/*  outside of the columns array */}
+      <div style={{  justifyContent: "right"}}>
       {showModal ? (
         <EditPopModal setShowModal={setShowModal} row={rowData} dataa={mn} />
       ) : null}
-
-      <div className={`${styles.box} `}>
+     <TableContainer>   
         <div style={{ margin: "10px" }}>
           <DataTable
             title={element}
@@ -95,6 +117,7 @@ export default function Table({ data }) {
             pagination
           />
         </div>
+      </TableContainer>
       </div>
     </>
   );

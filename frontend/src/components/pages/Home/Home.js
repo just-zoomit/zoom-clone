@@ -30,9 +30,15 @@ function Home() {
 
   return (
     <>
+    <div style={{display: "flex", margin: "auto"}}>
+    <div style={{ margin: "auto"}}>
       <GenericPopModal onDataReceived={handleDataReceived} onClearData={handleClearData} />
+    </div>
+    <div >
       {/* <CusTable data={data} /> */}
       {data.length > 0 ? <Table data={data} /> : null}
+    </div>
+</div>
     </>
   );
 }

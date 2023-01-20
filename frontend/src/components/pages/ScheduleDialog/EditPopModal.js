@@ -1,15 +1,12 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import ReactDom from "react-dom";
 
 import { withEditableMeeting } from "./withEditableMeeting";
-import styles from "../Home/Button.module.css";
+
 // To Be Refactored
 const display = {
   display: "inline-block",
 };
-
-// export const EditPopModal = ({ setShowModal, data }) => {
-
 var passData = "";
 
 export const EditPopModal = withEditableMeeting(
