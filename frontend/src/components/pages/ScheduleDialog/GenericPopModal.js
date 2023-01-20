@@ -106,6 +106,7 @@ export default function GenericPopModal(props) {
         <ControlledForm />
 
         </ControlledModal>
+        
         <button onClick={() => setShouldShowModal(!shouldShowModal)}>
         {shouldShowModal ? "Hide Modal": "Show Modal"} 
         </button>

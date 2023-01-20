@@ -40,7 +40,11 @@ export const JoinModal = ({ setShowModal }) => {
       <div className="modal">
 
       <div style={{position: "absolute", right: "10px", top:"10px", background:"crimson" , justifycontent: "center"}}>
-              <button onClick={() => setShowModal(false)}>X</button>
+      
+      <button onClick={() => setShowModal(false)}>
+            <span class="material-symbols-outlined">cancel</span>
+          </button>
+
               </div>
 
         {setShowModal && (

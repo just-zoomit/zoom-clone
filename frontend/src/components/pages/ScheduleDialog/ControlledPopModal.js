@@ -13,7 +13,6 @@ export const Controlled_PopModal = ({ setShowModal }) => {
       setShowModal(false);
     }
   };
-
   
   // render the modal JSX in the portal div.
   return ReactDom.createPortal(

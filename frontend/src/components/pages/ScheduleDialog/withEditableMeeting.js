@@ -49,6 +49,7 @@ export const withEditableMeeting = (Component, meetingID)=> {
     onChangeMeeting={onChangeMeeting}
     onSaveMeeting={onSaveMeeting}
     onResetMeeting={onResetMeeting}
+    onDeleteMeeting={onDeleteMeeting}
     />;
 }
 }

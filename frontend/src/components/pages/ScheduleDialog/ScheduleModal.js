@@ -30,57 +30,64 @@ export const ScheduleModal = ({ setShowModal }) => {
   const [date, setDate] = useState(defaultDate);
   const [toDate, setToDate] = useState(defaultDate);
 
-
   const prevStartDate = useRef("");
   const prevEndDate = useRef("");
 
   function formatDate(date) {
     date = new Date(date);
-    
-    return date.toLocaleDateString('en-GB', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric'
+
+    return date.toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
     });
   }
 
   const handleSubmit = (event) => {
-    
     // Do something with the topic, start and end date values here
-    const startTime = formatDate(prevStartDate.current) + ' ' + time + ' ' + 'UTC'
-    const endTime = formatDate(prevEndDate.current) + ' ' + toTime + ' ' + 'UTC'
+    const startTime =
+      formatDate(prevStartDate.current) + " " + time + " " + "UTC";
+    const endTime =
+      formatDate(prevEndDate.current) + " " + toTime + " " + "UTC";
 
     const POST_OPTIONS = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          topic: topic,
-          start_time: `${startTime}`,
-          end_time: `${endTime}`,
-          role: parseInt(role, 10),
-        }),
-      };
-  
-      fetch("/api/zoom/create", POST_OPTIONS)
-        .then((data) => data.json())
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        topic: topic,
+        start_time: `${startTime}`,
+        end_time: `${endTime}`,
+        role: parseInt(role, 10),
+      }),
+    };
 
-      setShowModal(false);
-      event.preventDefault();
+    fetch("/api/zoom/create", POST_OPTIONS).then((data) => data.json());
+
+    setShowModal(false);
+    event.preventDefault();
   };
 
   useEffect(() => {
-    
-        prevStartDate.current = date + ' ' ;
-        prevEndDate.current = toDate + ' ' ;
+    prevStartDate.current = date + " ";
+    prevEndDate.current = toDate + " ";
   }, [date, toDate]);
 
   // render the modal JSX in the portal div.
   return ReactDom.createPortal(
     <div className="container" ref={modalRef} onClick={closeModal}>
       <div className="modal">
-      <div style={{position: " absolute", right: "7px", top:"7px", background:"crimson" }}>
-              <button onClick={() => setShowModal(false)}>X</button>
-              </div>
+        <div
+          style={{
+            position: " absolute",
+            right: "7px",
+            top: "7px",
+            background: "crimson",
+          }}
+        >
+          <button onClick={() => setShowModal(false)}>
+            <span class="material-symbols-outlined">cancel</span>
+          </button>
+        </div>
 
         {setShowModal && (
           <div>
@@ -139,8 +146,8 @@ export const ScheduleModal = ({ setShowModal }) => {
                   style={{ display: "inline-block" }}
                   checked={role === 1}
                   onChange={() => setState({ role: 1 })}
-                />
-                {" "}Host
+                />{" "}
+                Host
               </label>
               &nbsp; &nbsp;
               <label>
@@ -150,8 +157,8 @@ export const ScheduleModal = ({ setShowModal }) => {
                   style={{ display: "inline-block" }}
                   checked={role === 0}
                   onChange={() => setState({ role: 0 })}
-                />
-                {" "}Participant
+                />{" "}
+                Participant
               </label>
               <div className="btn-container">
                 <button type="submit" style={{ background: "blue" }}>

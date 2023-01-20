@@ -1,5 +1,5 @@
 import DataTable from "react-data-table-component";
-import { useState , useCallback, useEffect} from "react";
+import { useState, useCallback, useEffect } from "react";
 
 import { EditPopModal } from "../ScheduleDialog/EditPopModal";
 
@@ -30,36 +30,27 @@ const customStyles = {
   },
 };
 
-export default function Table({data}) {
-  const [loading, ] = useState(false);
-  
+export default function Table({ data }) {
+  const [loading] = useState(false);
+
   const [showModal, setShowModal] = useState(false);
 
   const [mn, setMn] = useState(null);
 
-  const deletHandler = (id) => {
-    console.log("deleteHandler", id);
-    if (window.confirm("Are you sure you want to delete this item?")) {
-      // deleteHandler(id);
-    }
-  };
-
-
   const [rowData, setRowData] = useState({});
 
   const openModal = useCallback(
-      function (e,row) {
-        if (!showModal) {
-          console.log("openModal");
-          e.stopPropagation();
-        }
-        setShowModal(true);
-        setMn(e.currentTarget.value);
-        setRowData(row);
-      },
-      [showModal, setShowModal ]
-    );
-
+    function (e, row) {
+      if (!showModal) {
+        console.log("openModal");
+        e.stopPropagation();
+      }
+      setShowModal(true);
+      setMn(e.currentTarget.value);
+      setRowData(row);
+    },
+    [showModal, setShowModal]
+  );
 
   const columns = [
     {
@@ -69,18 +60,12 @@ export default function Table({data}) {
       selector: (row) =>
         row.id ? (
           <div>
-            <button 
-            className={`${styles.buttonDanger} `} 
-            value={[row.id]} 
-            onClick={openModal}
+            <button
+              className={`${styles.buttonDanger} `}
+              value={[row.id]}
+              onClick={openModal}
             >
               <i class="material-icons large icon-blue md-48"> edit</i>
-            </button>
-            <button className={`${styles.buttonDanger} `} onClick ={ () => deletHandler(row.id)}>
-              <i class="material-icons large icon-blue md-48">
-                {" "}
-                delete_forever
-              </i>
             </button>
           </div>
         ) : (
@@ -89,23 +74,18 @@ export default function Table({data}) {
       right: true,
     },
   ];
-  
-  // outside of the columns array
- 
 
-  useEffect(() => {
-
-    //return document.removeEventListener("click", eventHandler);
-  }, [showModal]);
+  useEffect(() => {}, [showModal]);
 
   return (
     <>
-    {/* Moved BottomComponent.js and replaced with buttomComposition pattern */}
-    {showModal ? <EditPopModal setShowModal={setShowModal} row={rowData} dataa={mn}/> : null}
+      {/*  outside of the columns array */}
+      {showModal ? (
+        <EditPopModal setShowModal={setShowModal} row={rowData} dataa={mn} />
+      ) : null}
 
       <div className={`${styles.box} `}>
         <div style={{ margin: "10px" }}>
-
           <DataTable
             title={element}
             columns={columns}
@@ -114,7 +94,6 @@ export default function Table({data}) {
             customStyles={customStyles}
             pagination
           />
-
         </div>
       </div>
     </>
