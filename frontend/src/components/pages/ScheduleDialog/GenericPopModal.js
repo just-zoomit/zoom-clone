@@ -26,11 +26,16 @@ const DivContainer = styled.div`
 `;
 
 const joinIcon = <i class="material-icons large icon-blue md40px"> add_box</i>;
+const showIcon = <i class="material-icons large icon-blue md40px"> visibility</i>;
 const scheduleIcon = (
   <i class="material-icons large icon-blue md40px">calendar_month</i>
 );
 const listMeetingIcon = (
   <i class="material-icons large icon-blue md40px">list</i>
+);
+
+const clearMeetingIcon = (
+  <i class="material-icons large icon-blue md40px">clear_all</i>
 );
 
 export default function GenericPopModal(props) {
@@ -89,7 +94,12 @@ export default function GenericPopModal(props) {
   let button;
 
   if (isData) {
-    button = <button onClick={handleClearData}>Clear Data</button>;
+    button = ( <BigSuccessButton
+    text={clearMeetingIcon}
+    onClick={handleClearData}
+    label="Clear Data"
+  />
+    );
   } else {
     button = (
       <BigSuccessButton
@@ -128,9 +138,13 @@ export default function GenericPopModal(props) {
             <ControlledForm />
           </ControlledModal>
 
-          <button onClick={() => setShouldShowModal(!shouldShowModal)}>
-            {shouldShowModal ? "Hide Modal" : "Show Modal"}
-          </button>
+          <BigSuccessButton
+            text={showIcon}
+            label={shouldShowModal ? "Hide Modal" : "Show Modal"}
+            onClick={() => setShouldShowModal(!shouldShowModal)}
+          />
+
+
         </DivContainer>
 
         <DivContainer>
@@ -146,9 +160,12 @@ export default function GenericPopModal(props) {
             onClick={handleClick}
             label="List"
           />
-
           {/* Ex. clear Table data switch */}
-          <button onClick={handleClearData}>Clear Data</button>
+          <BigSuccessButton
+            text={clearMeetingIcon}
+            onClick={handleClearData}
+            label="Clear Data"
+          />
 
           {/* Ex. list meeting switch */}
           {/* onClick={isData ? handleClick : handleClearData} */}

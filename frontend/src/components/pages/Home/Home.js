@@ -34,6 +34,7 @@ function Home() {
     <div style={{ margin: "auto"}}>
       <GenericPopModal onDataReceived={handleDataReceived} onClearData={handleClearData} />
     </div>
+    &nbsp; &nbsp;
     <div >
       {data.length > 0 ? <Table data={data} /> : null}
     </div>
