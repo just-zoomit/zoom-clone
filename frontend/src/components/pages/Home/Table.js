@@ -35,6 +35,8 @@ export default function Table({data}) {
   
   const [showModal, setShowModal] = useState(false);
 
+  const [mn, setMn] = useState(null);
+
   const deletHandler = (id) => {
     console.log("deleteHandler", id);
     if (window.confirm("Are you sure you want to delete this item?")) {
@@ -51,7 +53,8 @@ export default function Table({data}) {
           console.log("openModal");
           e.stopPropagation();
         }
-        setShowModal(true);;
+        setShowModal(true);
+        setMn(e.currentTarget.value);
         setRowData(row);
       },
       [showModal, setShowModal ]
@@ -98,7 +101,7 @@ export default function Table({data}) {
   return (
     <>
     {/* Moved BottomComponent.js and replaced with buttomComposition pattern */}
-    {showModal ? <EditPopModal setShowModal={setShowModal} row={rowData} /> : null}
+    {showModal ? <EditPopModal setShowModal={setShowModal} row={rowData} dataa={mn}/> : null}
 
       <div className={`${styles.box} `}>
         <div style={{ margin: "10px" }}>

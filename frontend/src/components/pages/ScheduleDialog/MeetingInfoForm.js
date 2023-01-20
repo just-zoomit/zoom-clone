@@ -38,7 +38,7 @@ export const MeetingInfoForm = withEditableMeeting(({ meeting, onChangeMeeting, 
         </label>
         &nbsp; &nbsp;
         <br />
-        <label htmlFor="date">Date & Time </label>
+        <label htmlFor="date"> Date & Time </label>
         <input
           type="date"
           id="datetime-local"

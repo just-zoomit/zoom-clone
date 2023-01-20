@@ -38,7 +38,10 @@ export const JoinModal = ({ setShowModal }) => {
   return ReactDom.createPortal(
     <div className="container" ref={modalRef} onClick={closeModal}>
       <div className="modal">
-        <button onClick={() => setShowModal(false)}>X</button>
+
+      <div style={{position: "absolute", right: "10px", top:"10px", background:"crimson" , justifycontent: "center"}}>
+              <button onClick={() => setShowModal(false)}>X</button>
+              </div>
 
         {setShowModal && (
           <div>

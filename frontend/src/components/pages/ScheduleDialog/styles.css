@@ -46,28 +46,30 @@
   }
 
   .btn-container {
-    position: absolute;
-    bottom: 1;
-    right: 0;
-    
-  }
-  
-  .btn-container button {
-    float: right;
-   
-  }
+    position: relative;
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-container button {
+    display: flex;
+}
+
   .modal button {
-    position: absolute;
+    position: relative;
     top: 7px;
     right: 7px;
     padding: 8px 11px;
-    background: crimson;
+   
     color: white;
     font-weight: bold;
     border: none;
     outline: none;
     border-radius: 2px;
     cursor: pointer;
+    display: flex;
+    align-items: flex-end;
   }
 
   .bn37 {

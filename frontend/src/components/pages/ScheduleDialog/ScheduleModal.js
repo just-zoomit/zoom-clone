@@ -78,7 +78,9 @@ export const ScheduleModal = ({ setShowModal }) => {
   return ReactDom.createPortal(
     <div className="container" ref={modalRef} onClick={closeModal}>
       <div className="modal">
-        <button onClick={() => setShowModal(false)}>X</button>
+      <div style={{position: " absolute", right: "7px", top:"7px", background:"crimson" }}>
+              <button onClick={() => setShowModal(false)}>X</button>
+              </div>
 
         {setShowModal && (
           <div>
