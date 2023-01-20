@@ -8,7 +8,6 @@ import { BigSuccessButton } from "../Home/buttonComposition";
 
 import { useResource } from "../Home/useResource";
 
-
 import { InstantMeeting } from "./InstantMeeting";
 
 import { ControlledModal } from "./ControlledModal";
@@ -34,14 +33,11 @@ const listMeetingIcon = (
   <i class="material-icons large icon-blue md40px">list</i>
 );
 
-
-
 export default function GenericPopModal(props) {
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
 
   const navigate = useNavigate();
-  //const isDataEventHandler = true;
 
   const openJoinModal = () => {
     setShowModal(true);
@@ -63,17 +59,15 @@ export default function GenericPopModal(props) {
   };
 
   const listmeetings = useResource("api/zoom/listmeetings");
-  const [, setTableData] = useState(null);  
+  const [, setTableData] = useState(null);
 
   const handleClick = async (event) => {
     event.preventDefault();
 
     try {
-      
       setTableData(listmeetings.meetings);
 
       props.onDataReceived(listmeetings.meetings);
-      
     } catch (error) {
       console.error(error);
     }
@@ -81,9 +75,30 @@ export default function GenericPopModal(props) {
 
   const handleClearData = () => {
     props.onClearData();
-  }
+  };
   // Switch to show modal
   const [shouldShowModal, setShouldShowModal] = useState(false);
+
+  const [isData, setIsData] = useState(false);
+
+  // Switch button to show list meeting
+  const handleListClick = () => {
+    setIsData(!isData);
+  };
+
+  let button;
+
+  if (isData) {
+    button = <button onClick={handleClearData}>Clear Data</button>;
+  } else {
+    button = (
+      <BigSuccessButton
+        text={listMeetingIcon}
+        onClick={handleClick}
+        label="List"
+      />
+    );
+  }
 
   return (
     <>
@@ -97,22 +112,25 @@ export default function GenericPopModal(props) {
             onClick={openScheduleModal}
           />
           {showModal2 ? <JoinModal setShowModal={setShowModal2} /> : null}
-         
-          {/* Ex. Controlled Modal and Form */}
+
+          {/*
+           *
+           *   Ex. Controlled Modal and Form
+           *   (Can Remove this if not needed)
+           */}
           <ControlledModal
-          shouldShow={shouldShowModal}
-          onRequestClose={() => { 
-          alert("Modal closed")
-          setShouldShowModal(false)}}
-        >
-        <ControlledForm />
+            shouldShow={shouldShowModal}
+            onRequestClose={() => {
+              alert("Modal closed");
+              setShouldShowModal(false);
+            }}
+          >
+            <ControlledForm />
+          </ControlledModal>
 
-        </ControlledModal>
-
-        <button onClick={() => setShouldShowModal(!shouldShowModal)}>
-        {shouldShowModal ? "Hide Modal": "Show Modal"} 
-        </button>
-
+          <button onClick={() => setShouldShowModal(!shouldShowModal)}>
+            {shouldShowModal ? "Hide Modal" : "Show Modal"}
+          </button>
         </DivContainer>
 
         <DivContainer>
@@ -128,12 +146,13 @@ export default function GenericPopModal(props) {
             onClick={handleClick}
             label="List"
           />
-          
-           {/* onClick={isDataEventHandler ? handleClick : handleClearData} */}
-           {/* {label === "List" ? "List" : "Clear Data"} */}
-           {/* {label === "List" ? handleClick : handleClearData} */}
-           {/* Ex. clear Table data switch */}
+
+          {/* Ex. clear Table data switch */}
           <button onClick={handleClearData}>Clear Data</button>
+
+          {/* Ex. list meeting switch */}
+          {/* onClick={isData ? handleClick : handleClearData} */}
+          {/* {button} */}
         </DivContainer>
       </div>
     </>
