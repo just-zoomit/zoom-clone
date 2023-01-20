@@ -35,7 +35,6 @@ function Home() {
       <GenericPopModal onDataReceived={handleDataReceived} onClearData={handleClearData} />
     </div>
     <div >
-      {/* <CusTable data={data} /> */}
       {data.length > 0 ? <Table data={data} /> : null}
     </div>
 </div>

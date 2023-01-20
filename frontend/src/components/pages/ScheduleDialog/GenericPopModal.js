@@ -41,6 +41,7 @@ export default function GenericPopModal(props) {
   const [showModal2, setShowModal2] = useState(false);
 
   const navigate = useNavigate();
+  //const isDataEventHandler = true;
 
   const openJoinModal = () => {
     setShowModal(true);
@@ -127,7 +128,11 @@ export default function GenericPopModal(props) {
             onClick={handleClick}
             label="List"
           />
-          {/* Ex. clear Table data switch */}
+          
+           {/* onClick={isDataEventHandler ? handleClick : handleClearData} */}
+           {/* {label === "List" ? "List" : "Clear Data"} */}
+           {/* {label === "List" ? handleClick : handleClearData} */}
+           {/* Ex. clear Table data switch */}
           <button onClick={handleClearData}>Clear Data</button>
         </DivContainer>
       </div>
