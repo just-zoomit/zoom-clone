@@ -103,9 +103,9 @@ export default function Table({ data }) {
     <>
       {/*  outside of the columns array */}
       <div style={{  justifyContent: "right"}}>
-      {showModal ? (
-        <EditPopModal setShowModal={setShowModal} row={rowData} dataa={mn} />
-      ) : null}
+      
+      {showModal ? (<EditPopModal setShowModal={setShowModal} row={rowData} dataa={mn} />) : null}
+
      <TableContainer>   
         <div style={{ margin: "10px" }}>
           <DataTable

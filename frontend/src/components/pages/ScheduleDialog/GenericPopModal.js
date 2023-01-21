@@ -25,19 +25,6 @@ const DivContainer = styled.div`
   flex-direction: row | row-reverse | column | column-reverse;
 `;
 
-const joinIcon = <i class="material-icons large icon-blue md40px"> add_box</i>;
-const showIcon = <i class="material-icons large icon-blue md40px"> visibility</i>;
-const scheduleIcon = (
-  <i class="material-icons large icon-blue md40px">calendar_month</i>
-);
-const listMeetingIcon = (
-  <i class="material-icons large icon-blue md40px">list</i>
-);
-
-const clearMeetingIcon = (
-  <i class="material-icons large icon-blue md40px">clear_all</i>
-);
-
 export default function GenericPopModal(props) {
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
@@ -95,7 +82,7 @@ export default function GenericPopModal(props) {
 
   if (isData) {
     button = ( <BigSuccessButton
-    text={clearMeetingIcon}
+    text="clear_all"
     onClick={handleClearData}
     label="Clear Data"
   />
@@ -103,7 +90,7 @@ export default function GenericPopModal(props) {
   } else {
     button = (
       <BigSuccessButton
-        text={listMeetingIcon}
+        text="list"
         onClick={handleClick}
         label="List"
       />
@@ -117,7 +104,7 @@ export default function GenericPopModal(props) {
           <InstantMeeting onDataReceived={handleDataReceived} />
 
           <BigSuccessButton
-            text={joinIcon}
+            text="add_box"
             label="Join"
             onClick={openScheduleModal}
           />
@@ -139,7 +126,7 @@ export default function GenericPopModal(props) {
           </ControlledModal>
 
           <BigSuccessButton
-            text={showIcon}
+            text= "visibility"
             label={shouldShowModal ? "Hide Modal" : "Show Modal"}
             onClick={() => setShouldShowModal(!shouldShowModal)}
           />
@@ -149,20 +136,20 @@ export default function GenericPopModal(props) {
 
         <DivContainer>
           <BigSuccessButton
-            text={scheduleIcon}
+            text="calendar_month"
             label="Schedule"
             onClick={openJoinModal}
           />
           {showModal ? <ScheduleModal setShowModal={setShowModal} /> : null}
 
           <BigSuccessButton
-            text={listMeetingIcon}
+            text="list"
             onClick={handleClick}
             label="List"
           />
           {/* Ex. clear Table data switch */}
           <BigSuccessButton
-            text={clearMeetingIcon}
+            text="clear_all"
             onClick={handleClearData}
             label="Clear Data"
           />

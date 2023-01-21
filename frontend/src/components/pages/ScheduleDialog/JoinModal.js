@@ -3,6 +3,8 @@ import ReactDom from "react-dom";
 
 import { useNavigate } from "react-router-dom";
 
+import { ModalCloseButton } from "../Home/buttonComposition";
+
 // Adopted unControlled form pattern. It does not care about the state of the form
 
 export const JoinModal = ({ setShowModal }) => {
@@ -22,7 +24,6 @@ export const JoinModal = ({ setShowModal }) => {
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
-   
     // Do something with the topic, start and end date values here
 
     if (id.current.value === "" || password.current.value === "") {
@@ -38,14 +39,13 @@ export const JoinModal = ({ setShowModal }) => {
   return ReactDom.createPortal(
     <div className="container" ref={modalRef} onClick={closeModal}>
       <div className="modal">
-
-      <div style={{position: "absolute", right: "10px", top:"10px", background:"crimson" , justifycontent: "center"}}>
-      
-      <button onClick={() => setShowModal(false)}>
-            <span class="material-symbols-outlined">cancel</span>
-          </button>
-
-              </div>
+       
+        <ModalCloseButton
+          type="submit"
+          text="close"
+          size = "20px"
+          onClick={() => setShowModal(false)}
+        />
 
         {setShowModal && (
           <div>
@@ -82,7 +82,8 @@ export const JoinModal = ({ setShowModal }) => {
                 Participant
               </label>
               <div className="btn-container">
-                <button type="submit" style={{ background: "blue" }}>
+              
+                  <button type="submit" style={{ background:"#316efd" }}>
                   {role === 0 ? "Join Meeting" : "Start Meeting"}
                 </button>
               </div>

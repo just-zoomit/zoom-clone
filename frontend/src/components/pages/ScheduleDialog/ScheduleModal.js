@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import ReactDom from "react-dom";
+import { ModalCloseButton } from "../Home/buttonComposition";
 
 const display = {
   display: "inline-block",
@@ -76,18 +77,13 @@ export const ScheduleModal = ({ setShowModal }) => {
   return ReactDom.createPortal(
     <div className="container" ref={modalRef} onClick={closeModal}>
       <div className="modal">
-        <div
-          style={{
-            position: " absolute",
-            right: "7px",
-            top: "7px",
-            background: "crimson",
-          }}
-        >
-          <button onClick={() => setShowModal(false)}>
-            <span class="material-symbols-outlined">cancel</span>
-          </button>
-        </div>
+        
+      <ModalCloseButton
+          type="submit"
+          text="close"
+          size = "20px"
+          onClick={() => setShowModal(false)}
+        />
 
         {setShowModal && (
           <div>
@@ -161,7 +157,7 @@ export const ScheduleModal = ({ setShowModal }) => {
                 Participant
               </label>
               <div className="btn-container">
-                <button type="submit" style={{ background: "blue" }}>
+                <button type="submit" style={{ background:"#316efd" }}>
                   Submit
                 </button>
               </div>

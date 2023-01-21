@@ -1,101 +1,94 @@
-.PopModal {
-    font-family: sans-serif;
-    text-align: center;
-  }
-  .PopModal button {
-    padding: 13px 29px;
-    position: relative;
-    display: grid;
-    place-items: center;
-    width: 99px;
-    height: 99px;
-    border-radius: 25px;
-    background: #316efd;
-    font-size: 48pt;
-    font-weight: bold;
-    border: none;
-    outline: none;
-    color: white;
-    cursor: pointer;
-  }
-  
-  #portal .container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(247, 247, 247, 0.7);
-  }
-  
-  .container .modal {
-    z-index: 1;
-    width: 550px;
-    height: 440px;
-    background: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 5px;
-    position: relative;
-    animation: animate 0.3s;
-  }
 
-  .btn-container {
-    position: relative;
-    margin-top: auto;
-    display: flex;
-    justify-content: space-between;
+#portal .container {
+  
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(247, 247, 247, 0.7);
+}
+
+.container .modal {
+  font-family: sans-serif;
+  z-index: 1;
+  width: 550px;
+  height: 440px;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  position: relative;
+  animation: animate 0.3s;
+}
+
+.btn-container {
+  position: relative;
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
 }
 
 .btn-container button {
-    display: flex;
+  display: flex;
 }
 
-  .modal button {
-    position: relative;
-    top: 7px;
-    right: 7px;
-    padding: 8px 11px;
-   
-    color: white;
-    font-weight: bold;
-    border: none;
-    outline: none;
-    border-radius: 2px;
-    cursor: pointer;
-    display: flex;
-    align-items: flex-end;
-  }
+.modal button {
+  position: relative;
+  top: 7px;
+  right: 7px;
+  padding: 8px 11px;
 
-  .bn37 {
-    transition: transform 0.2s cubic-bezier(0.235, 0, 0.05, 0.95);
-    box-shadow: 0px 15px 20px rgba(81, 83, 82, 0.4);
-  }
+  color: white;
+  border: none;
+  outline: none;
+  border-radius: 25px;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-end;
 
-  .bn37:hover {
-    transform: perspective(1px) scale3d(1.044, 1.044, 1) translateZ(0) !important;
-  }
 
-  .bn37:disabled {
-    background: grey;
-    cursor: not-allowed;
-  }
+  font-weight: bold 400;
+  text-align: center;
+  vertical-align: middle;
+  transition: box-shadow 0.3s;
+  transform: translateZ(0);
+  line-height: 1.5;
+}
 
-  i.md40px {
-    font-size: 45px;
-  }
-  
+.modal::backdrop {
+  background: rgba(224, 228, 232, 0.9);
+  animation: 0.4s ease fade;
+}
 
-  @keyframes animate {
-    from {
-      transform: scale(0.5);
-    }
-    to {
-      transform: scale(1);
-    }
+.bn37 {
+  transition: transform 0.2s cubic-bezier(0.235, 0, 0.05, 0.95);
+  box-shadow: 0px 15px 20px rgba(81, 83, 82, 0.4);
+}
+
+.bn37:hover {
+  transform: perspective(1px) scale3d(1.044, 1.044, 1) translateZ(0) !important;
+}
+
+.bn37:disabled {
+  background: grey;
+  cursor: not-allowed;
+}
+
+i.md40px {
+  font-size: 45px;
+}
+
+@keyframes animate {
+  from {
+    transform: scale(0.5);
   }
+  to {
+    transform: scale(1);
+  }
+}

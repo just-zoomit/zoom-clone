@@ -4,9 +4,6 @@ import { emailRegex } from "../../shared";
 
 import { DangerBlueButton } from "../Home/buttonComposition";
 
-const newMeetingIcon = (
-  <i class="material-icons large icon-blue md40px">videocam</i>
-);
 
 // Adpoted Component Composition pattern and pass data from child to parent pattern
 
@@ -63,7 +60,7 @@ export function InstantMeeting(props) {
       <form onSubmit={handleSubmit}>
         <DangerBlueButton
           type="submit"
-          text={newMeetingIcon}
+          text="videocam"
           label="New Meeting"
         />
       </form>

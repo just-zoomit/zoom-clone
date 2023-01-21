@@ -3,6 +3,8 @@ import ReactDom from "react-dom";
 
 import { withEditableMeeting } from "./withEditableMeeting";
 
+import { ModalCloseButton } from "../Home/buttonComposition";
+
 // To Be Refactored
 const display = {
   display: "inline-block",
@@ -63,18 +65,14 @@ export const EditPopModal = withEditableMeeting(
       ReactDom.createPortal(
         <div className="container" ref={modalRef} onClick={closeModal}>
           <div className="modal">
-            <div
-              style={{
-                position: " absolute",
-                right: "7px",
-                top: "7px",
-                background: "#fa1b01",
-              }}
-            >
-              <button onClick={() => setShowModal(false)}>
-                <span class="material-symbols-outlined">cancel</span>
-              </button>
-            </div>
+
+          
+        <ModalCloseButton
+          type="submit"
+          text="close"
+          size = "20px"
+          onClick={() => setShowModal(false)}
+        />
 
             {setShowModal && (
               <div>
@@ -121,7 +119,7 @@ export const EditPopModal = withEditableMeeting(
                       Update
                     </button>
                     <button
-                      style={{ background: "#316efd" }}
+                      style={{ background: "#faa92f" }}
                       onClick={onResetMeeting}
                     >
                       Reset
