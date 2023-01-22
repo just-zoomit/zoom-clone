@@ -1,7 +1,7 @@
 import React, { useState , useEffect} from "react";
 import axios from "axios";
 
-export const withEditableMeeting = (Component, meetingID)=> {
+export const withCrudMeetingOptions = (Component, meetingID)=> {
 
 
     return props => {
@@ -34,8 +34,8 @@ export const withEditableMeeting = (Component, meetingID)=> {
         setMeeting(response.data.meeting);
     };
 
-    const onDeleteMeeting = async () => {
-        console.log("Meeting:",meeting);
+    const onDeleteMeeting = async (id) => {
+        console.log("Clicked:", id);
         const response = await axios.delete(`api/zoom/${meetingID}`, {meeting});
     };
 

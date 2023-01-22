@@ -1,9 +1,11 @@
-import React, { useRef } from "react";
+import React, { useRef,useState } from "react";
 import ReactDom from "react-dom";
 
-import { withEditableMeeting } from "./withEditableMeeting";
+import { withCrudMeetingOptions } from "./withCrudMeetingOptions";
 
 import { ModalCloseButton } from "../Home/buttonComposition";
+
+import { Button } from "./DeleteButton";
 
 // To Be Refactored
 const display = {
@@ -11,7 +13,7 @@ const display = {
 };
 var passData = "";
 
-export const EditPopModal = withEditableMeeting(
+export const UpdateMeetingModal = withCrudMeetingOptions(
   ({
     dataa,
     setShowModal,
@@ -21,6 +23,8 @@ export const EditPopModal = withEditableMeeting(
     onResetMeeting,
     onDeleteMeeting,
   }) => {
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [showModal2, setShowModal2] = useState(false);
     const getTopic = meeting || {};
     const { topic, start_time, id } = meeting || {};
 
@@ -32,6 +36,12 @@ export const EditPopModal = withEditableMeeting(
       if (e.target === modalRef.current) {
         setShowModal(false);
       }
+    };
+
+    const openScheduleModal = () => {
+      window.confirm("Are you sure you want to delete this item?")
+      setIsDeleting(true)
+      setShowModal2(true);
     };
 
     const defaultDate = new Date();
@@ -65,14 +75,12 @@ export const EditPopModal = withEditableMeeting(
       ReactDom.createPortal(
         <div className="container" ref={modalRef} onClick={closeModal}>
           <div className="modal">
-
-          
-        <ModalCloseButton
-          type="submit"
-          text="close"
-          size = "20px"
-          onClick={() => setShowModal(false)}
-        />
+            <ModalCloseButton
+              type="submit"
+              text="close"
+              size="20px"
+              onClick={() => setShowModal(false)}
+            />
 
             {setShowModal && (
               <div>
@@ -124,11 +132,11 @@ export const EditPopModal = withEditableMeeting(
                     >
                       Reset
                     </button>
-
+                    
                     <button
                       style={{ background: "#fa1b01" }}
                       onClick={onDeleteMeeting}
-                      onChange={() =>
+                      onChange={(e) =>
                         window.confirm(
                           "Are you sure you want to delete this item?"
                         )
@@ -139,6 +147,15 @@ export const EditPopModal = withEditableMeeting(
                       </i>
                     </button>
                   </div>
+
+                  &nbsp;
+                  
+                  {/* 
+                  <div>
+                    <Button onClick={() => openScheduleModal} />
+                    {!isDeleting ? onDeleteMeeting : null }
+                  </div> */}
+
                 </form>
               </div>
             )}

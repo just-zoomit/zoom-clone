@@ -32,6 +32,7 @@ export const ControlledModal = ({ shouldShow, onRequestClose, children }) => {
 					<button onClick={onRequestClose}> </button>
 					{children}
 				</ModalBody>
+				
 			</ModalBackground>
 		) : null}
 		</>

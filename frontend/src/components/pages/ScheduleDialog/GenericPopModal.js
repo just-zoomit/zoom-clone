@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { ScheduleModal } from "./ScheduleModal";
-import { JoinModal } from "./JoinModal";
+import { CreateMeetingModal } from "./CreateMeetingModal";
+import { JoinPopModal } from "./JoinPopModal";
 
 import { BigSuccessButton } from "../Home/buttonComposition";
 
@@ -11,7 +11,7 @@ import { useResource } from "../Home/useResource";
 import { InstantMeeting } from "./InstantMeeting";
 
 import { ControlledModal } from "./ControlledModal";
-import { ControlledForm } from "./ControlledForm";
+import { AuthUserForm } from "./AuthUserForm";
 
 // Adpoted Component Composition pattern
 
@@ -108,12 +108,12 @@ export default function GenericPopModal(props) {
             label="Join"
             onClick={openScheduleModal}
           />
-          {showModal2 ? <JoinModal setShowModal={setShowModal2} /> : null}
+          {showModal2 ? <JoinPopModal setShowModal={setShowModal2} /> : null}
 
           {/*
            *
            *   Ex. Controlled Modal and Form
-           *   (Can Remove this if not needed)
+           *   (Refactor Logic to auth external users)
            */}
           <ControlledModal
             shouldShow={shouldShowModal}
@@ -122,7 +122,7 @@ export default function GenericPopModal(props) {
               setShouldShowModal(false);
             }}
           >
-            <ControlledForm />
+            <AuthUserForm />
           </ControlledModal>
 
           <BigSuccessButton
@@ -140,7 +140,7 @@ export default function GenericPopModal(props) {
             label="Schedule"
             onClick={openJoinModal}
           />
-          {showModal ? <ScheduleModal setShowModal={setShowModal} /> : null}
+          {showModal ? <CreateMeetingModal setShowModal={setShowModal} /> : null}
 
           <BigSuccessButton
             text="list"

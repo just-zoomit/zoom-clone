@@ -7,7 +7,7 @@ import { ModalCloseButton } from "../Home/buttonComposition";
 
 // Adopted unControlled form pattern. It does not care about the state of the form
 
-export const JoinModal = ({ setShowModal }) => {
+export const JoinPopModal = ({ setShowModal }) => {
   // close the modal when clicking outside the modal.
   const modalRef = useRef();
 

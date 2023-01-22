@@ -6,8 +6,10 @@ const display = {
   display: "inline-block",
 };
 
-// Adopted Controlled form pattern. It does care about the state of the form
-export const ScheduleModal = ({ setShowModal }) => {
+//ScheduleModal component defines the modal that pops up when the user clicks on the "Schedule" button. 
+//It demonstrates the use of controlled form pattern and shows how to schedule/create a meeting.
+// Adopted Controlled form pattern. It does care about the state of the form and the state of the input fields.
+export const CreateMeetingModal = ({ setShowModal }) => {
   // close the modal when clicking outside the modal.
   const modalRef = useRef();
 

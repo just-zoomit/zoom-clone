@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import DataTable from "react-data-table-component";
 
-import { EditPopModal } from "../ScheduleDialog/EditPopModal";
+import { UpdateMeetingModal } from "../ScheduleDialog/UpdateMeetingModal";
 
 import { element } from "./dateTime";
 
@@ -104,7 +104,7 @@ export default function Table({ data }) {
       {/*  outside of the columns array */}
       <div style={{  justifyContent: "right"}}>
       
-      {showModal ? (<EditPopModal setShowModal={setShowModal} row={rowData} dataa={mn} />) : null}
+      {showModal ? (<UpdateMeetingModal setShowModal={setShowModal} row={rowData} dataa={mn} />) : null}
 
      <TableContainer>   
         <div style={{ margin: "10px" }}>

@@ -4,7 +4,7 @@ import {useState, useEffect} from "react";
     Adpoted the controlled form pattern. It cares about the state of the form.
 */
 
-export const ControlledForm = () => {
+export const AuthUserForm = () => {
     const [nameInputError, setNameInputError] = useState('');
     const initialFormData = {
         name: '',

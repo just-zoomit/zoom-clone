@@ -1,8 +1,8 @@
-import { withEditableMeeting } from "./withEditableMeeting";
+import { withCrudMeetingOptions } from "./withCrudMeetingOptions";
 
 
-// REFERENCE:
-export const MeetingInfoForm = withEditableMeeting(({ meeting, onChangeMeeting, onSaveMeeting, onResetMeeting }) => {
+// REFERENCE:REFERENCE:REFERENCE:
+export const MeetingInfoForm = withCrudMeetingOptions(({ meeting, onChangeMeeting, onSaveMeeting, onResetMeeting }) => {
     const getTopic = meeting || {};
 
     const convertDate = (dateString) => {
