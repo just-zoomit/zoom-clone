@@ -75,11 +75,24 @@ const StyledH3 = styled.h3`
     text-align: center;
 `;
 
-var passData = "";
+// This function handles the page load. When a button is clicked it shows wrong data. 
+// The correct data is only shown when the page is manually refreshed.
+const localStorageMeetingID = key => {
+  
+  const existing = localStorage.getItem('meetingID');
+  const temp = localStorage.getItem('tempMeetingID');
+
+  localStorage.setItem('tempMeetingID', existing)
+  const data = existing == temp ?  temp : existing;
+  localStorage.setItem('meetingID', data);
+
+  return localStorage.getItem(key);
+}
+
 
 export const UpdateMeetingModal = withCrudMeetingOptions(
   ({
-    dataa,
+  
     setShowModal,
     meeting,
     onChangeMeeting,
@@ -131,8 +144,7 @@ export const UpdateMeetingModal = withCrudMeetingOptions(
 
     const newDate = convertDate(getTopic.start_time).split(" ");
 
-    passData = dataa || {};
-    console.log("editDataa:", passData);
+  
 
     // render the modal JSX in the portal div one topic and start_time loads
     return meeting ? (
@@ -161,10 +173,10 @@ export const UpdateMeetingModal = withCrudMeetingOptions(
                   />
                <label htmlFor="topic">Topic:</label>
                </StyledTextbox>
-               &nbsp; &nbsp;
-
-                  <label htmlFor="date">Date & Time </label>
-                  <br />
+            
+               
+                  <h3>Date & Time</h3>
+            
                   <input
                     type="date"
                     id="datetime-local"
@@ -235,5 +247,5 @@ export const UpdateMeetingModal = withCrudMeetingOptions(
       <p>Loading...</p>
     );
   },
-  "94431876430"
+  localStorageMeetingID("meetingID")
 );

@@ -58,9 +58,10 @@ export default function Table({ data }) {
 
   const [showModal, setShowModal] = useState(false);
 
-  const [mn, setMn] = useState(null);
 
-  const [rowData, setRowData] = useState({});
+
+  // set local storage value for meeting id
+
 
   const openModal = useCallback(
     function (e, row) {
@@ -68,11 +69,18 @@ export default function Table({ data }) {
         console.log("openModal");
         e.stopPropagation();
       }
+    
+      if(!localStorage.getItem("meetingID")){
+      localStorage.setItem("meetingID", e.currentTarget.value);
+      }else {
+        localStorage.removeItem("meetingID");
+        localStorage.setItem("meetingID", e.currentTarget.value);
+      }
+
       setShowModal(true);
-      setMn(e.currentTarget.value);
-      setRowData(row);
+    
     },
-    [showModal, setShowModal]
+    [showModal, setShowModal,localStorage]
   );
 
   const columns = [
@@ -104,7 +112,7 @@ export default function Table({ data }) {
       {/*  outside of the columns array */}
       <div style={{  justifyContent: "right"}}>
       
-      {showModal ? (<UpdateMeetingModal setShowModal={setShowModal} row={rowData} dataa={mn} />) : null}
+      {showModal ? (<UpdateMeetingModal setShowModal={setShowModal}  />) : null}
 
      <TableContainer>   
         <div style={{ margin: "10px" }}>
