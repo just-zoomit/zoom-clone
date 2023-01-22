@@ -69,7 +69,7 @@ export const CloseButton = ({ size, color, text, ...props }) => {
          }}
       {...props}
     >
-      <i  style={{ fontSize: size }} class="material-icons large icon-blue md40px"> {text} </i>
+      <i  style={{ fontSize: "20px" }} class="material-icons large icon-blue md40px"> {text} </i>
     </button>
 
     </div>
@@ -77,7 +77,7 @@ export const CloseButton = ({ size, color, text, ...props }) => {
 };
 
 export const ModalCloseButton = (props) => {
-  return <CloseButton {...props} color="crimson" />;
+  return <CloseButton {...props} color="#faa92f" />;
 };
 
 

@@ -43,8 +43,8 @@ export const AuthUserForm = () => {
     const handleSubmit = (event) => {
       
         event.preventDefault();
+        
         //submit the form data to the server here
-
         setFormData(initialFormData); // reset the form data to its initial 
 
     }

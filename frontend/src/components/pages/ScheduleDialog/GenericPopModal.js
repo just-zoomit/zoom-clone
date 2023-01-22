@@ -13,6 +13,9 @@ import { InstantMeeting } from "./InstantMeeting";
 import { ControlledModal } from "./ControlledModal";
 import { AuthUserForm } from "./AuthUserForm";
 
+import GlobalStyle from './theme/globalStyles';
+
+
 // Adpoted Component Composition pattern
 
 const DivContainer = styled.div`
@@ -108,6 +111,7 @@ export default function GenericPopModal(props) {
             label="Join"
             onClick={openScheduleModal}
           />
+          <GlobalStyle />
           {showModal2 ? <JoinPopModal setShowModal={setShowModal2} /> : null}
 
           {/*

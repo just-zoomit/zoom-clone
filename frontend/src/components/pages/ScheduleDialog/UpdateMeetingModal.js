@@ -1,4 +1,4 @@
-import React, { useRef,useState } from "react";
+import React, { useRef, useState } from "react";
 import ReactDom from "react-dom";
 
 import { withCrudMeetingOptions } from "./withCrudMeetingOptions";
@@ -7,7 +7,7 @@ import { ModalCloseButton } from "../Home/buttonComposition";
 
 import { Button } from "./DeleteButton";
 
-import styled from 'styled-components';
+import styled from "styled-components";
 
 // To Be Refactored
 const display = {
@@ -16,16 +16,14 @@ const display = {
 
 const StyledTextbox = styled.div`
   position: relative;
- 
+
   label {
     position: absolute;
     display: grid;
     place-items: center;
-    transform-origin: 0% 0%;
     pointer-events: none;
     top: 4px;
     left: 4px;
-    height: 32px;
     width: 90px;
     border-radius: 27px;
     background: #5071fa;
@@ -38,21 +36,17 @@ const StyledTextbox = styled.div`
     height: 40px;
     border-radius: 30px;
     background: white;
-    border: 1px solid blue;
     borderccolor: blue;
     padding-left: 126px;
-    font-size: 12px;
-    font-family: "Euclid Circular A";
     color: rgb(29 26 26 / 96%);
-    outline: blue;
     transition: 0.3s;
 
     &::placeholder {
       color: black;
     }
-   
-    &:focus, &:valid {
-      
+
+    &:focus,
+    &:valid {
       padding-right: 20px;
     }
   }
@@ -61,38 +55,25 @@ const StyledTextbox = styled.div`
     translate: 0 -56px;
     scale: 0.825;
   }
-
 `;
 
 /* Dialog Title */
-const StyledH3 = styled.h3`
-    width: 90vw;
-    max-width: 20rem;
-    padding: 1em;
-    background: #fff;
-    color: #656e77;
-    border: 0;
-    text-align: center;
-`;
 
-// This function handles the page load. When a button is clicked it shows wrong data. 
+// This function handles the page load. When a button is clicked it shows wrong data.
 // The correct data is only shown when the page is manually refreshed.
-const localStorageMeetingID = key => {
-  
-  const existing = localStorage.getItem('meetingID');
-  const temp = localStorage.getItem('tempMeetingID');
+const localStorageMeetingID = (key) => {
+  const existing = localStorage.getItem("meetingID");
+  const temp = localStorage.getItem("tempMeetingID");
 
-  localStorage.setItem('tempMeetingID', existing)
-  const data = existing == temp ?  temp : existing;
-  localStorage.setItem('meetingID', data);
+  localStorage.setItem("tempMeetingID", existing);
+  const data = existing == temp ? temp : existing;
+  localStorage.setItem("meetingID", data);
 
   return localStorage.getItem(key);
-}
-
+};
 
 export const UpdateMeetingModal = withCrudMeetingOptions(
   ({
-  
     setShowModal,
     meeting,
     onChangeMeeting,
@@ -116,8 +97,8 @@ export const UpdateMeetingModal = withCrudMeetingOptions(
     };
 
     const openScheduleModal = () => {
-      window.confirm("Are you sure you want to delete this item?")
-      setIsDeleting(true)
+      window.confirm("Are you sure you want to delete this item?");
+      setIsDeleting(true);
       setShowModal2(true);
     };
 
@@ -144,8 +125,6 @@ export const UpdateMeetingModal = withCrudMeetingOptions(
 
     const newDate = convertDate(getTopic.start_time).split(" ");
 
-  
-
     // render the modal JSX in the portal div one topic and start_time loads
     return meeting ? (
       ReactDom.createPortal(
@@ -160,23 +139,21 @@ export const UpdateMeetingModal = withCrudMeetingOptions(
 
             {setShowModal && (
               <div>
-              <StyledH3>Schedule</StyledH3>
+                <h3>Schedule</h3>
                 <form>
-
-                <StyledTextbox> 
-              <input
-                type="text"
-                id="topic"
-                placeholder="Topic"
-                value={getTopic.topic}
-                onChange={(e) => onChangeMeeting({ topic: e.target.value })}
-                  />
-               <label htmlFor="topic">Topic:</label>
-               </StyledTextbox>
-            
-               
+                  <StyledTextbox>
+                    <input
+                      type="text"
+                      id="topic"
+                      placeholder="Topic"
+                      value={getTopic.topic}
+                      onChange={(e) =>
+                        onChangeMeeting({ topic: e.target.value })
+                      }
+                    />
+                    <label htmlFor="topic">Topic:</label>
+                  </StyledTextbox>
                   <h3>Date & Time</h3>
-            
                   <input
                     type="date"
                     id="datetime-local"
@@ -212,7 +189,7 @@ export const UpdateMeetingModal = withCrudMeetingOptions(
                     >
                       Reset
                     </button>
-                    
+
                     <button
                       style={{ background: "#fa1b01" }}
                       onClick={onDeleteMeeting}
@@ -227,15 +204,12 @@ export const UpdateMeetingModal = withCrudMeetingOptions(
                       </i>
                     </button>
                   </div>
-
                   &nbsp;
-                  
                   {/* 
                   <div>
                     <Button onClick={() => openScheduleModal} />
                     {!isDeleting ? onDeleteMeeting : null }
                   </div> */}
-
                 </form>
               </div>
             )}

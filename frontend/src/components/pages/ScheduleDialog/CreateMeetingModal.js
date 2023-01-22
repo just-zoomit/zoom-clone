@@ -39,8 +39,7 @@ const StyledTextbox = styled.div`
     border: 1px solid blue;
     borderccolor: blue;
     padding-left: 126px;
-    font-size: 12px;
-    font-family: "Euclid Circular A";
+
     color: rgb(29 26 26 / 96%);
     outline: blue;
     transition: 0.3s;
@@ -60,17 +59,6 @@ const StyledTextbox = styled.div`
     scale: 0.825;
   }
 
-`;
-
-/* Dialog Title */
-const StyledH3 = styled.h3`
-    width: 90vw;
-    max-width: 20rem;
-    padding: 1em;
-    background: #fff;
-    color: #656e77;
-    border: 0;
-    text-align: center;
 `;
 
 export const CreateMeetingModal = ({ setShowModal }) => {
@@ -153,7 +141,7 @@ export const CreateMeetingModal = ({ setShowModal }) => {
 
         {setShowModal && (
           <div>
-            <StyledH3>Schedule</StyledH3>
+            <h3>Schedule</h3>
             <form onSubmit={handleSubmit}>
 
              
