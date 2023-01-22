@@ -5,7 +5,73 @@ import { useNavigate } from "react-router-dom";
 
 import { ModalCloseButton } from "../Home/buttonComposition";
 
+import styled from 'styled-components';
+
 // Adopted unControlled form pattern. It does not care about the state of the form
+
+const StyledTextbox = styled.div`
+  position: relative;
+ 
+
+  label {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    transform-origin: 0% 0%;
+    pointer-events: none;
+    top: 4px;
+    left: 4px;
+    height: 32px;
+    width: 90px;
+    border-radius: 27px;
+    background: #5071fa;
+    color: rgb(255 255 255 / 80%);
+    transition: 0.3s;
+  }
+
+  input {
+    width: 300px;
+    height: 40px;
+    border-radius: 30px;
+    background: white;
+    border: 1px solid blue;
+    borderccolor: blue;
+    padding-left: 126px;
+    font-size: 12px;
+    font-family: "Euclid Circular A";
+    color: rgb(29 26 26 / 96%);
+    outline: blue;
+    transition: 0.3s;
+
+    &::placeholder {
+      color: black;
+    }
+   
+    &:focus, &:valid {
+      padding-right: 20px;
+    }
+  }
+
+  & :is(input:focus) ~ label {
+    translate: 0 -56px;
+    scale: 0.825;
+  }
+`;
+
+/* Dialog Title */
+const StyledH3 = styled.h3`
+    width: 90vw;
+    max-width: 20rem;
+    padding: 1em;
+    background: #fff;
+    color: #656e77;
+    border: 0;
+    text-align: center;
+`;
+
+
+
+
 
 export const JoinPopModal = ({ setShowModal }) => {
   // close the modal when clicking outside the modal.
@@ -38,27 +104,35 @@ export const JoinPopModal = ({ setShowModal }) => {
   // render the modal JSX in the portal div.
   return ReactDom.createPortal(
     <div className="container" ref={modalRef} onClick={closeModal}>
+     
       <div className="modal">
-       
+    
         <ModalCloseButton
           type="submit"
           text="close"
           size = "20px"
           onClick={() => setShowModal(false)}
         />
-
+       
         {setShowModal && (
-          <div>
-            <p>Join Meeting</p>
+          <div >
+          <StyledH3>Join Meeting</StyledH3>
+          &nbsp; &nbsp;
             <form onSubmit={handleSubmit}>
-              <label htmlFor="topic">Meeting Number</label>
-              <br />
-              <input type="text" id="topic" ref={id} required={true} />
-              <br />
-              <label htmlFor="topic">Meeting Password</label>
-              <br />
-              <input type="text" id="topic" ref={password} required={true} />
+              
+            <StyledTextbox>
+              <input type="text" id="topic" placeholder="Meeting ID" ref={id} required={true} />
+              <label htmlFor="topic">ID</label>
+              </StyledTextbox>
+              &nbsp; &nbsp;
+             
+             <StyledTextbox> 
+              <input type="text" id="topic" placeholder="Meeting Password" ref={password} required={true} />
+              <label htmlFor="topic">Password</label>
+              </StyledTextbox>
+
               <hr class="solid"></hr>
+
               <p>Role Type</p>
               <label>
                 <input
@@ -70,6 +144,7 @@ export const JoinPopModal = ({ setShowModal }) => {
                 />{" "}
                 Host
               </label>
+
               &nbsp; &nbsp;
               <label>
                 <input
@@ -81,6 +156,7 @@ export const JoinPopModal = ({ setShowModal }) => {
                 />{" "}
                 Participant
               </label>
+
               <div className="btn-container">
               
                   <button type="submit" style={{ background:"#316efd" }}>

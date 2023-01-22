@@ -7,10 +7,74 @@ import { ModalCloseButton } from "../Home/buttonComposition";
 
 import { Button } from "./DeleteButton";
 
+import styled from 'styled-components';
+
 // To Be Refactored
 const display = {
   display: "inline-block",
 };
+
+const StyledTextbox = styled.div`
+  position: relative;
+ 
+  label {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    transform-origin: 0% 0%;
+    pointer-events: none;
+    top: 4px;
+    left: 4px;
+    height: 32px;
+    width: 90px;
+    border-radius: 27px;
+    background: #5071fa;
+    color: rgb(255 255 255 / 80%);
+    transition: 0.3s;
+  }
+
+  input {
+    width: 300px;
+    height: 40px;
+    border-radius: 30px;
+    background: white;
+    border: 1px solid blue;
+    borderccolor: blue;
+    padding-left: 126px;
+    font-size: 12px;
+    font-family: "Euclid Circular A";
+    color: rgb(29 26 26 / 96%);
+    outline: blue;
+    transition: 0.3s;
+
+    &::placeholder {
+      color: black;
+    }
+   
+    &:focus, &:valid {
+      
+      padding-right: 20px;
+    }
+  }
+
+  & :is(input:focus) ~ label {
+    translate: 0 -56px;
+    scale: 0.825;
+  }
+
+`;
+
+/* Dialog Title */
+const StyledH3 = styled.h3`
+    width: 90vw;
+    max-width: 20rem;
+    padding: 1em;
+    background: #fff;
+    color: #656e77;
+    border: 0;
+    text-align: center;
+`;
+
 var passData = "";
 
 export const UpdateMeetingModal = withCrudMeetingOptions(
@@ -84,17 +148,21 @@ export const UpdateMeetingModal = withCrudMeetingOptions(
 
             {setShowModal && (
               <div>
-                <p>Schedule</p>
+              <StyledH3>Schedule</StyledH3>
                 <form>
-                  <label htmlFor="topic">Topic:</label>
-                  <br />
-                  <input
-                    type="text"
-                    id="topic"
-                    value={getTopic.topic}
-                    onChange={(e) => onChangeMeeting({ topic: e.target.value })}
+
+                <StyledTextbox> 
+              <input
+                type="text"
+                id="topic"
+                placeholder="Topic"
+                value={getTopic.topic}
+                onChange={(e) => onChangeMeeting({ topic: e.target.value })}
                   />
-                  <br />
+               <label htmlFor="topic">Topic:</label>
+               </StyledTextbox>
+               &nbsp; &nbsp;
+
                   <label htmlFor="date">Date & Time </label>
                   <br />
                   <input
