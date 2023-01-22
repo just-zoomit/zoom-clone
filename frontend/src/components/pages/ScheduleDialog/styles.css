@@ -66,6 +66,22 @@
   animation: 0.4s ease fade;
 }
 
+.modal-close {
+  color: #aaa;
+  line-height: 50px;
+  font-size: 80%;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 0;
+  width: 70px;
+  text-decoration: none;
+  
+  &:hover {
+    color: black;
+  }
+}
+
 .bn37 {
   transition: transform 0.2s cubic-bezier(0.235, 0, 0.05, 0.95);
   box-shadow: 0px 15px 20px rgba(81, 83, 82, 0.4);

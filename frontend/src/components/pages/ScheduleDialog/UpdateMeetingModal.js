@@ -66,7 +66,7 @@ const localStorageMeetingID = (key) => {
   const temp = localStorage.getItem("tempMeetingID");
 
   localStorage.setItem("tempMeetingID", existing);
-  const data = existing == temp ? temp : existing;
+  const data = existing === temp ? temp : existing;
   localStorage.setItem("meetingID", data);
 
   return localStorage.getItem(key);
