@@ -1,12 +1,13 @@
 import styled from "styled-components";
 import "../ScheduleDialog/styles.css";
 
+//Not used
+
 const Buttoner = styled.button`
   padding: 0;
   font-size: 16px;
   background: #316efd;
   background-color: #316efd;
-
   position: relative;
   display: grid;
   placeitems: center;
@@ -18,6 +19,7 @@ const Buttoner = styled.button`
   color: white;
 `;
 
+//Not used
 const StyledTextbox = styled.button`
   color: #aaa;
   line-height: 50px;
@@ -36,6 +38,7 @@ const StyledTextbox = styled.button`
 
 // Adpoted Component Composition pattern, parent component of GenericPopModal
 
+// Convert to styled component
 export const Button = ({ size, color, text, label, ...props }) => {
   return (
     <div>
@@ -65,6 +68,7 @@ export const Button = ({ size, color, text, label, ...props }) => {
   );
 };
 
+// Convert to styled component
 export const CloseButton = ({ size, color, text, ...props }) => {
   return (
     <div>

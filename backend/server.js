@@ -16,6 +16,12 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use('/login', (req, res) => {
+  res.send({
+    token: 'test123'
+  });
+});
+
 // Must be before any other routes. Remove this line if you don't want to use the default route.
 app.get('/api', (req, res) => {
   res.send(' Backend API is working');

@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import Table from "./Table";
 import GenericPopModal from "../ScheduleDialog/GenericPopModal";
+import { AuthUserForm } from "../ScheduleDialog/ZoomAuth/AuthUserForm";
+import useToken  from "../ScheduleDialog/ZoomAuth/useToken";
+
+
 
 function Home() {
   //Create react module for the buttons
@@ -18,6 +22,13 @@ function Home() {
 
   const [data, setData] = useState([]);
   const [, setDataFetched] = useState(false);
+
+
+  const { token, setToken } = useToken();
+
+  if(!token) {
+    return <AuthUserForm  setToken={setToken} />
+  }
 
   const handleDataReceived = (newData) => {
     setData(newData);

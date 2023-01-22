@@ -2,7 +2,9 @@ import {useState, useEffect} from "react";
 
 /*
     Adpoted the controlled form pattern. It cares about the state of the form.
+    Reference 
 */
+
 
 export const AuthUserForm = () => {
     const [nameInputError, setNameInputError] = useState('');
@@ -27,6 +29,9 @@ export const AuthUserForm = () => {
 
     // Benefit of controlled form is that we can
     // use the state to do things like validation
+
+
+
     useEffect(() => {
         
         if (name.length < 2) {
@@ -87,3 +92,4 @@ export const AuthUserForm = () => {
 
     )
 }
+

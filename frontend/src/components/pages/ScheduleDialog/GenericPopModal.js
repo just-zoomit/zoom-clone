@@ -11,7 +11,7 @@ import { useResource } from "../Home/useResource";
 import { InstantMeeting } from "./InstantMeeting";
 
 import { ControlledModal } from "./ControlledModal";
-import { AuthUserForm } from "./AuthUserForm";
+import { AuthUserForm } from "./ZoomAuth/AuthUserForm";
 
 import GlobalStyle from './theme/globalStyles';
 
