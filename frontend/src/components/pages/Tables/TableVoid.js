@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import ReactDom from "react-dom";
 import DataTable from "react-data-table-component";
@@ -8,9 +8,14 @@ import { ModalCloseButton } from "../Home/buttonComposition";
 import { useResource } from "../hooks/useResource";
 import useAxios from "../hooks/useAxios";
 
+import { UpdateForm } from "../ScheduleDialog/UpdateForm";
+
+import { json } from "react-router";
+
 import { ButtonDanger } from "../theme/globalStyles";
 import { TableContainer, StyledTextbox } from "./TableComponents";
-import moment from 'moment';
+
+import { Button } from "./DeleteButton";
 
 //  Internally, customStyles will deep merges your customStyles with the default styling.
 const customStyles = {
@@ -62,24 +67,16 @@ export default function Table2() {
   const closeModal = (e) => {
     if (e.target === modalRef.current) {
       setMeeting(null);
+    
       setOpenModal(false);
     }
   };
 
   const [meeting, setMeeting] = useState();
   const [openModal, setOpenModal] = useState(false);
-  const [formData, setFormData] = useState({});
 
   const [id, setId] = useState(null);
-  const {
-    data,
-    error,
-    loading,
-    updateData,
-    changeData,
-    deleteData,
-    resetData,
-  } = useAxios(`api/zoom`, id) || {};
+  const { data, error, loading, updateData, deleteData, resetData } = useAxios(`api/zoom`,id);
 
   const listmeetings = useResource("api/zoom/listmeetings");
   const newData = listmeetings?.meetings?.map((item) => ({
@@ -87,21 +84,19 @@ export default function Table2() {
     topic: item.topic,
   }));
 
+
+
   const getMeetingInfo = async (id) => {
     const response = await axios.get(`api/zoom/${id}`);
 
     setMeeting(response.data);
     setId(id);
+    setTimeout(() => {
+
     setOpenModal(true);
-  };
-
-
-  useEffect(() => {
-    if (data) {
-      console.log("Form data Set");
-      setFormData(data);
     }
-  }, [data]);
+    , 1000);
+  };
 
   if (loading) {
     return <p>Loading...</p>;
@@ -113,14 +108,10 @@ export default function Table2() {
 
   const columns = [
     {
-      selector: (row) => (
-        <div onClick={(e) => e.stopPropagation()}>{row.topic}</div>
-      ),
+      selector: (row) => <div onClick={(e) => e.stopPropagation()}>{row.topic}</div>,
     },
     {
-      selector: (row) => (
-        <div onClick={(e) => e.stopPropagation()}>{row.keyField}</div>
-      ),
+      selector: (row) => <div onClick={(e) => e.stopPropagation()}>{row.keyField}</div>,
     },
     {
       selector: (row) =>
@@ -133,14 +124,18 @@ export default function Table2() {
               <i class="material-icons large icon-blue md-48"> edit</i>
             </ButtonDanger>
           </div>
-        ) : (
-          <p>Loading</p>
-        ),
+        ) : <p>Loading</p>,
     },
-  ];
+];
 
-  formData.start_time = moment(formData.start_time).format('YYYY-MM-DD HH:mm')
-  
+
+
+  // const newDate = convertDate(meeting.start_time).split(" ");
+
+
+  console.log("meeting", meeting);
+  console.log("meetingID", id);
+
   return (
     <div style={{ maxWidth: "100vw", overflowX: "scroll" }}>
       <TableContainer>
@@ -155,12 +150,10 @@ export default function Table2() {
           />
         </div>
       </TableContainer>
-
       {!!meeting &&
         ReactDom.createPortal(
           <div className="container" ref={modalRef} onClick={closeModal}>
             <div className="modal">
-            
               <ModalCloseButton
                 type="submit"
                 text="close"
@@ -168,58 +161,7 @@ export default function Table2() {
                 onClick={closeModal}
               />
 
-              {openModal ? (
-                <div>
-                  <h3>Schedule</h3>
-                  <form>
-                    <StyledTextbox>
-                      <input
-                        type="text"
-                        id="topic"
-                        placeholder="Topic"
-                        value={formData.topic}
-                        onChange={(e) => changeData({ topic: e.target.value })}
-    
-                      />
-                      <label htmlFor="topic">Topic:</label>
-                    </StyledTextbox>
-                    <h3>Date & Time</h3>
-                    <hr class="solid"></hr>
-                   
-                    <input
-                      type="datetime-local"
-                      value={formData.start_time}
-                      required={true}
-                      onChange={(e) =>
-                        changeData({ start_time: e.target.value })
-                      }
-                      style={display}
-                    />
-                    <br />
-                    <div style={{ display: "block" }}>
-                      <button
-                        style={{ color: "black" }}
-                        onClick={() => updateData({ some: "new data" })}
-                      >
-                        Update Data
-                      </button>
-                      &nbsp;
-                      <button style={{ color: "black" }} onClick={resetData}>
-                        {" "}
-                        Reset Data
-                      </button>
-                      &nbsp;
-                      <button style={{ color: "black" }} onClick={deleteData}>
-                        {" "}
-                        Delete Data
-                      </button>
-                    </div>
-                    &nbsp;
-                  </form>
-                </div>
-              ) : (
-                <p>Loading</p>
-              )}
+              {openModal && (<UpdateForm mnID={id} />)}
             </div>
           </div>,
           document.getElementById("portal")

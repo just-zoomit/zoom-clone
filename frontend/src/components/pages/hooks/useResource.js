@@ -9,7 +9,6 @@ export const useResource = (resourceUrl) => {
     useEffect(() => {
         (async () => {
             const response = await axios.get(resourceUrl);
-            console.log("UseResource response.data: ", response.data)
             setResources(response.data);
         })();
     }, [resourceUrl]);
