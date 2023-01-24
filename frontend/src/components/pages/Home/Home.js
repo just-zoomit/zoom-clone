@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import Table from "./Table";
 import GenericPopModal from "../ScheduleDialog/GenericPopModal";
-import { AuthUserForm } from "../ScheduleDialog/ZoomAuth/AuthUserForm";
-import useToken  from "../ScheduleDialog/ZoomAuth/useToken";
-
+import { AuthUserForm } from "../ZoomAuth/AuthUserForm";
+import useToken  from "../ZoomAuth/useToken";
+import  Table2  from "../Tables/Table";
 
 
 function Home() {
@@ -48,7 +47,7 @@ function Home() {
     </div>
     &nbsp; &nbsp;
     <div >
-      {data.length > 0 ? <Table data={data} /> : null}
+      {data.length > 0 ? <Table2  /> : null}
     </div>
 </div>
     </>

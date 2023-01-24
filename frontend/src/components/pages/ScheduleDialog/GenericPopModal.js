@@ -6,15 +6,15 @@ import { JoinPopModal } from "./JoinPopModal";
 
 import { BigSuccessButton } from "../Home/buttonComposition";
 
-import { useResource } from "../Home/useResource";
+import { useResource } from "../hooks/useResource";
 
 import { InstantMeeting } from "./InstantMeeting";
 
 import { ControlledModal } from "./ControlledModal";
 import { ControlledForm } from "./ControlledForm";
-import { AuthUserForm } from "./ZoomAuth/AuthUserForm";
+import { AuthUserForm } from "../ZoomAuth/AuthUserForm";
 
-import {GlobalStyle} from './theme/globalStyles';
+import {GlobalStyle} from '../theme/globalStyles';
 
 
 // Adpoted Component Composition pattern

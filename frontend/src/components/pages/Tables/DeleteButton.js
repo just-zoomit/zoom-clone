@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 
 const StyledButton = styled.button`
-  display: flex;
+  display: block;
   align-items: center;
   justify-content: center;
   border-radius: 10px;
@@ -14,8 +14,8 @@ const StyledButton = styled.button`
   font-weight: 400;
   font-family: "Euclid Circular A";
   color: #f9f9f9;
-  padding: 0 16px 0 24px;
-  height: 66px;
+  padding: 7px 16px 0 24px;
+  height: 46px;
   width: 260px;
   text-align: left;
   cursor: pointer;
@@ -60,6 +60,7 @@ export const Button = () => {
      <>
     <StyledButton
       // onClick={handleClick} 
+      type="submit"
       className={isDeleting || isDeleted ? "deleting" : ""}
       disabled={isDeleting || isDeleted}
     >

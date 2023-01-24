@@ -6,7 +6,7 @@ import Home from './components/pages/Home/Home';
 import ZoomMSDK from './components/pages/ZoomMSDK/ZoomMSDK';
 // import ExampleModal from './components/pages/ScheduleDialog/ExampleModal';
 import GenericPopModal from './components/pages/ScheduleDialog/GenericPopModal';
-import Table2 from './components/pages/Home/Tables/Table2';
+import Table2 from './components/pages/Tables/Table';
 
 import "./App.css";
 

@@ -3,15 +3,17 @@ import styled from "styled-components";
 import ReactDom from "react-dom";
 import DataTable from "react-data-table-component";
 import axios from "axios";
-import { element } from "../dateTime";
-import { ModalCloseButton } from "../buttonComposition";
-import { useResource } from "../useResource";
-import useAxios from "../useAxios";
+import { element } from "../Home/dateTime";
+import { ModalCloseButton } from "../Home/buttonComposition";
+import { useResource } from "../hooks/useResource";
+import useAxios from "../hooks/useAxios";
 
 import { json } from "react-router";
 
-import { ButtonDanger } from "../../ScheduleDialog/theme/globalStyles";
-import { TableContainer, StyledTextbox } from "./Table2Components";
+import { ButtonDanger } from "../theme/globalStyles";
+import { TableContainer, StyledTextbox } from "./TableComponents";
+
+import { Button } from "./DeleteButton";
 
 //  Internally, customStyles will deep merges your customStyles with the default styling.
 const customStyles = {
@@ -60,6 +62,14 @@ export default function Table2() {
   // const [id, setId] = useState();
   const modalRef = useRef();
 
+  const closeModal = (e) => {
+    if (e.target === modalRef.current) {
+      setMeeting(null);
+    
+      setOpenModal(false);
+    }
+  };
+
   const [meeting, setMeeting] = useState();
   const [openModal, setOpenModal] = useState(false);
 
@@ -74,23 +84,19 @@ export default function Table2() {
     keyField: item.id,
     topic: item.topic,
   }));
-  // console.log('id in table2', id);
 
-  function handleIdChange() {
-    setId(meeting.meeting.id);
-  }
+
 
   const getMeetingInfo = async (id) => {
     const response = await axios.get(`api/zoom/${id}`);
 
     setMeeting(response.data);
+    setId(id);
+    setTimeout(() => {
 
     setOpenModal(true);
-  };
-
-  const closeModal = () => {
-    setMeeting(null);
-    setOpenModal(false);
+    }
+    , 1000);
   };
 
   if (loading) {
@@ -103,10 +109,10 @@ export default function Table2() {
 
   const columns = [
     {
-      selector: (row) => row.topic,
+      selector: (row) => <div onClick={(e) => e.stopPropagation()}>{row.topic}</div>,
     },
     {
-      selector: (row) => row.keyField,
+      selector: (row) => <div onClick={(e) => e.stopPropagation()}>{row.keyField}</div>,
     },
     {
       selector: (row) =>
@@ -114,20 +120,20 @@ export default function Table2() {
           <div>
             <ButtonDanger
               value={row.keyField}
-              // onClick={() => openModal(row.keyField)}
               onClick={() => getMeetingInfo(row.keyField)}
             >
               <i class="material-icons large icon-blue md-48"> edit</i>
             </ButtonDanger>
           </div>
-        ) : (
-          "No"
-        ),
-      right: true,
+        ) : <p>Loading</p>,
     },
-  ];
+];
 
-  console.log("openmodal", openModal);
+
+
+  // const newDate = convertDate(meeting.start_time).split(" ");
+
+
   console.log("meeting", meeting);
   console.log("meetingID", id);
 
@@ -159,36 +165,46 @@ export default function Table2() {
               {openModal && (
                 <div>
                   <h3>Schedule</h3>
-                  <form>
+                  <form onSubmit={deleteData}>
                     <StyledTextbox>
                       <input
                         type="text"
                         id="topic"
                         placeholder="Topic"
                         value={meeting.meeting.topic}
-                        onChange={(e) =>
-                          console.log("e.target.value", e.target.value)
-                        }
+                       
                       />
                       <label htmlFor="topic">Topic:</label>
                     </StyledTextbox>
                     <h3>Date & Time</h3>
                     <hr class="solid"></hr>
-                    <div className="btn-container">
-                      <p>Data: {data}</p>
-
+                    <input
+                      type="date"
+                      id="datetime-local"
+                      value={"2021-08-01"}
+                      required={true}
+                      // onChange={(e) => setDate(e.target.value)}
+                      style={display}
+                    />
+                    &nbsp; &nbsp;
+                    <input
+                      type="time"
+                      id="time"
+                      value={"10:00"}
+                      required={true}
+                      // onChange={(e) => setTime(e.target.value)}
+                      style={display}
+                    />
+                    <br />
+                    <div style={{ display: "block" }}>
                       <button
                         style={{ color: "black" }}
                         onClick={() => updateData({ some: "new data" })}
                       >
                         Update Data
                       </button>
-
-                      <button
-                        style={{ color: "black" }}
-                        onClick={deleteData}
-                        onChange={handleIdChange}
-                      >
+                      &nbsp;
+                      <button style={{ color: "black" }} onClick={deleteData}>
                         {" "}
                         Delete Data
                       </button>

@@ -164,8 +164,9 @@ async function getAccessToken() {
 //@access          Public
 
   const DeleteMeeting = asyncHandler(async (req, res) => {
-    const { meetingId } = req.body;
-    const meetings = await deleteZoomMeeting(meetingId);
+  
+    const meetings = await deleteZoomMeeting(req.params.id);
+    
     if ( meetings === undefined) {
       res.status(400);
       throw new Error("No meeting found");
@@ -316,10 +317,11 @@ async function getAccessToken() {
 
   const deleteZoomMeeting = asyncHandler(async (meetingId) => {
     try {
+      console.log("Backend Meeting ID: ", meetingId);
       const access_token = await getAccessToken();
       const resp = await axios({
         method: "DELETE",
-        url: "https://api.zoom.us/v2/meetings/" + meetingId,
+        url: "https://api.zoom.us/v2/meetings/" + meetingId +'/?',
         headers: {
           Authorization: "Bearer " + access_token,
         },
@@ -330,6 +332,9 @@ async function getAccessToken() {
       console.error(err);
     }
   });
+
+  
+
 
 /**
  * @description Zoom API supports the ISO 8601 date and time format.

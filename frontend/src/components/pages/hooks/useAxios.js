@@ -32,13 +32,24 @@ function useAxios(url, id) {
   }
 
   function deleteData() {
-    axios.delete(`${url}/${id}`)
-      .then(response => {
+    console.log('deleteData', id);
+   
+
+      const config = {
+        method: 'delete',
+        url: `api/zoom/${id}`,
+        headers: { },
+        data : data
+      };
+      
+      axios(config)
+      .then(function (response) {
         setData(null);
       })
-      .catch(error => {
-        setError(error);
+      .catch(function (error) {
+        console.log(error);
       });
+    
   }
 
   return { data, error, loading, updateData, deleteData };
