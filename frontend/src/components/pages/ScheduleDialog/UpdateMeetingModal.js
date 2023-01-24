@@ -62,19 +62,16 @@ const StyledTextbox = styled.div`
 // This function handles the page load. When a button is clicked it shows wrong data.
 // The correct data is only shown when the page is manually refreshed.
 const localStorageMeetingID = (key) => {
-  const existing = localStorage.getItem("meetingID");
-  const temp = localStorage.getItem("tempMeetingID");
-
-  localStorage.setItem("tempMeetingID", existing);
-  const data = existing === temp ? temp : existing;
-  localStorage.setItem("meetingID", data);
+  
 
   return localStorage.getItem(key);
 };
+const temp = ""
 
 export const UpdateMeetingModal = withCrudMeetingOptions(
   ({
     setShowModal,
+    id,
     meeting,
     onChangeMeeting,
     onSaveMeeting,
@@ -84,10 +81,8 @@ export const UpdateMeetingModal = withCrudMeetingOptions(
     const [isDeleting, setIsDeleting] = useState(false);
     const [showModal2, setShowModal2] = useState(false);
     const getTopic = meeting || {};
-    const { topic, start_time, id } = meeting || {};
-
-    console.log("Topic meeting:", id);
-
+    
+    console.log('id in modal', id);
     // close the modal when clicking outside the modal.
     const modalRef = useRef();
     const closeModal = (e) => {
@@ -221,5 +216,6 @@ export const UpdateMeetingModal = withCrudMeetingOptions(
       <p>Loading...</p>
     );
   },
-  localStorageMeetingID("meetingID")
+  "94431876430"
+  // localStorageMeetingID("meetingID")
 );

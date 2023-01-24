@@ -3,6 +3,8 @@ import styled from "styled-components";
 
 import DataTable from "react-data-table-component";
 
+import { useResource } from "../Home/useResource";
+
 import { UpdateMeetingModal } from "../ScheduleDialog/UpdateMeetingModal";
 
 import { element } from "./dateTime";
@@ -55,33 +57,22 @@ const ButtonDanger = styled.button`
  
 export default function Table({ data }) {
   const [loading] = useState(false);
+  const [id, setId] = useState("");
 
   const [showModal, setShowModal] = useState(false);
 
+  const listmeetings = useResource("api/zoom/listmeetings");
+
+  // console.log('listmeetings', listmeetings);
 
 
+  const openModal = (id) => {
+    setShowModal(!showModal);
+    setId(id);
+  }
   // set local storage value for meeting id
 
-
-  const openModal = useCallback(
-    function (e, row) {
-      if (!showModal) {
-        console.log("openModal");
-        e.stopPropagation();
-      }
-    
-      if(!localStorage.getItem("meetingID")){
-      localStorage.setItem("meetingID", e.currentTarget.value);
-      }else {
-        localStorage.removeItem("meetingID");
-        localStorage.setItem("meetingID", e.currentTarget.value);
-      }
-
-      setShowModal(true);
-    
-    },
-    [showModal, setShowModal,localStorage]
-  );
+  // console.log('id', id);
 
   const columns = [
     {
@@ -89,11 +80,12 @@ export default function Table({ data }) {
     },
     {
       selector: (row) =>
-        row.id ? (
+        row.keyField ? (
           <div>
             <ButtonDanger
-              value={[row.id]}
-              onClick={openModal}
+              value={row.keyField}
+              onClick={() => openModal(row.keyField)}
+              // onClick={() => setId(row.id)}
             >
               <i class="material-icons large icon-blue md-48"> edit</i>
             </ButtonDanger>
@@ -105,21 +97,25 @@ export default function Table({ data }) {
     },
   ];
 
-  useEffect(() => {}, [showModal]);
+  // console.log('data', data);
+
+  const newData = data?.map(item => ({ keyField: item.id, topic: item.topic }))
+
+  // console.log(newData)
 
   return (
     <>
       {/*  outside of the columns array */}
       <div style={{  justifyContent: "right"}}>
       
-      {showModal ? (<UpdateMeetingModal setShowModal={setShowModal}  />) : null}
+      {showModal ? (<UpdateMeetingModal setShowModal={setShowModal} id={id}  />) : null}
 
      <TableContainer>   
         <div style={{ margin: "10px" }}>
           <DataTable
             title={element}
             columns={columns}
-            data={data}
+            data={newData}
             progressPending={loading}
             customStyles={customStyles}
             pagination

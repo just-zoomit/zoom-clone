@@ -35,6 +35,7 @@ function Home() {
     setDataFetched(true);
   };
 
+
   const handleClearData = () => {
     setData([]);
   }

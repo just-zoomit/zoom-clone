@@ -11,9 +11,10 @@ import { useResource } from "../Home/useResource";
 import { InstantMeeting } from "./InstantMeeting";
 
 import { ControlledModal } from "./ControlledModal";
+import { ControlledForm } from "./ControlledForm";
 import { AuthUserForm } from "./ZoomAuth/AuthUserForm";
 
-import GlobalStyle from './theme/globalStyles';
+import {GlobalStyle} from './theme/globalStyles';
 
 
 // Adpoted Component Composition pattern
@@ -53,10 +54,10 @@ export default function GenericPopModal(props) {
     startInstantMeeting(data);
   };
 
-  const listmeetings = useResource("api/zoom/listmeetings");
-  const [, setTableData] = useState(null);
+   const listmeetings = useResource("api/zoom/listmeetings");
+  const [data, setTableData] = useState(null);
 
-  const handleClick = async (event) => {
+  const handleClick = (event) => {
     event.preventDefault();
 
     try {
@@ -126,15 +127,15 @@ export default function GenericPopModal(props) {
               setShouldShowModal(false);
             }}
           >
+           {/* <ControlledForm /> */}
             <AuthUserForm />
           </ControlledModal>
 
           <BigSuccessButton
-            text= "visibility"
-            label={shouldShowModal ? "Hide Modal" : "Show Modal"}
+            text= "login"
+            label={shouldShowModal ? "Hide Modal" : "Login With Zoom"}
             onClick={() => setShouldShowModal(!shouldShowModal)}
           />
-
 
         </DivContainer>
 

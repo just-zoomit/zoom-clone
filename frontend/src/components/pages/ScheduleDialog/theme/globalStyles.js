@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -38,4 +38,19 @@ const GlobalStyle = createGlobalStyle`
 
 `;
 
-export default GlobalStyle;
+const ButtonDanger = styled.button`
+position: relative;
+color: grey;
+place-items: center;
+font-weight: bold;
+width: 62px;
+height: 26px;
+border-radius: 25px;
+border: 5;
+margin: 0 auto;
+grid-gap: 80px;
+padding:0;
+flex-direction: row;
+`;
+
+export { GlobalStyle, ButtonDanger };
