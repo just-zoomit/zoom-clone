@@ -115,6 +115,7 @@ export const CreateMeetingModal = ({ setShowModal }) => {
         role: parseInt(role, 10),
       }),
     };
+    console.log(POST_OPTIONS);
 
     fetch("/api/zoom/create", POST_OPTIONS).then((data) => data.json());
 

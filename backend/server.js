@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 
 const zoomRoutes = require('./routes/zoomRoutes'); // Import the zoomRoutes.js file
+const { notFound, errorHandler } = require('./middlewares/errorMiddleware');
 
 const app = express();
 dotenv.config();
@@ -9,12 +10,6 @@ dotenv.config();
 app.use(express.json());
 
 const port = process.env.PORT || 30010;
-
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
-});
 
 app.use('/login', (req, res) => {
   res.send({
@@ -28,6 +23,9 @@ app.get('/api', (req, res) => {
 });
 
 app.use('/api/zoom', zoomRoutes); // Use the zoomRoutes.js file
+
+app.use(notFound)
+app.use(errorHandler)
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

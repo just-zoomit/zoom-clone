@@ -20,7 +20,7 @@ function Home() {
  */
 
   const [data, setData] = useState([]);
-  const [, setDataFetched] = useState(false);
+  const [dataFetched, setDataFetched] = useState(false);
 
 
   const { token, setToken } = useToken();
@@ -37,6 +37,7 @@ function Home() {
 
   const handleClearData = () => {
     setData([]);
+    setDataFetched(false);
   }
 
   return (
@@ -47,7 +48,7 @@ function Home() {
     </div>
     &nbsp; &nbsp;
     <div >
-      {data.length > 0 ? <Table2  /> : null}
+      {dataFetched ? <Table2  /> : null}
     </div>
 </div>
     </>

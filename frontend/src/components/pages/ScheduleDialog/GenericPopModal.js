@@ -54,16 +54,12 @@ export default function GenericPopModal(props) {
     startInstantMeeting(data);
   };
 
-   const listmeetings = useResource("api/zoom/listmeetings");
-  const [data, setTableData] = useState(null);
-
+ // Handle data received from child component table switch button
   const handleClick = (event) => {
     event.preventDefault();
 
     try {
-      setTableData(listmeetings.meetings);
-
-      props.onDataReceived(listmeetings.meetings);
+      props.onDataReceived(true);
     } catch (error) {
       console.error(error);
     }

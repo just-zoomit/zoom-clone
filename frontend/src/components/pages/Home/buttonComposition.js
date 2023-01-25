@@ -68,6 +68,30 @@ export const Button = ({ size, color, text, label, ...props }) => {
   );
 };
 
+export const iconButton = ({ size, color, text, label, ...props }) => {
+  return (
+    <div>
+      <button
+    
+        style={{
+          padding: "0",
+          fontWeight:" bold",
+          display: "grid",
+          placeItems: "center",
+          borderRadius: "25px",
+          width: "100px",
+          height: "100px",
+          lineHeight: "100px",
+        }}
+        {...props}
+      >
+        <i class="material-icons large icon-blue md40px"> {text} </i>
+      </button>
+      <p> {label}</p>
+    </div>
+  );
+};
+
 // Convert to styled component
 export const CloseButton = ({ size, color, text, ...props }) => {
   return (
@@ -90,13 +114,7 @@ export const CloseButton = ({ size, color, text, ...props }) => {
         }}
         {...props}
       >
-        <i
-          style={{ fontSize: "20px" }}
-          class="material-icons large icon-blue md40px"
-        >
-          {" "}
-          {text}{" "}
-        </i>
+        <i class="material-icons large icon-blue md40px">  close </i>
       </button>
     </div>
   );
@@ -113,3 +131,6 @@ export const DangerBlueButton = (props) => {
 export const BigSuccessButton = (props) => {
   return <Button {...props} color="#316efd" size="large" />;
 };
+
+
+

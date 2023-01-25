@@ -89,19 +89,19 @@ async function getAccessToken() {
  */
 
   const CreateAppointment = asyncHandler(async (req, res) => {
-    const { topic, start_time, end_time, first_name ,email } = req.body;
+    const { topic, start_time, role } = req.body;
 
 
     console.log("Test Request Body: ",req.body);
     console.log("Start Time Conversion : ", converttoISOString(start_time));
     // console.log("End Time Conversion : ", converttoISOString(end_time));
 
-    if (!email || !start_time || !first_name) {
+    if (!topic || !start_time || !role) {
       res.status(400);
       throw new Error("Please Fill all the fields");
     } else {
   
-    const { id, password} = await createZoomMeeting(topic, converttoISOString(start_time), first_name, email);
+    const { id, password} = await createZoomMeeting(topic, converttoISOString(start_time));
   
       res.status(201).json({id , password});
     }
@@ -149,8 +149,10 @@ async function getAccessToken() {
   const UpdateMeeting = asyncHandler(async (req, res) => {
     //Should meetingID be req.params.id or req.body.meetingId?
     const meetingID = req.params.id;
-    const {meetingId,topic, start_time, end_time, first_name , email } = req.body;
-    const meetings = await updateZoomMeeting(meetingID, topic, convertISOString(start_time), first_name, email);
+    const {topic} = req.body.data;
+    console.log("Backend ID ", meetingID );
+    console.log("Topic ", topic);
+    const meetings = await updateZoomMeeting(meetingID, topic);
     if ( meetings === undefined) {
       res.status(400);
       throw new Error("No meeting found");
@@ -185,7 +187,7 @@ async function getAccessToken() {
  * @access     Public
  */
     
-  async function createZoomMeeting(topic, start_time, first_name, email) {
+  async function createZoomMeeting(topic, start_time) {
     try {
 
       console.log("Start Time in Create Meeting: ", start_time);
@@ -193,8 +195,6 @@ async function getAccessToken() {
       const data = JSON.stringify({
         topic: topic,
         start_time: start_time,
-        first_name: first_name,
-        email: email,
         join_before_host: true,
         password: generateOTP(),
       });
@@ -282,14 +282,11 @@ async function getAccessToken() {
  * @access Private
  */
 
-  const updateZoomMeeting = asyncHandler(async (meetingId, topic, start_time, first_name, email) => {
+  const updateZoomMeeting = asyncHandler(async (meetingId, topic) => {
     try {
       const access_token = await getAccessToken();
       const data = JSON.stringify({
         topic: topic,
-        start_time: start_time,
-        first_name: first_name,
-        email: email,
         join_before_host: true,
         password: generateOTP(),
       });
@@ -332,8 +329,6 @@ async function getAccessToken() {
       console.error(err);
     }
   });
-
-  
 
 
 /**

@@ -9,7 +9,10 @@ function useAxios(url, id) {
 
   useEffect(() => {
     if(id !== null) {
+
+     
       setLoading(true);
+      (async () => {
       axios.get(`${url}/${id}`)
         .then(response => {
           setData(response.data.meeting);
@@ -20,6 +23,8 @@ function useAxios(url, id) {
           setError(error);
           setLoading(false);
         });
+      })();
+
     }
   }, [url, id]);
   
@@ -29,8 +34,9 @@ function useAxios(url, id) {
 };
 
 
-  function updateData(newData) {
-    axios.put(`${url}/${id}`, newData)
+  const updateData = async () => {
+    console.log('updateData', data);
+   await axios.put(`${url}/${id}`, {data})
       .then(response => {
         setData(response.data.meeting);
         setOriginalData(response.data.meeting);
@@ -39,7 +45,7 @@ function useAxios(url, id) {
         setError(error);
       });
   }
-  function resetData(changes){
+  function resetData(){
     setData({originalData});
 };
  

@@ -1,15 +1,18 @@
 import { useState, useEffect } from "react";
 import useAxios from "../hooks/useAxios";
+import { ButtonDanger } from "../theme/globalStyles";
 import { TableContainer, StyledTextbox } from "../Tables/TableComponents";
+import moment from 'moment';
 
 const display = {
   display: "inline-block",
 };
 
-export const UpdateForm = (topic, mnID) => {
+export const UpdateForm = (mnID) => {
+
   
-  const [id, setId] = useState(null);
-  const [dataa, setDataa] = useState(null);
+  const [id, setId] = useState("");
+  
   const {
     data,
     error,
@@ -18,64 +21,79 @@ export const UpdateForm = (topic, mnID) => {
     deleteData,
     resetData,
     changeData,
-  } = useAxios(`api/zoom`, id);
-
-  const setForm = (e) => {
-    console.log("setForm", mnID);
-    setDataa(mnID);
-    };
-
+  } = useAxios(`api/zoom`,mnID.mnID);
 
   console.log("data", data);
 
-  return !!data && (
+  const [formData, setFormData] = useState({});
+
+  useEffect(() => {
+    if (data) {
+      console.log("Form data Set");
+      console.log("Here",data);
+      setFormData(data);
+    }
+  }, [data]);
+
+  console.log("data", data);
+
+  formData.start_time = moment(formData.start_time).format('YYYY-MM-DD HH:mm')
+  
+  console.log("formData ", formData);
+  console.log("meetingID", id);
+  console.log("formData StartTime: ", formData.start_time);
+  return (
     <>
       <div>
-        <StyledTextbox>
-          <input type="text" id="topic" placeholder="Topic" value={topic} />
-          <label htmlFor="topic">Topic:</label>
-        </StyledTextbox>
-        <label>
-          Name:
-          <input
-            value={topic}
-            onChange={(e) => changeData({ name: e.target.value })}
-          />
-        </label>
-        <label>
-          Age:
-          <input
-            type="number"
-            value={"0"}
-            onChange={(e) => changeData({ age: Number(e.target.value) })}
-          />
-        </label>
+                  <h3>Schedule</h3>
+                  <form>
+                    <StyledTextbox>
+                      <input
+                        type="text"
+                        id="topic"
+                        placeholder="Topic"
+                        value={formData.topic}
+                        onChange={(e) => changeData({ topic: e.target.value })}
     
-      
-        <h3>Date & Time</h3>
-        <hr class="solid"></hr>
-        <input
-          type="date"
-          id="datetime-local"
-          value={"2021-08-01"}
-          required={true}
-          onChange={(e) => changeData({ age: Number(e.target.value) })}
-          style={display}
-        />
-        &nbsp; &nbsp;
-        <input
-          type="time"
-          id="time"
-          value={"10:00"}
-          required={true}
-          // onChange={(e) => setTime(e.target.value)}
-          style={display}
-        />
+                      />
+                      <label htmlFor="topic">Topic:</label>
+                    </StyledTextbox>
+                    <h3>Date & Time</h3>
+                    <hr class="solid"></hr>
+                   
+                    <input
+                      type="datetime-local"
+                      value={formData.start_time}
+                      required={true}
+                      onChange={(e) =>
+                        changeData({ start_time: e.target.value })
+                      }
+                      style={{display: "inline-block"}}
+                    />
+                    <br />
 
-        <button style={{ color: "black" }} onClick={resetData}>Reset</button>
-        <button style={{ color: "black" }} onClick={updateData}>Save Changes</button>
-        <button style={{ color: "black" }} onClick={deleteData}> Delete Data </button>Ï
-      </div>
+                    <div style={{ display: "block" }}>
+                      <button
+                        style={{ color: "black" }}
+                        onClick={updateData}
+                      >
+                        Update Data
+                      </button>
+                      &nbsp;
+                      <button style={{ color: "black" }} onClick={resetData}>
+                        {" "}
+                        Reset Data
+                      </button>
+                      &nbsp;
+                      <button style={{ color: "black" }} onClick={deleteData}>
+                        {" "}
+                        Delete Data
+                      </button>
+                    </div>
+                    &nbsp;
+                  </form>
+                </div>
+              
     </>
   )
 }
