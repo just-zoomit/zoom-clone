@@ -48,7 +48,7 @@ export default function Buttons(props) {
     const { id, password } = data;
     if (!id || !password) {
     navigate(`/msdk/?mn=${id}&pw=${password}`);
-    }else {
+    } else {
       console.log("Error: No data received");
     }
   };

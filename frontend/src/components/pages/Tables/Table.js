@@ -10,7 +10,7 @@ import { TableContainer } from "./TableComponents";
 import UpdateForm from "../Forms/UpdateForm";
 
 import moment from 'moment';
-import { element } from "../Home/dateTime";
+import { element } from "./dateTime";
 
 import { handleError } from "../../shared";
 
