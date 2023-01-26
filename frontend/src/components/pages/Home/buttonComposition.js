@@ -1,40 +1,6 @@
 import styled from "styled-components";
 import "../ScheduleDialog/styles.css";
 
-//Not used
-
-const Buttoner = styled.button`
-  padding: 0;
-  font-size: 16px;
-  background: #316efd;
-  background-color: #316efd;
-  position: relative;
-  display: grid;
-  placeitems: center;
-  borderradius: 25px;
-  width: 99px;
-  height: 99px;
-  lineheight: 100px;
-  border: 0;
-  color: white;
-`;
-
-//Not used
-const StyledTextbox = styled.button`
-  color: #aaa;
-  line-height: 50px;
-  font-size: 80%;
-  position: absolute;
-  right: 0;
-  text-align: center;
-  top: 0;
-  width: 70px;
-  text-decoration: none;
-
-  &:hover {
-    color: black;
-  }
-`;
 
 // Adpoted Component Composition pattern, parent component of GenericPopModal
 

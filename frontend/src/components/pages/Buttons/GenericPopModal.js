@@ -1,17 +1,18 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { CreateMeetingModal } from "../CreateMeetingModal";
-import { JoinPopModal } from "../JoinPopModal";
+import { CreateMeetingModal } from "../ScheduleDialog/CreateMeetingModal";
 
-import { BigSuccessButton } from "../../Home/buttonComposition";
-import { InstantMeeting } from "../InstantMeeting";
+import { JoinPopModal } from "../ScheduleDialog/JoinMeetingModal";
+
+import { BigSuccessButton } from "../Home/buttonComposition";
+import { InstantMeeting } from "../ScheduleDialog/InstantMeetingModal";
 
 import { ControlledModal } from "../Login/ControlledModal";
 import { ControlledForm } from "../Login/ControlledForm";
-import { AuthUserForm } from "../../ZoomAuth/AuthUserForm";
+import { AuthUserForm } from "../ZoomAuth/AuthUserForm";
 
-import {GlobalStyle} from '../../theme/globalStyles';
+import {GlobalStyle} from '../theme/globalStyles';
 
 
 // Adpoted Component Composition pattern

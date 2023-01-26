@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
+import { StyledForm, StyledInput, StyledButton, StyledAlert, StyledLabel } from "../Forms/FormComponents";
+
 async function loginUser(credentials) {
   return fetch("http://localhost:3000/login", {
     method: "POST",
@@ -35,23 +37,23 @@ export const AuthUserForm = ({ setToken }) =>{
       }}
     >
       <h1>Log In With Zoom</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
+      <StyledForm  onSubmit={handleSubmit}>
+        <StyledLabel>
           <p>Username</p>
-          <input type="text" onChange={(e) => setUserName(e.target.value)} />
-        </label>
+          <StyledInput  type="text" onChange={(e) => setUserName(e.target.value)} />
+        </StyledLabel>
         <br />
-        <label>
+        <StyledLabel>
           <p>Password</p>
-          <input
+          <StyledInput 
             type="password"
             onChange={(e) => setPassword(e.target.value)}
           />
-        </label>
+        </StyledLabel>
         <div>
-          <button type="submit">Submit</button>
+          <StyledButton type="submit">Submit</StyledButton>
         </div>
-      </form>
+      </StyledForm>
     </div>
   );
 }

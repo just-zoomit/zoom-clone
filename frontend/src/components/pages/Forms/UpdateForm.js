@@ -75,6 +75,9 @@ function UpdateForm(mnID) {
               value={formData.start_time}
               onChange={(e) => changeData({ start_time: e.target.value })}
             />
+            
+              &nbsp;
+            <div style={{display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center"}}>
             <StyledButton type="submit" onClick={updateData}>
               {" "}
               Update Data
@@ -88,6 +91,8 @@ function UpdateForm(mnID) {
             <StyledButton type="submit" onClick={deleteData}>
               Delete Data
             </StyledButton>
+            </div>
+
           </StyledForm>
         </div>
       </div>
