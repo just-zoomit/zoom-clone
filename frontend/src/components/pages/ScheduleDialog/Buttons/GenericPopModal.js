@@ -1,20 +1,17 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { CreateMeetingModal } from "./CreateMeetingModal";
-import { JoinPopModal } from "./JoinPopModal";
+import { CreateMeetingModal } from "../CreateMeetingModal";
+import { JoinPopModal } from "../JoinPopModal";
 
-import { BigSuccessButton } from "../Home/buttonComposition";
+import { BigSuccessButton } from "../../Home/buttonComposition";
+import { InstantMeeting } from "../InstantMeeting";
 
-import { useResource } from "../hooks/useResource";
+import { ControlledModal } from "../Login/ControlledModal";
+import { ControlledForm } from "../Login/ControlledForm";
+import { AuthUserForm } from "../../ZoomAuth/AuthUserForm";
 
-import { InstantMeeting } from "./InstantMeeting";
-
-import { ControlledModal } from "./ControlledModal";
-import { ControlledForm } from "./ControlledForm";
-import { AuthUserForm } from "../ZoomAuth/AuthUserForm";
-
-import {GlobalStyle} from '../theme/globalStyles';
+import {GlobalStyle} from '../../theme/globalStyles';
 
 
 // Adpoted Component Composition pattern
@@ -54,10 +51,10 @@ export default function GenericPopModal(props) {
     startInstantMeeting(data);
   };
 
+
  // Handle data received from child component table switch button
   const handleClick = (event) => {
     event.preventDefault();
-
     try {
       props.onDataReceived(true);
     } catch (error) {

@@ -13,7 +13,8 @@ import { handleError } from "../../shared";
 import { ButtonDanger } from "../theme/globalStyles";
 import { TableContainer, StyledTextbox } from "./TableComponents";
 import moment from 'moment';
-import {UpdateForm} from "../ScheduleDialog/UpdateForm";
+import UpdateForm from "../Forms/UpdateForm";
+// import {UpdateForm} from "../ScheduleDialog/UpdateForm";
 
 const customStyles = {
   rows: {
@@ -51,6 +52,8 @@ export default function Table2() {
   const [openModal, setOpenModal] = useState(false);
   const [formData, setFormData] = useState({});
 
+  const [showModal, setShowModal] = useState(false);
+
   const [id, setId] = useState(null);
   const {
     data,
@@ -64,6 +67,11 @@ export default function Table2() {
     keyField: item.id,
     topic: item.topic,
   }));
+  
+  const openJoinModal = () => {
+    setShowModal(true);
+    console.log("showModal Table 1", showModal)
+  }
 
   const getMeetingInfo = async (id) => {
     try {
@@ -71,7 +79,9 @@ export default function Table2() {
 
     setMeeting(response.data);
     setId(id);
-    setOpenModal(true);
+    openJoinModal();
+
+
   } catch (handleError ) {
     console.log("Error", handleError);
     }
@@ -122,6 +132,8 @@ export default function Table2() {
   ];
 
   formData.start_time = moment(formData.start_time).format('YYYY-MM-DD HH:mm')
+
+  console.log("showModal Table", showModal)
   
   return (
     <div style={{ maxWidth: "100vw", overflowX: "scroll" }}>
@@ -143,15 +155,13 @@ export default function Table2() {
           <div className="container" ref={modalRef} onClick={closeModal }>
             <div className="modal">
             
-              <ModalCloseButton
+              {/* <ModalCloseButton
                 text="close"
                 size="20px"
                 onClick={closeModal}
-              />
+              /> */}
 
-              {!!openModal && 
-                <UpdateForm mnID={id}/>
-              }
+              {showModal ? <UpdateForm mnID={id} setShowModal={!showModal}  /> : null}
             </div>
           </div>,
           document.getElementById("portal")

@@ -57,6 +57,7 @@ const StyledTextbox = styled.div`
   }
 `;
 
+
 export const JoinPopModal = ({ setShowModal }) => {
   // close the modal when clicking outside the modal.
   const modalRef = useRef();

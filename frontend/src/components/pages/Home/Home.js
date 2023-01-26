@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import GenericPopModal from "../ScheduleDialog/GenericPopModal";
+import GenericPopModal from "../ScheduleDialog/Buttons/GenericPopModal";
 import { AuthUserForm } from "../ZoomAuth/AuthUserForm";
 import useToken  from "../ZoomAuth/useToken";
 import  Table2  from "../Tables/Table";

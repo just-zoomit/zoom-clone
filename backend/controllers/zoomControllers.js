@@ -1,82 +1,55 @@
-
 const asyncHandler = require("express-async-handler");
 
 require("dotenv").config();
-const axios = require("axios");
-const btoa = require("btoa");
 const KJUR = require("jsrsasign");
 
-  /**
-  * @description Get Meeting SDK Auth Token
-  * @param {String} meetingNumber
-  * @param {String} role
-  * @returns {String} sdk auth token
-  * @see https://marketplace.zoom.us/docs/sdk/native-sdks/web/getting-started/auth-jwt
-  * @see https://marketplace.zoom.us/docs/sdk/native-sdks/web/getting-started/join-meeting
-  * @access            Public
+const {
+  createZoomMeeting,
+  listZoomMeetings,
+  getZoomMeetingById,
+  updateZoomMeeting,
+  deleteZoomMeeting,
+} = require("../api/api.js");
+
+/**
+ * @description Get Meeting SDK Auth Token
+ * @param {String} meetingNumber
+ * @param {String} role
+ * @returns {String} sdk auth token
+ * @see https://marketplace.zoom.us/docs/sdk/native-sdks/web/getting-started/auth-jwt
+ * @see https://marketplace.zoom.us/docs/sdk/native-sdks/web/getting-started/join-meeting
+ * @access            Public
  */
 const getMsdkSignature = asyncHandler(async (req, res) => {
-    const iat = Math.round(new Date().getTime() / 1000) - 30;
-    const exp = iat + 60 * 60 * 2;
-  
-    const oHeader = { alg: "HS256", typ: "JWT" };
-    
-  
-    const oPayload = {
-      sdkKey: process.env.REACT_APP_ZOOM_MSDK_KEY,
-      mn: req.body.meetingNumber,
-      role: req.body.role,
-      iat: iat,
-      exp: exp,
-      tokenExp: iat + 60 * 60 * 2,
-    };
-  
-    const sHeader = JSON.stringify(oHeader);
-    const sPayload = JSON.stringify(oPayload);
-    const signature = KJUR.jws.JWS.sign(
-      "HS256",
-      sHeader,
-      sPayload,
-      process.env.ZOOM_MSDK_SECRET
-    );
-  
-    res.json({
-      signature: signature,
-    });
+  const iat = Math.round(new Date().getTime() / 1000) - 30;
+  const exp = iat + 60 * 60 * 2;
+
+  const oHeader = { alg: "HS256", typ: "JWT" };
+
+  const oPayload = {
+    sdkKey: process.env.REACT_APP_ZOOM_MSDK_KEY,
+    mn: req.body.meetingNumber,
+    role: req.body.role,
+    iat: iat,
+    exp: exp,
+    tokenExp: iat + 60 * 60 * 2,
+  };
+
+  const sHeader = JSON.stringify(oHeader);
+  const sPayload = JSON.stringify(oPayload);
+  const signature = KJUR.jws.JWS.sign(
+    "HS256",
+    sHeader,
+    sPayload,
+    process.env.ZOOM_MSDK_SECRET
+  );
+
+  res.json({
+    signature: signature,
   });
-  
+});
+
 /**
- * @description Call Zoom Oauth API for Server-to-Server access token.
- * @param      {Object}  input_config
- * @param      {String}  input_config.ZOOM_ACCOUNT_ID     The zoom account id
- * @param      {String}  input_config.ZOOM_CLIENT_ID      The zoom client id
- * @param      {String}  input_config.ZOOM_CLIENT_SECRET  The zoom client secret
- * @returns    {String}  zoom access_token
- * @access               Public
- */
-async function getAccessToken() {
-    try {
-      base_64 = btoa(process.env.CLIENT_ID + ":" + process.env.CLIENT_SECRET);
-  
-      const resp = await axios({
-        method: "POST",
-        url:
-          "https://zoom.us/oauth/token?grant_type=account_credentials&account_id=" +
-          `${process.env.ACCOUNT_ID}`,
-        headers: {
-          Authorization: "Basic " + `${base_64} `,
-        },
-      });
-      
-     
-      return resp.data.access_token;
-    } catch (err) {
-      // Handle Error Here
-      console.error(err);
-    }
-  }
-  
-  /**
  * @description Create A Zoom Meeting Appointments
  * @route POST /api/zoom/create
  * @access Public
@@ -88,41 +61,41 @@ async function getAccessToken() {
  * @access           Public
  */
 
-  const CreateAppointment = asyncHandler(async (req, res) => {
-    const { topic, start_time, role } = req.body;
+const CreateAppointment = asyncHandler(async (req, res) => {
+  const { topic, start_time, role } = req.body;
 
+  console.log("Test Request Body: ", req.body);
+  console.log("Start Time Conversion : ", converttoISOString(start_time));
+  // console.log("End Time Conversion : ", converttoISOString(end_time));
 
-    console.log("Test Request Body: ",req.body);
-    console.log("Start Time Conversion : ", converttoISOString(start_time));
-    // console.log("End Time Conversion : ", converttoISOString(end_time));
+  if (!topic || !start_time || !role) {
+    res.status(400);
+    throw new Error("Please Fill all the fields");
+  } else {
+    const { id, password } = await createZoomMeeting(
+      topic,
+      converttoISOString(start_time)
+    );
 
-    if (!topic || !start_time || !role) {
-      res.status(400);
-      throw new Error("Please Fill all the fields");
-    } else {
-  
-    const { id, password} = await createZoomMeeting(topic, converttoISOString(start_time));
-  
-      res.status(201).json({id , password});
-    }
-  });
+    res.status(201).json({ id, password });
+  }
+});
 
-  /**
+/**
  * @description List Zoom Meeting Appointments
  * @route GET /api/zoom/ListMeetings
  * @access Public
  */
 
-  const ListMeeting = asyncHandler(async (req, res) => {
-    const meetings = await listZoomMeetings();
-    if ( meetings === undefined) {
-      res.status(400);
-      throw new Error("No meeting found");
-    } else {  
-      res.status(201).json({meetings});
-      
-    }
-  });
+const ListMeeting = asyncHandler(async (req, res) => {
+  const meetings = await listZoomMeetings();
+  if (meetings === undefined) {
+    res.status(400);
+    throw new Error("No meeting found");
+  } else {
+    res.status(201).json({ meetings });
+  }
+});
 
 /**
  * @description Fetch Single Meeting Record
@@ -130,206 +103,55 @@ async function getAccessToken() {
  * @access Public
  */
 
-  const getMeetingById = asyncHandler(async (req, res) => {
-   
-    const meeting = await getZoomMeetingById(req.params.id);
-    if ( meeting === undefined) {
-      res.status(400);
-      throw new Error("No meeting found");
-    } else {
-      res.status(201).json({meeting});
-    }
-  });
+const getMeetingById = asyncHandler(async (req, res) => {
+  const meeting = await getZoomMeetingById(req.params.id);
+  if (meeting === undefined) {
+    res.status(400);
+    throw new Error("No meeting found");
+  } else {
+    res.status(201).json({ meeting });
+  }
+});
 
 /**
  * @description Update Single Meeting Record
  * @route PUT /api/zoom/ListMeetings
  * @access Public
  */
-  const UpdateMeeting = asyncHandler(async (req, res) => {
-    //Should meetingID be req.params.id or req.body.meetingId?
-    const meetingID = req.params.id;
-    const {topic} = req.body.data;
-    console.log("Backend ID ", meetingID );
-    console.log("Topic ", topic);
-    const meetings = await updateZoomMeeting(meetingID, topic);
-    if ( meetings === undefined) {
-      res.status(400);
-      throw new Error("No meeting found");
-    } else {
-      res.status(201).json({meetings});
-    }
-  })
-
-//@description     Delete Single Meeting Record
-//@route           DELETE /api/meetings/:id
-//@access          Public
-
-  const DeleteMeeting = asyncHandler(async (req, res) => {
-  
-    const meetings = await deleteZoomMeeting(req.params.id);
-    
-    if ( meetings === undefined) {
-      res.status(400);
-      throw new Error("No meeting found");
-    } else {
-      res.status(201).json({meetings});
-    }
-  });
-
-/**
- *  Create Zoom Meeting Via REST API
- * @param      {Object}  input_config
- * @param      {String}  topic     The topic of the meeting
- * @param      {String}  start_time  The start time of the meeting
- * @param      {String}  first_name  The first name of the user
- * @returns    {String}  The meeting id and password
- * @access     Public
- */
-    
-  async function createZoomMeeting(topic, start_time) {
-    try {
-
-      console.log("Start Time in Create Meeting: ", start_time);
-
-      const data = JSON.stringify({
-        topic: topic,
-        start_time: start_time,
-        join_before_host: true,
-        password: generateOTP(),
-      });
-  
-      const resp = await axios({
-        method: "post",
-        url: "https://api.zoom.us/v2/users/donte.zoomie@gmail.com/meetings",
-        headers: {
-          Authorization: "Bearer " + `${await getAccessToken()} `,
-          "Content-Type": "application/json",
-        },
-        data: data,
-      });
-
-      const { id, password } = resp.data;
-  
-      return { id, password };
-    } catch (err) {
-      if (err.status == undefined) {
-        console.log("Error : ", err);
-      }
-    }
+const UpdateMeeting = asyncHandler(async (req, res) => {
+  //Should meetingID be req.params.id or req.body.meetingId?
+  const meetingID = req.params.id;
+  const { topic, start_time } = req.body.data || req.body;
+  console.log("Request Body ", req.body);
+  console.log("Backend ID ", meetingID);
+  console.log("Topic ", topic);
+  console.log("Start ", start_time );
+  console.log("Converted ", convertDateFormat(start_time) );
+  const meetings = await updateZoomMeeting(meetingID, topic, convertDateFormat(start_time));
+  if (meetings === undefined) {
+    res.status(400);
+    throw new Error("No meeting found");
+  } else {
+    res.status(201).json({ meetings });
   }
+});
 
 /**
- * @description List Single Meeting Record
- * @route GET /api/zoom/ListMeetings
- * @access Private
+ * @description     Delete Single Meeting Record
+ * @route           DELETE /api/meetings/:id
+ * @access          Public
  */
 
-  async function listZoomMeetings() {
-    try {
+const DeleteMeeting = asyncHandler(async (req, res) => {
+  const meetings = await deleteZoomMeeting(req.params.id);
 
-      const resp = await axios({
-        method: "get",
-        url: "https://api.zoom.us/v2/users/donte.zoomie@gmail.com/meetings",
-        headers: {
-          Authorization: "Bearer " + `${await getAccessToken()} `,
-          "Content-Type": "application/json",
-        }
-      });
-      const  meetings = resp.data.meetings;
-      
-      const newArray = meetings.map(obj => ['id', 'topic', ].reduce((newObj, key) => { 
-        newObj[key] = obj[key]
-        return newObj
-      }, {}))
-      
-  
-      return newArray;
-    } catch (err) {
-      if (err.status == undefined) {
-        console.log("Error : ", err);
-      }
-    }
+  if (meetings === undefined) {
+    res.status(400);
+    throw new Error("No meeting found");
+  } else {
+    res.status(201).json({ meetings });
   }
-//Start here tomorrow
-
-/**
- * @description Fetch Single Meeting from Zoom Server
- * @route GET /api/meetings/:id
- * @access Private
- */
-
-  const getZoomMeetingById = asyncHandler(async (meetingId) => {
-    try {
-      const access_token = await getAccessToken();
-      const resp = await axios({
-        method: "GET",
-        url: "https://api.zoom.us/v2/meetings/" + meetingId,
-        headers: {
-          Authorization: "Bearer " + access_token,
-        },
-      });
-      return resp.data;
-    } catch (err) {
-      // Handle Error Here
-      console.error(err);
-    }
-  });
-
-  /**
- * @description Update Single Meeting from Zoom Server
- * @route PUT /api/meetings/:id
- * @access Private
- */
-
-  const updateZoomMeeting = asyncHandler(async (meetingId, topic) => {
-    try {
-      const access_token = await getAccessToken();
-      const data = JSON.stringify({
-        topic: topic,
-        join_before_host: true,
-        password: generateOTP(),
-      });
-      const resp = await axios({
-        method: "PATCH",
-        url: "https://api.zoom.us/v2/meetings/" + meetingId,
-        headers: {
-          Authorization: "Bearer " + access_token,
-          "Content-Type": "application/json",
-        },
-        data: data,
-      });
-      return resp.data;
-    } catch (err) {
-      // Handle Error Here
-      console.error(err);
-    }
-  });
-
-/**
- * @description Delete Single Meeting from Zoom Server
- * @route DELETE /api/meetings/:id
- * @access Private
- */
-
-  const deleteZoomMeeting = asyncHandler(async (meetingId) => {
-    try {
-      console.log("Backend Meeting ID: ", meetingId);
-      const access_token = await getAccessToken();
-      const resp = await axios({
-        method: "DELETE",
-        url: "https://api.zoom.us/v2/meetings/" + meetingId +'/?',
-        headers: {
-          Authorization: "Bearer " + access_token,
-        },
-      });
-      return resp.data;
-    } catch (err) {
-      // Handle Error Here
-      console.error(err);
-    }
-  });
-
+});
 
 /**
  * @description Zoom API supports the ISO 8601 date and time format.
@@ -339,36 +161,32 @@ async function getAccessToken() {
  * @see https://marketplace.zoom.us/docs/api-reference/using-zoom-apis/#time-in-zoom-api
  */
 
-  function converttoISOString(date) {
-    // const date = "05 October 2011 14:48 UTC";
-    
-    const event = new Date(date);
-// expected output: 2011-10-05T14:48:00.000Z
-    return event.toISOString();
-  }
+function converttoISOString(date) {
+  // const date = "05 October 2011 14:48 UTC";
+
+  const event = new Date(date);
+  // expected output: 2011-10-05T14:48:00.000Z
+  return event.toISOString();
+}
+
+function convertDateFormat(date) {
+  return new Date(date).toISOString();
+}
+function convertDateFormatV(date) {
+  return date.replace(" ","T")+":00Z";
+}
 
 /**
  * @description Declare a digits variable which stores all digits from 0 to 9
  * @returns   {String}  One time password
  * @access Private
  */
-  
-  function generateOTP() {
 
-
-    var digits = "0123456789";
-    let OTP = "";
-    for (let i = 0; i < 6; i++) {
-      OTP += digits[Math.floor(Math.random() * 10)];
-    }
-    return OTP;
-  }
-  
-  module.exports = {
-    getMsdkSignature, 
-    CreateAppointment,
-    ListMeeting,
-    getMeetingById,
-    UpdateMeeting,
-    DeleteMeeting,
-  };
+module.exports = {
+  getMsdkSignature,
+  CreateAppointment,
+  ListMeeting,
+  getMeetingById,
+  UpdateMeeting,
+  DeleteMeeting,
+};
