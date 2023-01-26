@@ -11,7 +11,6 @@ app.use(cors())
 
 app.use(express.json());
 
-;
 const port = process.env.PORT || 30010;
 
 app.use("/login", (req, res) => {

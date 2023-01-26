@@ -2,8 +2,8 @@ import styled from "styled-components";
 import "../ScheduleDialog/styles.css";
 
 
-// Adpoted Component Composition pattern, parent component of GenericPopModal
 
+// Adpoted Component Composition pattern, parent component of GenericPopModal
 // Convert to styled component
 export const Button = ({ size, color, text, label, ...props }) => {
   return (
