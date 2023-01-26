@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import GenericPopModal from "../Buttons/GenericPopModal";
+import  Buttons from "../Buttons/Buttons";
 import { AuthUserForm } from "../ZoomAuth/AuthUserForm";
 import useToken  from "../ZoomAuth/useToken";
-import  Table2  from "../Tables/Table";
+import  Table from "../Tables/Table";
 
 
 function Home() {
@@ -23,7 +23,6 @@ function Home() {
     setDataFetched(true);
   };
 
-
   const handleClearData = () => {
     setData([]);
     setDataFetched(false);
@@ -33,11 +32,11 @@ function Home() {
     <>
     <div style={{display: "flex", margin: "auto"}}>
     <div style={{ margin: "auto"}}>
-      <GenericPopModal onDataReceived={handleDataReceived} onClearData={handleClearData} />
+      <Buttons onDataReceived={handleDataReceived} onClearData={handleClearData} />
     </div>
     &nbsp; &nbsp;
     <div >
-      {dataFetched ? <Table2  /> : null}
+      {dataFetched ? <Table  /> : null}
     </div>
 </div>
     </>

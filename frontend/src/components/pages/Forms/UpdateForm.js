@@ -9,7 +9,7 @@ import {
   StyledLabel,
 } from "./FormComponents";
 import moment from "moment";
-import { ModalCloseButton } from "../Home/buttonComposition";
+import { ModalCloseButton } from "../Buttons/buttonComposition";
 
 function UpdateForm(mnID) {
   const [date, setDate] = React.useState("");

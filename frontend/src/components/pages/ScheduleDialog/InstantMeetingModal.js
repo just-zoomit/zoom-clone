@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { emailRegex } from "../../shared";
 
-import { DangerBlueButton } from "../Home/buttonComposition";
+import { DangerBlueButton } from "../Buttons/buttonComposition";
 
 
 // Adpoted Component Composition pattern and pass data from child to parent pattern

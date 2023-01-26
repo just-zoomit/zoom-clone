@@ -3,7 +3,7 @@ import ReactDom from "react-dom";
 
 import { useNavigate } from "react-router-dom";
 import { StyledTextbox  } from "./DialogComponents";
-import { ModalCloseButton } from "../Home/buttonComposition";
+import { ModalCloseButton } from "../Buttons/buttonComposition";
 
 import styled from 'styled-components';
 

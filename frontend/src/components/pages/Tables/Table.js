@@ -11,6 +11,7 @@ import UpdateForm from "../Forms/UpdateForm";
 
 import moment from 'moment';
 import { element } from "../Home/dateTime";
+
 import { handleError } from "../../shared";
 
 const customStyles = {
@@ -34,7 +35,7 @@ const customStyles = {
 };
 
 
-export default function Table2() {
+export default function Table() {
   
   const modalRef = useRef();
 
@@ -128,9 +129,8 @@ export default function Table2() {
     },
   ];
 
+// Meeting Data
   formData.start_time = moment(formData.start_time).format('YYYY-MM-DD HH:mm')
-
-  console.log("showModal Table", showModal)
   
   return (
     <div style={{ maxWidth: "100vw", overflowX: "scroll" }}>
@@ -151,7 +151,8 @@ export default function Table2() {
         ReactDom.createPortal(
           <div className="container" ref={modalRef} onClick={closeModal }>
             <div className="modal">
-          
+
+          {/* Resolve on Click Issue */}
               {showModal ? <UpdateForm mnID={id} setShowModal={!showModal}  /> : null}
             </div>
           </div>,

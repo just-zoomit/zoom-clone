@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import ReactDom from "react-dom";
 import { StyledTextbox  } from "./DialogComponents";
-import { ModalCloseButton } from "../Home/buttonComposition";
+import { ModalCloseButton } from "../Buttons/buttonComposition";
 
 import styled from 'styled-components';
 

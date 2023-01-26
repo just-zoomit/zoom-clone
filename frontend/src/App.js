@@ -5,7 +5,7 @@ import {Route ,Routes } from 'react-router-dom';
 import Home from './components/pages/Home/Home';
 import ZoomMSDK from './components/pages/ZoomMSDK/ZoomMSDK';
 // import ExampleModal from './components/pages/ScheduleDialog/ExampleModal';
-import GenericPopModal from './components/pages/Buttons/GenericPopModal';
+import GenericPopModal from './components/pages/Buttons/Buttons';
 import Table2 from './components/pages/Tables/Table';
 import UpdateForm from './components/pages/Forms/UpdateForm';
 

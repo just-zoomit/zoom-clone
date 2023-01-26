@@ -5,7 +5,7 @@ import { CreateMeetingModal } from "../ScheduleDialog/CreateMeetingModal";
 
 import { JoinPopModal } from "../ScheduleDialog/JoinMeetingModal";
 
-import { BigSuccessButton } from "../Home/buttonComposition";
+import { BigSuccessButton } from "./buttonComposition";
 import { InstantMeeting } from "../ScheduleDialog/InstantMeetingModal";
 
 import { ControlledModal } from "../Login/ControlledModal";
@@ -27,7 +27,7 @@ const DivContainer = styled.div`
   flex-direction: row | row-reverse | column | column-reverse;
 `;
 
-export default function GenericPopModal(props) {
+export default function Buttons(props) {
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
 
