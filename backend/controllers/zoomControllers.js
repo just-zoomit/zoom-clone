@@ -1,4 +1,6 @@
 const asyncHandler = require("express-async-handler");
+const axios = require("axios");
+const btoa = require("btoa");
 
 require("dotenv").config();
 const KJUR = require("jsrsasign");
@@ -63,6 +65,9 @@ const getMsdkSignature = asyncHandler(async (req, res) => {
 
 const CreateAppointment = asyncHandler(async (req, res) => {
   const { topic, start_time, role } = req.body;
+  console.log("Test  topic: ", topic);
+  console.log("Test Start Time: ", start_time);
+  console.log("Test Role: ", role);
 
   console.log("Test Request Body: ", req.body);
   console.log("Start Time Conversion : ", converttoISOString(start_time));
@@ -70,12 +75,12 @@ const CreateAppointment = asyncHandler(async (req, res) => {
 
   if (!topic || !start_time || !role) {
     res.status(400);
+    console.log("Test  topic: ", topic);
+    console.log("Test Start Time: ", start_time);
+    console.log("Test Role: ", role);
     throw new Error("Please Fill all the fields");
   } else {
-    const { id, password } = await createZoomMeeting(
-      topic,
-      converttoISOString(start_time)
-    );
+    const { id, password } = await createZoomMeeting(topic, converttoISOString(start_time), role);
 
     res.status(201).json({ id, password });
   }

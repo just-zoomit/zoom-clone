@@ -42,8 +42,14 @@ export default function GenericPopModal(props) {
   const [, setData] = useState(null);
 
   const startInstantMeeting = (data) => {
+
+    // Catch error if data is null
     const { id, password } = data;
+    if (!id || !password) {
     navigate(`/msdk/?mn=${id}&pw=${password}`);
+    }else {
+      console.log("Error: No data received");
+    }
   };
 
   const handleDataReceived = (data) => {
@@ -151,10 +157,7 @@ export default function GenericPopModal(props) {
             onClick={handleClearData}
             label="Clear Data"
           />
-
-          {/* Ex. list meeting switch */}
-          {/* onClick={isData ? handleClick : handleClearData} */}
-          {/* {button} */}
+          
         </DivContainer>
       </div>
     </>

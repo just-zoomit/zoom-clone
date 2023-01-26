@@ -6,8 +6,12 @@ const { notFound, errorHandler } = require("./middlewares/errorMiddleware");
 
 const app = express();
 dotenv.config();
+const cors = require("cors");
+app.use(cors())
 
 app.use(express.json());
+
+
 
 const port = process.env.PORT || 30010;
 

@@ -30,6 +30,7 @@ function Home() {
   }
 
   const handleDataReceived = (newData) => {
+    console.log("Data received in Home.js", newData);
     setData(newData);
     setDataFetched(true);
   };

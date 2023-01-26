@@ -35,7 +35,7 @@ const getAccessToken = async () => {
  */
 const createZoomMeeting = async (topic, start_time) => {
   try {
-    console.log("Start Time in Create Meeting: ", start_time);
+    console.log("Create Meeting: ", start_time);
 
     const data = JSON.stringify({
       topic: topic,

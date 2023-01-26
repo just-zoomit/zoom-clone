@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { emailRegex } from "../../shared";
 
@@ -21,6 +22,7 @@ export function InstantMeeting(props) {
   const prevDateTimeValue = React.useRef("");
 
   const [, setData] = useState(null);
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -33,14 +35,23 @@ export function InstantMeeting(props) {
           topic: topic,
           first_name: name,
           email: email,
+          role: role,
           start_time: prevDateTimeValue.current,
         }),
       };
 
       const response = await fetch("/api/zoom/create", POST_OPTIONS);
-
+      console.log("Data Sent Response ", POST_OPTIONS);
       const json = await response.json();
-      console.log("ID & PW", json);
+      console.log("JSON ", json);
+
+      if (!response.ok) {
+        
+        throw new Error("Network response was not ok");
+      } 
+      
+      console.log("ID & PW", json.id);
+      navigate(`/msdk/?mn=${json.id}&pw=${json.password}`);
       setData(json);
       props.onDataReceived(json);
       setOpen(false);

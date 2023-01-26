@@ -1,20 +1,17 @@
 import React, { useState, useRef, useEffect } from "react";
-import styled from "styled-components";
 import ReactDom from "react-dom";
 import DataTable from "react-data-table-component";
 import axios from "axios";
-import { element } from "../Home/dateTime";
-import { ModalCloseButton} from "../Home/buttonComposition";
-import { useResource } from "../hooks/useResource";
+
 import useAxios from "../hooks/useAxios";
-import { handleError } from "../../shared";
+import { useResource } from "../hooks/useResource";
 
-
-import { ButtonDanger } from "../theme/globalStyles";
-import { TableContainer, StyledTextbox } from "./TableComponents";
-import moment from 'moment';
+import { TableContainer } from "./TableComponents";
 import UpdateForm from "../Forms/UpdateForm";
-// import {UpdateForm} from "../ScheduleDialog/UpdateForm";
+
+import moment from 'moment';
+import { element } from "../Home/dateTime";
+import { handleError } from "../../shared";
 
 const customStyles = {
   rows: {
@@ -154,13 +151,7 @@ export default function Table2() {
         ReactDom.createPortal(
           <div className="container" ref={modalRef} onClick={closeModal }>
             <div className="modal">
-            
-              {/* <ModalCloseButton
-                text="close"
-                size="20px"
-                onClick={closeModal}
-              /> */}
-
+          
               {showModal ? <UpdateForm mnID={id} setShowModal={!showModal}  /> : null}
             </div>
           </div>,
